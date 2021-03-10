@@ -1,4 +1,4 @@
-using Blazor.Database.Web.Data;
+using Blazor.Database.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Blazor.Database.Services;
 
 namespace Blazor.Database.Web
 {
@@ -25,11 +27,15 @@ namespace Blazor.Database.Web
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
-        {
+        public void ConfigureServices(IServiceCollection services){
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddControllersWithViews();
+            var dbContext = "Data Source=:memory:";
+            services.AddDbContext<WeatherDbContext>(options => options.UseSqlite(dbContext), ServiceLifetime.Singleton);
+            services.AddSingleton<IWeatherDataService, WeatherServerDataService>();
+            services.AddScoped<WeatherControllerService>();
+
             services.AddSingleton<WeatherForecastService>();
             // Server Side Blazor doesn't register HttpClient by default
             // Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode

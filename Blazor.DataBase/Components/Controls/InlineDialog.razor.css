@@ -1,0 +1,36 @@
+﻿div.back-block {
+    display: block;
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: RGBA(224, 224, 224, 0.4);
+}
+
+div.back-block-transparent {
+    display: block;
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: transparent; 
+}
+
+div.fore-block-transparent {
+    display: block;
+    position: relative;
+    z-index: 2; /* Sit on top */
+}
+
+div.fore-block {
+    display: block;
+    position: relative;
+    z-index: 2; /* Sit on top */
+    background-color: RGB(255, 255, 255);
+}

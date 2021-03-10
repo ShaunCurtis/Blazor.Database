@@ -1,0 +1,18 @@
+﻿@namespace Blazor.Database.Components
+
+@if (this.Loaded)
+{
+    @this.ChildContent
+}
+else
+{
+    <div>Loading....</div>
+}
+
+@code {
+
+    [Parameter] public bool Loaded { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+}

@@ -1,0 +1,7 @@
+﻿@page "/weather/view/{ID:int}"
+
+<WeatherForecastViewer ID="this.ID"></WeatherForecastViewer>
+
+@code {
+    [Parameter] public int ID { get; set; }
+}
