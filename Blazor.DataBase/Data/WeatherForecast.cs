@@ -1,6 +1,7 @@
 using Blazor.Database.Data.Validators;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazor.Database.Data
 {
@@ -12,7 +13,7 @@ namespace Blazor.Database.Data
 
         public int TemperatureC { get; set; } = 0;
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        [NotMapped] public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
         public string Summary { get; set; } = string.Empty;
 

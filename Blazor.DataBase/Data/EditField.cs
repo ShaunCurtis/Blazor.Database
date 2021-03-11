@@ -8,15 +8,15 @@ namespace Blazor.Database.Data
 {
     public class EditField
     {
-        public string FieldName { get; }
+        public string FieldName { get; init; }
 
-        public Guid GUID { get; }
+        public Guid GUID { get; init; }
 
-        public object Value { get; }
+        public object Value { get; init; }
 
         public object EditedValue { get; set; }
 
-        public object Model { get; private set; }
+        public object Model { get; init; }
 
         public bool IsDirty
         {

@@ -41,7 +41,7 @@ namespace Blazor.Database.Data.Validators
         public StringValidator(string value, string fieldName, object model, ValidationMessageStore validationMessageStore, string message) : base(value, fieldName, model, validationMessageStore, message) { }
 
         /// <summary>
-        /// Check of the string is grater than test
+        /// Check of the string is longer than test
         /// </summary>
         /// <param name="test"></param>
         /// <returns></returns>
@@ -56,7 +56,7 @@ namespace Blazor.Database.Data.Validators
         }
 
         /// <summary>
-        /// Check if thr string is shorter than
+        /// Check if the string is shorter than
         /// </summary>
         /// <param name="test"></param>
         /// <returns></returns>
@@ -72,7 +72,7 @@ namespace Blazor.Database.Data.Validators
         }
 
         /// <summary>
-        /// Check if thr string is shorter than
+        /// Check if the string matches a regex pattern
         /// </summary>
         /// <param name="test"></param>
         /// <returns></returns>

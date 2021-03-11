@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blazor.Database.Data
 {
@@ -12,10 +10,6 @@ namespace Blazor.Database.Data
         private List<EditField> _items = new List<EditField>();
 
         public int Count => _items.Count;
-
-        public bool IsSynchronized => false;
-
-        public object SyncRoot => this;
 
         public Action<bool> FieldValueChanged;
 
@@ -28,9 +22,7 @@ namespace Blazor.Database.Data
             => _items.ForEach(item => item.Reset());
 
         public IEnumerator GetEnumerator()
-        {
-            return new EditFieldCollectionEnumerator(_items);
-        }
+            => new EditFieldCollectionEnumerator(_items);
 
         public T Get<T>(string FieldName)
         {

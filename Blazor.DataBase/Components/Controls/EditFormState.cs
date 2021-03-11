@@ -7,19 +7,29 @@ using System.Threading.Tasks;
 
 namespace Blazor.Database.Components
 {
-    public class EditState : ComponentBase, IDisposable
+    /// <summary>
+    /// Component Class that adds Edit State and Validation State to a Blazor EditForm Control
+    /// Should be placed within thr EditForm ontrol
+    /// </summary>
+    public class EditFormState : ComponentBase, IDisposable
     {
-        [Parameter] public bool DoValidationOnFieldChange { get; set; } = true;
 
+        /// <summary>
+        /// EditContext - cascaded from EditForm
+        /// </summary>
         [CascadingParameter] public EditContext EditContext { get; set; }
 
-        [Parameter] public bool DoValidation { get; set; } = true;
-
+        /// <summary>
+        /// EventCallback for parent to link into for Edit State Change Events
+        /// passes the the current Dirty state
+        /// </summary>
         [Parameter] public EventCallback<bool> EditStateChanged { get; set; }
 
-        [Parameter] public EventCallback<bool> ValidStateChanged { get; set; }
-
-        [Parameter] public bool Reset
+        /// <summary>
+        /// Pseudo Property to force the control to do a state and validation
+        /// </summary>
+        [Parameter]
+        public bool Reset
         {
             get => false;
             set
@@ -28,13 +38,12 @@ namespace Blazor.Database.Components
             }
         }
 
-        public bool IsValid { get; private set; } = true;
-
+        /// <summary>
+        /// Property to expose the Edit/Dirty state of the control
+        /// </summary>
         public bool IsDirty => EditFields?.IsDirty ?? false;
 
         private EditFieldCollection EditFields = new EditFieldCollection();
-        private ValidationMessageStore validationMessageStore;
-        private bool validating = false;
         private bool disposedValue;
 
         protected override Task OnInitializedAsync()
@@ -43,6 +52,7 @@ namespace Blazor.Database.Components
 
             if (this.EditContext != null)
             {
+                // Gets the model from the EditContext and populates the EditFieldCollection
                 var model = this.EditContext.Model;
                 var props = model.GetType().GetProperties();
                 foreach (var prop in props)
@@ -50,54 +60,41 @@ namespace Blazor.Database.Components
                     var value = prop.GetValue(model);
                     EditFields.AddField(model, prop.Name, value);
                 }
+                // Wires up to the EditContext OnFieldChanged event
                 this.EditContext.OnFieldChanged += FieldChanged;
-                if (model is IValidation && this.DoValidation)
-                {
-                    // Get the Validation Message Store from the EditContext
-                    this.validationMessageStore = new ValidationMessageStore(this.EditContext);
 
-                    this.EditContext.OnValidationRequested += ValidationRequested;
-                }
             }
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// Event Handler for Editcontext.OnFieldChanged
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FieldChanged(object sender, FieldChangedEventArgs e)
         {
+            // Get the PropertyInfo object for the model property
+            // Uses reflection to get property and value
             var prop = e.FieldIdentifier.Model.GetType().GetProperty(e.FieldIdentifier.FieldName);
             if (prop != null)
             {
+                // Get the value for the property
                 var value = prop.GetValue(e.FieldIdentifier.Model);
+                // Sets the edit value in the EditField
                 EditFields.SetField(e.FieldIdentifier.FieldName, value);
-                if (DoValidationOnFieldChange) this.Validate(e.FieldIdentifier.FieldName);
+                // Invokes EditStateChanged
                 this.EditStateChanged.InvokeAsync(EditFields?.IsDirty ?? false);
             }
         }
 
-        private void ValidationRequested(object sender, ValidationRequestedEventArgs e)
-            => this.Validate();
-
-        private void Validate(string fieldname = null)
-        {
-            var validator = this.EditContext.Model as IValidation;
-            if (validator != null || !this.validating)
-            {
-                this.validating = false;
-                this.validationMessageStore.Clear();
-                this.IsValid = validator.Validate(validationMessageStore, fieldname, this.EditContext.Model);
-                this.EditContext.NotifyValidationStateChanged();
-                this.ValidStateChanged.InvokeAsync(this.IsValid);
-                this.validating = false;
-            }
-        }
-
+        /// <summary>
+        /// Method to clear the Validation and Edit State 
+        /// </summary>
         public void Clear()
-        {
-            this.EditFields.ResetValues();
-            this.validationMessageStore.Clear();
-            this.IsValid = true;
-        }
+            => this.EditFields.ResetValues();
 
+        // IDisposable Implementation
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -105,10 +102,7 @@ namespace Blazor.Database.Components
                 if (disposing)
                 {
                     if (this.EditContext != null)
-                    {
                         this.EditContext.OnFieldChanged -= this.FieldChanged;
-                        this.EditContext.OnValidationRequested -= this.ValidationRequested;
-                    }
                 }
                 disposedValue = true;
             }

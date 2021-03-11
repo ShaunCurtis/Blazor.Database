@@ -18,14 +18,14 @@ namespace Blazor.Database.Data.Validators
         public bool IsValid => !Trip;
 
         /// <summary>
-        /// Tripwire for validation failure
-        /// </summary>
-        public bool Trip = false;
-
-        /// <summary>
         /// Messages to display if validation fails
         /// </summary>
         public List<string> Messages { get; } = new List<string>();
+
+        /// <summary>
+        /// Tripwire for validation failure
+        /// </summary>
+        protected bool Trip { get; set; } = false;
 
         /// <summary>
         /// Class Contructor
@@ -64,7 +64,7 @@ namespace Blazor.Database.Data.Validators
         }
 
         /// <summary>
-        /// Method to Log the Validation to the Validation Store and trip the tripwire
+        /// Method to Log the Validation to the Validation Store and trip a tripwire
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>

@@ -1,6 +1,6 @@
 ﻿@namespace Blazor.Database.Components
 
-<InlineDialog Lock="this._isDirty">
+<InlineDialog Lock="this._isDirty" Transparent="false">
     <UIContainer>
 
         <UIFormRow>
@@ -14,7 +14,8 @@
     <UILoader Loaded="this._isLoaded">
 
         <EditForm EditContext="this.EditContext" OnValidSubmit="HandleValidSubmit">
-            <EditState Reset="this.ResetEditState" EditStateChanged="this.EditStateChanged" ValidStateChanged="this.ValidStateChanged"></EditState>
+            <EditFormState Reset="this.ResetEditState" EditStateChanged="this.EditStateChanged"></EditFormState>
+            <ValidationFormState Reset="this.ResetEditState" ValidStateChanged="this.ValidStateChanged"></ValidationFormState>
             <UIContainer>
 
                 <UIFormRow>

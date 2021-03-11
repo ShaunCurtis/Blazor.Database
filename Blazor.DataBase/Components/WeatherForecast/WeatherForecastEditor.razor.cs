@@ -15,10 +15,9 @@ namespace Blazor.Database.Components
 
         [Inject] private WeatherControllerService ControllerService { get; set; }
 
+        protected EditContext EditContext { get; set; }
+
         private bool _isNew => this.ControllerService?.IsNewRecord ?? true;
-
-        public EditContext EditContext { get; set; }
-
         private bool _isDirty = false;
         private bool _isValid = true;
         private bool _saveDisabled => !this._isDirty || !this._isValid;
