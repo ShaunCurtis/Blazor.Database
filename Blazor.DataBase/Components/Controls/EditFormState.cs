@@ -1,4 +1,9 @@
-﻿using Blazor.Database.Data;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
+
+using Blazor.Database.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
@@ -26,19 +31,6 @@ namespace Blazor.Database.Components
         [Parameter] public EventCallback<bool> EditStateChanged { get; set; }
 
         /// <summary>
-        /// Pseudo Property to force the control to do a state and validation
-        /// </summary>
-        [Parameter]
-        public bool Reset
-        {
-            get => false;
-            set
-            {
-                if (value) this.Clear();
-            }
-        }
-
-        /// <summary>
         /// Property to expose the Edit/Dirty state of the control
         /// </summary>
         public bool IsDirty => EditFields?.IsDirty ?? false;
@@ -52,19 +44,29 @@ namespace Blazor.Database.Components
 
             if (this.EditContext != null)
             {
-                // Gets the model from the EditContext and populates the EditFieldCollection
-                var model = this.EditContext.Model;
-                var props = model.GetType().GetProperties();
-                foreach (var prop in props)
-                {
-                    var value = prop.GetValue(model);
-                    EditFields.AddField(model, prop.Name, value);
-                }
+                // Populates the EditField Collection
+                this.GetEditFields();
                 // Wires up to the EditContext OnFieldChanged event
                 this.EditContext.OnFieldChanged += FieldChanged;
 
             }
             return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Method to populate the edit field collection
+        /// </summary>
+        protected void GetEditFields()
+        {
+            // Gets the model from the EditContext and populates the EditFieldCollection
+            this.EditFields.Clear();
+            var model = this.EditContext.Model;
+            var props = model.GetType().GetProperties();
+            foreach (var prop in props)
+            {
+                var value = prop.GetValue(model);
+                EditFields.AddField(model, prop.Name, value);
+            }
         }
 
         /// <summary>
@@ -89,10 +91,13 @@ namespace Blazor.Database.Components
         }
 
         /// <summary>
-        /// Method to clear the Validation and Edit State 
+        /// Method to Update the Edit State to current values 
         /// </summary>
-        public void Clear()
-            => this.EditFields.ResetValues();
+        public void UpdateState()
+        {
+            this.GetEditFields();
+            this.EditStateChanged.InvokeAsync(EditFields?.IsDirty ?? false);
+        }
 
         // IDisposable Implementation
         protected virtual void Dispose(bool disposing)

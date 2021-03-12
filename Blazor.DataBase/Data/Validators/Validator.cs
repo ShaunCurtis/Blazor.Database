@@ -45,25 +45,6 @@ namespace Blazor.Database.Data.Validators
         }
 
         /// <summary>
-        /// Method to Log the Validation to the Validation Store
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public virtual bool Validate(string message = null)
-        {
-            if (!this.IsValid)
-            {
-                message ??= this.DefaultMessage;
-                // Check if we've logged specific messages.  If not add the default message
-                if (this.Messages.Count == 0) Messages.Add(message);
-                //set up a FieldIdentifier and add the message to the Edit Context ValidationMessageStore
-                var fi = new FieldIdentifier(this.Model, this.FieldName);
-                this.ValidationMessageStore.Add(fi, this.Messages);
-            }
-            return this.IsValid;
-        }
-
-        /// <summary>
         /// Method to Log the Validation to the Validation Store and trip a tripwire
         /// </summary>
         /// <param name="message"></param>
@@ -105,6 +86,26 @@ namespace Blazor.Database.Data.Validators
         protected ValidationMessageStore ValidationMessageStore { get; set; }
 
         protected object Model { get; set; }
+
+
+        /// <summary>
+        /// Method to Log the Validation to the Validation Store
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        protected virtual bool Validate(string message = null)
+        {
+            if (!this.IsValid)
+            {
+                message ??= this.DefaultMessage;
+                // Check if we've logged specific messages.  If not add the default message
+                if (this.Messages.Count == 0) Messages.Add(message);
+                //set up a FieldIdentifier and add the message to the Edit Context ValidationMessageStore
+                var fi = new FieldIdentifier(this.Model, this.FieldName);
+                this.ValidationMessageStore.Add(fi, this.Messages);
+            }
+            return this.IsValid;
+        }
 
         /// <summary>
         /// Method to add a message to the log

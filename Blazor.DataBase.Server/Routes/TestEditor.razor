@@ -1,8 +1,8 @@
 ﻿@using Blazor.Database.Data
-@page "/test"
+@page "/editstateeditor"
 
 <EditForm Model="@Model" OnValidSubmit="@HandleValidSubmit">
-    <EditFormState EditStateChanged="this.EditStateChanged"></EditFormState>
+    <EditFormState @ref="editFormState" EditStateChanged="this.EditStateChanged"></EditFormState>
 
     <label class="form-label">ID:</label> <InputNumber class="form-control" @bind-Value="Model.ID" />
     <label class="form-label">Date:</label> <InputDate class="form-control" @bind-Value="Model.Date" />
@@ -25,6 +25,8 @@
     protected string btncolour => _isDirty ? "btn-danger" : "btn-success";
     protected string btntext => _isDirty ? "Dirty" : "Clean";
 
+    protected EditFormState editFormState { get; set; }
+
     private WeatherForecast Model = new WeatherForecast()
     {
         ID = 1,
@@ -33,7 +35,10 @@
         Summary = "Balmy"
     };
 
-    private void HandleValidSubmit() { }
+    private void HandleValidSubmit()
+    {
+        this.editFormState.UpdateState();
+    }
 
     private void EditStateChanged(bool editstate)
         => this._isDirty = editstate;

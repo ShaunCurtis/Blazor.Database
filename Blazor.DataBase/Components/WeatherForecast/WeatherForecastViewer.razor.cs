@@ -7,6 +7,7 @@ namespace Blazor.Database.Components
 {
     public partial class WeatherForecastViewer : ComponentBase
     {
+        [Inject] private NavigationManager NavManager { get; set; }
         [Parameter] public int ID { get; set; } = -1;
 
         private bool HasServices => this.ControllerService != null;
@@ -23,8 +24,6 @@ namespace Blazor.Database.Components
         }
 
         private void Exit()
-        {
-        }
-
+            => this.NavManager.NavigateTo("/fetchdata");
     }
 }

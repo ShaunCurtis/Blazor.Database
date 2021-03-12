@@ -27,9 +27,9 @@ namespace Blazor.Database.Components
         private bool _confirmDelete = false;
         private string _saveButtonText => this._isNew ? "Save" : "Update";
 
-        public bool ResetEditState { get; set; }
-
         private WeatherForecast Model => this.ControllerService.Record;
+
+        private EditFormState EditFormState { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
@@ -54,21 +54,17 @@ namespace Blazor.Database.Components
         }
 
         private void EditStateChanged(bool dirty)
-        {
-                this._isDirty = dirty;
-        }
+            => this._isDirty = dirty;
 
 
         private void ValidStateChanged(bool valid)
-        {
-            this._isValid = valid;
-        }
+            => this._isValid = valid;
 
         private async void HandleValidSubmit()
         {
             await this.ControllerService.SaveRecordAsync();
-            if (this.ResetEditState) this.ResetEditState = false;
-            this.ResetEditState = true;
+            this.EditFormState.UpdateState();
+            this._dirtyExit = false;
             await this.InvokeAsync(this.StateHasChanged);
         }
 
@@ -91,14 +87,14 @@ namespace Blazor.Database.Components
             if (this._confirmDelete)
             {
                 await this.ControllerService.DeleteRecordAsync();
+                this._isDirty = false;
                 await this.ExitAction.InvokeAsync();
             }
         }
 
         private void ConfirmExit()
         {
-            if (this.ResetEditState) this.ResetEditState = false;
-            this.ResetEditState = true;
+            this._isDirty = false;
             this.ExitAction.InvokeAsync();
         }
 

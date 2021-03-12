@@ -1,8 +1,15 @@
-﻿using Blazor.Database.Data;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
+
+using Blazor.Database.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazor.Database.Components
@@ -32,22 +39,9 @@ namespace Blazor.Database.Components
         [Parameter] public EventCallback<bool> ValidStateChanged { get; set; }
 
         /// <summary>
-        /// Pseudo Property to force the control to do a state and validation
-        /// </summary>
-        [Parameter]
-        public bool Reset
-        {
-            get => false;
-            set
-            {
-                if (value) this.Clear();
-            }
-        }
-
-        /// <summary>
         /// Property to expose the Validation State of the Control
         /// </summary>
-        public bool IsValid { get; private set; } = true;
+        public bool IsValid => !EditContext?.GetValidationMessages().Any() ?? true;
 
         private ValidationMessageStore validationMessageStore;
         private bool validating = false;
@@ -106,7 +100,7 @@ namespace Blazor.Database.Components
                 else
                     validationMessageStore.Clear(new FieldIdentifier(this.EditContext.Model, fieldname));
                 // Run the IValidation interface Validate method
-                this.IsValid = validator.Validate(validationMessageStore, fieldname, this.EditContext.Model);
+                validator.Validate(validationMessageStore, fieldname, this.EditContext.Model);
                 // Notify the EditContext that the Validation State has changed - 
                 // This precipitates a OnValidationStateChanged event which the validation message controls are all plugged into
                 this.EditContext.NotifyValidationStateChanged();
@@ -120,10 +114,7 @@ namespace Blazor.Database.Components
         /// Method to clear the Validation and Edit State 
         /// </summary>
         public void Clear()
-        {
-            this.validationMessageStore.Clear();
-            this.IsValid = true;
-        }
+            => this.validationMessageStore.Clear();
 
         // IDisposable Implementation
         protected virtual void Dispose(bool disposing)
