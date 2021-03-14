@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blazor.Database.Data
 {
-    public class WeatherDbContext : DbContext
+    public class InMemoryWeatherDbContext : DbContext
     {
         /// <summary>
         /// Tracking lifetime of contexts.
@@ -21,7 +21,7 @@ namespace Blazor.Database.Data
         /// New Method - creates a guid in case we need to track it
         /// </summary>
         /// <param name="options"></param>
-        public WeatherDbContext(DbContextOptions<WeatherDbContext> options)
+        public InMemoryWeatherDbContext(DbContextOptions<InMemoryWeatherDbContext> options)
             : base(options)
         {
             this._id = Guid.NewGuid();
@@ -47,7 +47,7 @@ namespace Blazor.Database.Data
             var conn = this.Database.GetDbConnection();
             conn.Open();
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "CREATE TABLE [WeatherForecast]([ID] [int] NOT NULL, [Date] [smalldatetime] NOT NULL, [TemperatureC] [int] NOT NULL, [Summary] [varchar](255) NULL)";
+            cmd.CommandText = "CREATE TABLE [WeatherForecast]([ID] [int] NOT NULL PRIMARY KEY AUTOINCREMENT, [Date] [smalldatetime] NOT NULL, [TemperatureC] [int] NOT NULL, [Summary] [varchar](255) NULL)";
             cmd.ExecuteNonQuery();
             foreach (var forecast in this.NewForecasts)
             {
@@ -70,7 +70,7 @@ namespace Blazor.Database.Data
 
                     return Enumerable.Range(1, 10).Select(index => new WeatherForecast
                     {
-                        ID = index,
+                        //ID = index,
                         Date = DateTime.Now.AddDays(index),
                         TemperatureC = rng.Next(-20, 55),
                         Summary = Summaries[rng.Next(Summaries.Length)]

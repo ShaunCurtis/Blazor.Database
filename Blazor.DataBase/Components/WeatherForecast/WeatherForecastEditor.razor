@@ -1,6 +1,6 @@
 ﻿@namespace Blazor.Database.Components
 
-<InlineDialog Lock="this._isDirty" Transparent="false">
+<InlineDialog Lock="this._isInlineDirty" Transparent="false">
     <UIContainer>
 
         <UIFormRow>
@@ -13,7 +13,7 @@
 
     <UILoader Loaded="this._isLoaded">
 
-        <EditForm EditContext="this.EditContext" OnValidSubmit="HandleValidSubmit">
+        <EditForm EditContext="this.EditContext" OnValidSubmit="HandleValidSubmit" class=" px-2 py-3">
             <EditFormState @ref="this.EditFormState"  EditStateChanged="this.EditStateChanged"></EditFormState>
             <ValidationFormState ValidStateChanged="this.ValidStateChanged"></ValidationFormState>
             <UIContainer>

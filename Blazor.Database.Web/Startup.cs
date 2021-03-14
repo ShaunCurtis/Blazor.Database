@@ -31,12 +31,12 @@ namespace Blazor.Database.Web
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddControllersWithViews();
-            var dbContext = "Data Source=:memory:";
-            services.AddDbContext<WeatherDbContext>(options => options.UseSqlite(dbContext), ServiceLifetime.Singleton);
-            services.AddSingleton<IWeatherDataService, WeatherServerDataService>();
-            services.AddScoped<WeatherControllerService>();
+            //var dbContext = "Data Source=:memory:";
+            //services.AddDbContext<InMemoryWeatherDbContext>(options => options.UseSqlite(dbContext), ServiceLifetime.Singleton);
+            //services.AddSingleton<IWeatherDataService, WeatherServerDataService>();
+            //services.AddScoped<WeatherControllerService>();
 
-            services.AddSingleton<WeatherForecastService>();
+            //services.AddSingleton<WeatherForecastService>();
             // Server Side Blazor doesn't register HttpClient by default
             // Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode
             if (!services.Any(x => x.ServiceType == typeof(HttpClient)))
@@ -85,6 +85,7 @@ namespace Blazor.Database.Web
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapRazorPages();
                 endpoints.MapFallbackToPage("/Server/{*path:nonfile}","/_Host");

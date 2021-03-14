@@ -1,13 +1,14 @@
 using Blazor.Database.Data.Validators;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazor.Database.Data
 {
-    public class WeatherForecast : IValidation
+    public class WeatherForecast : IValidation, IDbRecord<WeatherForecast>
     {
-        public int ID { get; set; } = -1;
+        [Key] public int ID { get; set; } = -1;
 
         public DateTime Date { get; set; } = DateTime.Now;
 
@@ -16,6 +17,10 @@ namespace Blazor.Database.Data
         [NotMapped] public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
         public string Summary { get; set; } = string.Empty;
+
+        public Guid GUID { get; init; } = Guid.NewGuid();
+
+        public string DisplayName => $"Weather Forecast for {this.Date.ToShortDateString()} ";
 
         public bool Validate(ValidationMessageStore validationMessageStore, string fieldname, object model = null)
         {

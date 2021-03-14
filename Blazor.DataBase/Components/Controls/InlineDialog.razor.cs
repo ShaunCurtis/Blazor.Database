@@ -43,16 +43,16 @@ namespace Blazor.Database.Components
             get => _lock;
             set 
             {
-                if (value && !_lock)
-                {
-                    SetLock();
-                    this._lock = true;
-                }
-                else if (!value && _lock)
-                { 
-                    SetUnlock();
-                    this._lock = false;
-                }
+                    if (value && !_lock)
+                    {
+                        SetLock();
+                        this._lock = true;
+                    }
+                    else if (!value && _lock)
+                    {
+                        SetUnlock();
+                        this._lock = false;
+                    }
             } 
         }
 

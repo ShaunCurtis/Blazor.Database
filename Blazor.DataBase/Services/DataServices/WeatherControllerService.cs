@@ -40,6 +40,8 @@ namespace Blazor.Database.Services
 
         public bool IsNewRecord => this.RecordId == -1;
 
+        public bool HasRecords => this.Records != null;
+
         public async Task GetRecordsAsync()
         {
             this.Records = await DataService.GetRecordListAsync();

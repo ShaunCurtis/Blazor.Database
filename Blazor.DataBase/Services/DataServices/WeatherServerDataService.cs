@@ -17,9 +17,9 @@ namespace Blazor.Database.Services
     public class WeatherServerDataService
         : IWeatherDataService
     {
-        public WeatherDbContext _dbContext { get; set; } = null;
+        public InMemoryWeatherDbContext _dbContext { get; set; } = null;
 
-        public WeatherServerDataService(IConfiguration configuration, WeatherDbContext dbContext)
+        public WeatherServerDataService(IConfiguration configuration, InMemoryWeatherDbContext dbContext)
         {
             this._dbContext = dbContext;
         }

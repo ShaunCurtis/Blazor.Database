@@ -9,23 +9,46 @@ namespace Blazor.Database.Components
     public partial class WeatherForecastEditor : ComponentBase, IDisposable
     {
 
-        [Parameter] public int ID { get; set; } = -1;
+        [Parameter]
+        public int ID
+        {
+            get => this._Id;
+            set => this._Id = value;
+        }
 
         [Parameter] public EventCallback ExitAction { get; set; }
+
+        [CascadingParameter] IModalDialog Modal { get; set; }
 
         [Inject] private WeatherControllerService ControllerService { get; set; }
 
         protected EditContext EditContext { get; set; }
 
+        protected bool IsDirty
+        {
+            get => this._isDirty;
+            set
+            {
+                if (value != this.IsDirty)
+                {
+                    this._isDirty = value;
+                    if (this._isModal) this.Modal.Lock(value);
+                }
+            }
+        }
+
         private bool _isNew => this.ControllerService?.IsNewRecord ?? true;
         private bool _isDirty = false;
         private bool _isValid = true;
-        private bool _saveDisabled => !this._isDirty || !this._isValid;
+        private bool _saveDisabled => !this.IsDirty || !this._isValid;
         private bool _deleteDisabled => this._isNew || this._confirmDelete;
         private bool _isLoaded = false;
         private bool _dirtyExit = false;
         private bool _confirmDelete = false;
+        private bool _isModal => this.Modal != null;
+        private bool _isInlineDirty => (!this._isModal) && this._isDirty;
         private string _saveButtonText => this._isNew ? "Save" : "Update";
+        private int _Id = -1;
 
         private WeatherForecast Model => this.ControllerService.Record;
 
@@ -38,13 +61,24 @@ namespace Blazor.Database.Components
 
         private async Task LoadRecordAsync()
         {
-            await this.ControllerService.GetRecordAsync(ID);
+            this.TryGetModalID();
+            await this.ControllerService.GetRecordAsync(this._Id);
             this.EditContext = new EditContext(this.Model);
             await base.OnInitializedAsync();
             _isLoaded = true;
             this.EditContext.OnFieldChanged += FieldChanged;
             if (!this._isNew)
                 this.EditContext.Validate();
+        }
+
+        private bool TryGetModalID()
+        {
+            if (this._isModal && this.Modal.Options.TryGet<int>("Id", out int value))
+            {
+                this._Id = value;
+                return true;
+            }
+            return false;
         }
 
         private void FieldChanged(object sender, FieldChangedEventArgs e)
@@ -54,7 +88,7 @@ namespace Blazor.Database.Components
         }
 
         private void EditStateChanged(bool dirty)
-            => this._isDirty = dirty;
+            => this.IsDirty = dirty;
 
 
         private void ValidStateChanged(bool valid)
@@ -70,7 +104,7 @@ namespace Blazor.Database.Components
 
         private void Exit()
         {
-            if (this._isDirty)
+            if (this.IsDirty)
                 this._dirtyExit = true;
             else
                 ConfirmExit();
@@ -87,20 +121,29 @@ namespace Blazor.Database.Components
             if (this._confirmDelete)
             {
                 await this.ControllerService.DeleteRecordAsync();
-                this._isDirty = false;
-                await this.ExitAction.InvokeAsync();
+                this.IsDirty = false;
+                this.DoExit();
             }
         }
 
         private void ConfirmExit()
         {
-            this._isDirty = false;
-            this.ExitAction.InvokeAsync();
+            this.IsDirty = false;
+            this.DoExit();
         }
 
         public void Dispose()
         {
             this.EditContext.OnFieldChanged -= FieldChanged;
+        }
+
+        private void DoExit(ModalResult result = null)
+        {
+            result = result ?? ModalResult.OK();
+            if (this._isModal) 
+                this.Modal.Close(result);
+            else 
+                this.ExitAction.InvokeAsync();
         }
     }
 }
