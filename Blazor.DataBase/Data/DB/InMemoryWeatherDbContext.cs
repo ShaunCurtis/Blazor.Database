@@ -33,25 +33,16 @@ namespace Blazor.Database.Data
         /// </summary>
         public DbSet<WeatherForecast> WeatherForecast { get; set; }
 
-        /// <summary>
-        /// Builds the DbSets from Database Views
-        /// </summary>
-        /// <param name="modelBuilder"></param>
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
-
         private void BuildInMemoryDatabase()
         {
             var conn = this.Database.GetDbConnection();
             conn.Open();
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "CREATE TABLE [WeatherForecast]([ID] [int] NOT NULL PRIMARY KEY AUTOINCREMENT, [Date] [smalldatetime] NOT NULL, [TemperatureC] [int] NOT NULL, [Summary] [varchar](255) NULL)";
+            cmd.CommandText = "CREATE TABLE [WeatherForecast]([ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Date] [smalldatetime] NOT NULL, [TemperatureC] [int] NOT NULL, [Summary] [varchar](255) NULL)";
             cmd.ExecuteNonQuery();
             foreach (var forecast in this.NewForecasts)
             {
-                cmd.CommandText = $"INSERT INTO WeatherForecast([ID], [Date], [TemperatureC], [Summary]) VALUES({forecast.ID}, '{forecast.Date.ToLongDateString()}', {forecast.TemperatureC}, '{forecast.Summary}')";
+                cmd.CommandText = $"INSERT INTO WeatherForecast([Date], [TemperatureC], [Summary]) VALUES('{forecast.Date.ToLongDateString()}', {forecast.TemperatureC}, '{forecast.Summary}')";
                 cmd.ExecuteNonQuery();
             }
         }

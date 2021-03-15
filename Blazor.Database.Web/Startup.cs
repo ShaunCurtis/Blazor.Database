@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Blazor.Database.Services;
+using Blazor.Database.Web.Extensions;
 
 namespace Blazor.Database.Web
 {
@@ -31,6 +32,7 @@ namespace Blazor.Database.Web
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddControllersWithViews();
+            services.AddApplicationServices(this.Configuration);
             //var dbContext = "Data Source=:memory:";
             //services.AddDbContext<InMemoryWeatherDbContext>(options => options.UseSqlite(dbContext), ServiceLifetime.Singleton);
             //services.AddSingleton<IWeatherDataService, WeatherServerDataService>();

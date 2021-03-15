@@ -10,21 +10,19 @@ namespace Blazor.Database.Web.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
-            // Singleton service for the Server Side version of WeatherForecast Data Service 
-            // Dummy service produces a new recordset each time the application runs 
 
-            // services.AddSingleton<IFactoryDataService<WeatherForecastDbContext>, FactoryServerDataService<WeatherForecastDbContext>>();
-             services.AddSingleton<IFactoryDataService<LocalWeatherDbContext>, FactoryServerDataService<LocalWeatherDbContext>>();
+            // Local DB Setup
+            //var dbContext = configuration.GetValue<string>("Configuration:DBContext");
+            //services.AddDbContextFactory<LocalWeatherDbContext>(options => options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
+            //services.AddSingleton<IFactoryDataService, LocalDatabaseDataService>();
+
+            // In Memory DB Setup
+            var memdbContext = "Data Source=:memory:";
+            services.AddDbContextFactory<InMemoryWeatherDbContext>(options => options.UseSqlite(memdbContext), ServiceLifetime.Singleton);
+            services.AddSingleton<IFactoryDataService, TestDatabaseDataService>();
+
             services.AddScoped<WeatherForecastControllerService>();
 
-            //var dbContext = "Data Source=:memory:";
-            //services.AddDbContext<InMemoryWeatherDbContext>(options => options.UseSqlite(dbContext), ServiceLifetime.Singleton);
-            //services.AddSingleton<IWeatherDataService, WeatherServerDataService>();
-            //services.AddScoped<WeatherControllerService>();
-
-            // Factory for building the DBContext 
-            var dbContext = configuration.GetValue<string>("Configuration:DBContext");
-            services.AddDbContextFactory<LocalWeatherDbContext>(options => options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
             return services;
         }
     }

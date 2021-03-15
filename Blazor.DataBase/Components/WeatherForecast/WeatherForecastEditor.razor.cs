@@ -20,7 +20,7 @@ namespace Blazor.Database.Components
 
         [CascadingParameter] IModalDialog Modal { get; set; }
 
-        [Inject] private WeatherControllerService ControllerService { get; set; }
+        [Inject] private WeatherForecastControllerService ControllerService { get; set; }
 
         protected EditContext EditContext { get; set; }
 

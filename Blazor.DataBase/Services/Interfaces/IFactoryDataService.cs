@@ -17,21 +17,21 @@ namespace Blazor.Database.Services
 /// Interface for a Factory Data Service
 /// defines the CRUD operations Methods for interfacing with the DbContext
 /// </summary>
-/// <typeparam name="TContext"></typeparam>
-    public interface IFactoryDataService<TContext> 
-        where TContext : DbContext
+    public interface IFactoryDataService 
     {
-        public HttpClient HttpClient { get; set; }
-
-        public IDbContextFactory<TContext> DBContext { get; set; }
-
-        public IConfiguration AppConfiguration { get; set; }
 
         /// <summary>
         /// Method to get the Record List
         /// </summary>
         /// <returns></returns>
         public Task<List<TRecord>> GetRecordListAsync<TRecord>() where TRecord : class, IDbRecord<TRecord>, new();
+
+
+        /// <summary>
+        /// Method to get the Record List
+        /// </summary>
+        /// <returns></returns>
+        public Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize) where TRecord : class, IDbRecord<TRecord>, new();
 
         /// <summary>
         /// Method to get a Record

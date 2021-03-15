@@ -18,9 +18,9 @@ namespace Blazor.Database.Data
 
         public string Summary { get; set; } = string.Empty;
 
-        public Guid GUID { get; init; } = Guid.NewGuid();
+        [NotMapped] public Guid GUID { get; init; } = Guid.NewGuid();
 
-        public string DisplayName => $"Weather Forecast for {this.Date.ToShortDateString()} ";
+        [NotMapped] public string DisplayName => $"Weather Forecast for {this.Date.ToShortDateString()} ";
 
         public bool Validate(ValidationMessageStore validationMessageStore, string fieldname, object model = null)
         {

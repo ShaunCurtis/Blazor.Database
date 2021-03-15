@@ -17,20 +17,12 @@ namespace Blazor.Database.Services
     /// Abstract base class for a Dactory Data Service implmenting IFactoryDataService 
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
-    public abstract class FactoryDataService<TContext>: IFactoryDataService<TContext>
-        where TContext : DbContext
+    public abstract class FactoryDataService: IFactoryDataService
     {
         /// <summary>
         /// Guid for Service
         /// </summary>
         public Guid ServiceID { get; } = Guid.NewGuid();
-
-        /// <summary>
-        /// Access to the HttpClient
-        /// </summary>
-        public HttpClient HttpClient { get; set; } = null;
-
-        public virtual IDbContextFactory<TContext> DBContext { get; set; } = null;
 
         /// <summary>
         /// Access to the Application Configuration data
@@ -52,6 +44,13 @@ namespace Blazor.Database.Services
         /// </summary>
         /// <returns></returns>
         public virtual Task<List<TRecord>> GetRecordListAsync<TRecord>() where TRecord : class, IDbRecord<TRecord>, new()
+            => Task.FromResult(new List<TRecord>());
+
+        /// <summary>
+        /// Method to get the Record List
+        /// </summary>
+        /// <returns></returns>
+        public virtual Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize) where TRecord : class, IDbRecord<TRecord>, new()
             => Task.FromResult(new List<TRecord>());
 
         /// <summary>

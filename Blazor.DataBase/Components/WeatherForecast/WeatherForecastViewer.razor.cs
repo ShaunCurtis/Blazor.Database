@@ -20,7 +20,7 @@ namespace Blazor.Database.Components
 
         private bool HasServices => this.ControllerService != null;
 
-        [Inject] private WeatherControllerService ControllerService { get; set; }
+        [Inject] private WeatherForecastControllerService ControllerService { get; set; }
 
         private bool IsLoaded => this.ControllerService != null && this.ControllerService.Record != null;
         

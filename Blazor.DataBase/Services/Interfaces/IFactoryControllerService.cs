@@ -18,9 +18,8 @@ namespace Blazor.Database.Services
     /// </summary>
     /// <typeparam name="TRecord"></typeparam>
     /// <typeparam name="TContext"></typeparam>
-    public interface IFactoryControllerService<TRecord, TContext>
+    public interface IFactoryControllerService<TRecord>
         where TRecord : class, IDbRecord<TRecord>, new()
-        where TContext : DbContext
     {
         /// <summary>
         /// Unique ID for the Service

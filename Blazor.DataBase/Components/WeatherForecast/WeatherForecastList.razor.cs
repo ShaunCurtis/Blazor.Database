@@ -17,9 +17,9 @@ namespace Blazor.Database.Components
 
         //[Inject] WeatherControllerService ControllerService { get; set; }
 
-        [Inject] WeatherForecastControllerService ControllerService { get; set; }
+        [Inject] private WeatherForecastControllerService ControllerService { get; set; }
 
-        private bool _isLoaded => this.ControllerService.?.HasRecords ?? false;
+        private bool _isLoaded => this.ControllerService?.HasRecords ?? false;
 
         private BaseModalDialog Modal { get; set; }
 
