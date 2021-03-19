@@ -1,0 +1,103 @@
+﻿@page "/EditorControls"
+
+<EditForm Model="this.model" OnValidSubmit="this.ValidSubmit">
+    <div class="container m-5 p-4 border border-secondary">
+        <div class="row">
+            <div class="col-12">
+                <h2>Test Editor</h2>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4 form-label" for="txtcountry">
+                Country
+            </div>
+            <div class="col-4">
+                <InputSearchControl @bind-Value="model.Value" DataList="Countries.CountryArray" class="form-control" placeholder="Select a country"></InputSearchControl>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4 form-label" for="txtcountry">
+                Country Index
+            </div>
+            <div class="col-4">
+                <InputSearchSelectControl @bind-Value="model.Index" DataList="Countries.CountryDictionary" class="form-control" placeholder="Select a country"></InputSearchSelectControl>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4 form-label" for="txtcountry">
+                Opinion
+            </div>
+            <div class="col-4">
+                <ButtonSelectControl @bind-Value="model.Opinion" DataList="this.opinion" ButtonColour="info" ButtonGroupSize="@ButtonSelectControl.ButtonSize.Small"></ButtonSelectControl>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-6">
+            </div>
+            <div class="col-6 text-right">
+                <button class="btn btn-secondary" @onclick="(e) => this.CheckButton()">Check</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+<div class="container">
+    <div class="row mb-2">
+        <div class="col-4 form-label">
+            Country Value
+        </div>
+        <div class="col-4 form-control">
+            @this.model.Value
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-4 form-label">
+            Country Index
+        </div>
+        <div class="col-4 form-control">
+            @this.model.Index
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-4 form-label">
+            Opinion Index
+        </div>
+        <div class="col-4 form-control">
+            @this.model.Opinion
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    Model model = new Model();
+
+    private void CheckButton()
+    {
+        var x = true;
+    }
+
+    private void ValidSubmit()
+    {
+        var x = true;
+    }
+
+    private SortedDictionary<int, string> opinion => new SortedDictionary<int, string>()
+    {
+        {1, "Agree"},
+        {2, "Ambivalent"},
+        {3, "Disagree"},
+    };
+
+    class Model
+    {
+        public string Value { get; set; } = string.Empty;
+        public int Index { get; set; } = 0;
+        public int Opinion { get; set; } = 0;
+    }
+
+}
+

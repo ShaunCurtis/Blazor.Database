@@ -1,0 +1,12 @@
+﻿@namespace Blazor.Database.Components
+@inherits BaseInputControl<string>
+
+<input class="@CssClass" type="text" @bind-value="this.CurrentValue" @attributes="this.AdditionalAttributes" list="@dataListId" @oninput="UpdateEnteredText" @onkeydown="OnKeyDown" />
+
+<datalist id="@dataListId">
+    @foreach (var value in this.DataList)
+    {
+        <option value="@value" />
+    }
+</datalist>
+
