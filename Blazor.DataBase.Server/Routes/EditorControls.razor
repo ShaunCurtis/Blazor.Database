@@ -20,26 +20,7 @@
                 Country (Strict)
             </div>
             <div class="col-4">
-                <InputDataList @bind-Value="model.Value" DataList="Countries.CountryArray" RestrictToList="true" class="form-control" placeholder="Select a country"></InputDataList>
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-4 form-label" for="txtcountry">
-                Country
-            </div>
-            <div class="col-4">
-                <InputSearchControl @bind-Value="model.Value" DataList="Countries.CountryArray" class="form-control" placeholder="Select a country"></InputSearchControl>
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-4 form-label" for="txtcountry">
-                Country Index
-            </div>
-            <div class="col-4">
-                <InputDataListSelect @bind-Value="model.Index" DataList="Countries.CountryDictionary" class="form-control" placeholder="Select a country"></InputDataListSelect>
-            </div>
-            <div class="col-4">
-                <ValidationMessage For="(() => model.Index)"></ValidationMessage>
+                <InputDataList @bind-Value="model.StrictValue" DataList="Countries.CountryArray" RestrictToList="true" class="form-control" placeholder="Select a country"></InputDataList>
             </div>
         </div>
         <div class="row mb-2">
@@ -47,10 +28,10 @@
                 Country T Index
             </div>
             <div class="col-4">
-                <InputDataListSelectT TValue="int" @bind-Value="model.Index" DataList="Countries.CountryDictionary" class="form-control" placeholder="Select a country"></InputDataListSelectT>
+                <InputDataListSelectT TValue="int" @bind-Value="model.TIndex" DataList="Countries.CountryDictionary" class="form-control" placeholder="Select a country"></InputDataListSelectT>
             </div>
             <div class="col-4">
-                <ValidationMessage For="(() => model.Index)"></ValidationMessage>
+                <ValidationMessage For="(() => model.TIndex)"></ValidationMessage>
             </div>
         </div>
         <div class="row mb-2">
@@ -85,10 +66,26 @@
     </div>
     <div class="row mb-2">
         <div class="col-4 form-label">
+            Country Strict Value
+        </div>
+        <div class="col-4 form-control">
+            @this.model.StrictValue
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-4 form-label">
             Country Index
         </div>
         <div class="col-4 form-control">
             @this.model.Index
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-4 form-label">
+            Country T Index
+        </div>
+        <div class="col-4 form-control">
+            @this.model.TIndex
         </div>
     </div>
     <div class="row mb-2">
@@ -125,7 +122,9 @@
     class Model
     {
         public string Value { get; set; } = string.Empty;
+        public string StrictValue { get; set; } = string.Empty;
         public int Index { get; set; } = 0;
+        public int TIndex { get; set; } = 0;
         public int Opinion { get; set; } = 0;
     }
 
