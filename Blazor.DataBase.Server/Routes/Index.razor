@@ -1,3 +1,51 @@
-﻿@page "/"
+﻿@*@page "/"*@
 @page "/Server"
+
+@using System.Diagnostics
+
 <IndexComponent></IndexComponent>
+
+
+<button class="btn @buttoncolour" @onmousedown="(e) => OnButton(e)">Test Click</button>
+
+
+@code {
+
+    [Inject] private IJSRuntime _js { get; set; }
+
+    [JSInvokable]
+    public static Task ButtonMouseUpOut()
+    {
+        mouseUpAction?.Invoke();
+        return Task.CompletedTask;
+    }
+
+    private static Action mouseUpAction;
+    private string buttoncolour = "btn-success";
+
+    protected override Task OnInitializedAsync()
+    {
+        mouseUpAction = JsMouseUp;
+        return base.OnInitializedAsync();
+    }
+
+    private void OnButton(MouseEventArgs e)
+    {
+        SetMouseUp(true);
+        Debug.WriteLine("Down");
+        buttoncolour = "btn-danger";
+    }
+
+    private void JsMouseUp()
+    {
+        Debug.WriteLine("Up");
+        buttoncolour = "btn-success";
+        _ = InvokeAsync(StateHasChanged);
+        SetMouseUp(false);
+    }
+
+    private void SetMouseUp(bool action)
+    => _js.InvokeAsync<bool>("blazor_setMouseUpEvent", action);
+
+}
+

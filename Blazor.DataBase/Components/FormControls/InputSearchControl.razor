@@ -1,4 +1,11 @@
-﻿@namespace Blazor.Database.Components
+﻿@*
+/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
+*@
+
+@namespace Blazor.Database.Components
 @inherits BaseInputControl<string>
 
 <input class="@CssClass" type="text" @bind-value="this.CurrentValue" @attributes="this.AdditionalAttributes" list="@dataListId" @oninput="UpdateEnteredText" @onkeydown="OnKeyDown" />

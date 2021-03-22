@@ -6,7 +6,10 @@
 *@
 
 @namespace Blazor.Database.Components
-@inherits BaseInputControl<int>
+
+
+@inherits InputBase<TValue>
+@typeparam TValue
 
 <input class="@CssClass" type="text" @bind-value="this.CurrentStringValue" @attributes="this.AdditionalAttributes" list="@dataListId" @oninput="UpdateEnteredText" @onkeydown="OnKeyDown" />
 
@@ -16,4 +19,3 @@
         <option value="@kv.Value" />
     }
 </datalist>
-

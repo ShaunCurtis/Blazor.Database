@@ -6,7 +6,9 @@
 *@
 
 @namespace Blazor.Database.Components
-@inherits BaseInputControl<int>
+
+
+@inherits InputBase<int>
 
 <div class="btn-group @this.btnSize" role="group" aria-label="select buttons">
     @foreach (var option in DataList)

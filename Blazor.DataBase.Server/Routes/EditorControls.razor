@@ -9,6 +9,22 @@
         </div>
         <div class="row mb-2">
             <div class="col-4 form-label" for="txtcountry">
+                Country (Any Value)
+            </div>
+            <div class="col-4">
+                <InputDataList @bind-Value="model.Value" DataList="Countries.CountryArray" class="form-control" placeholder="Select a country"></InputDataList>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4 form-label" for="txtcountry">
+                Country (Strict)
+            </div>
+            <div class="col-4">
+                <InputDataList @bind-Value="model.Value" DataList="Countries.CountryArray" RestrictToList="true" class="form-control" placeholder="Select a country"></InputDataList>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4 form-label" for="txtcountry">
                 Country
             </div>
             <div class="col-4">
@@ -20,7 +36,21 @@
                 Country Index
             </div>
             <div class="col-4">
-                <InputSearchSelectControl @bind-Value="model.Index" DataList="Countries.CountryDictionary" class="form-control" placeholder="Select a country"></InputSearchSelectControl>
+                <InputDataListSelect @bind-Value="model.Index" DataList="Countries.CountryDictionary" class="form-control" placeholder="Select a country"></InputDataListSelect>
+            </div>
+            <div class="col-4">
+                <ValidationMessage For="(() => model.Index)"></ValidationMessage>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4 form-label" for="txtcountry">
+                Country T Index
+            </div>
+            <div class="col-4">
+                <InputDataListSelectT TValue="int" @bind-Value="model.Index" DataList="Countries.CountryDictionary" class="form-control" placeholder="Select a country"></InputDataListSelectT>
+            </div>
+            <div class="col-4">
+                <ValidationMessage For="(() => model.Index)"></ValidationMessage>
             </div>
         </div>
         <div class="row mb-2">
@@ -33,6 +63,7 @@
         </div>
         <div class="row mb-2">
             <div class="col-6">
+                <ValidationSummary></ValidationSummary>
             </div>
             <div class="col-6 text-right">
                 <button class="btn btn-secondary" @onclick="(e) => this.CheckButton()">Check</button>
@@ -69,7 +100,6 @@
         </div>
     </div>
 </div>
-
 
 @code {
 
