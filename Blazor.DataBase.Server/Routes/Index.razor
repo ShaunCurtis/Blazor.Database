@@ -1,12 +1,13 @@
-﻿@*@page "/"*@
-@page "/Server"
+﻿@page "/"
 
 @using System.Diagnostics
 
 <IndexComponent></IndexComponent>
 
-
-<button class="btn @buttoncolour" @onmousedown="(e) => OnButton(e)">Test Click</button>
+<div>
+    <p>This button works on driving events from button down and button up events - even when the button up event is outside the browser.</p>
+    <button class="btn @buttoncolour" @onmousedown="(e) => OnButton(e)">Test Button Down and Up Events</button>
+</div>
 
 
 @code {

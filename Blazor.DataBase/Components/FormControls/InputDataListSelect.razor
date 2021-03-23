@@ -8,9 +8,10 @@
 @namespace Blazor.Database.Components
 
 
-@inherits InputBase<int>
+@inherits InputBase<TValue>
+@typeparam TValue
 
-<input class="@CssClass" type="text" @bind-value="this.CurrentStringValue" @attributes="this.AdditionalAttributes" list="@dataListId" @oninput="UpdateEnteredText" @onkeydown="OnKeyDown" />
+<input class="@CssClass" type="text" @bind-value="this.CurrentStringValue" @attributes="this.AdditionalAttributes" list="@dataListId" @oninput="UpdateEnteredText" @onkeydown="OnKeyDown"/>
 
 <datalist id="@dataListId">
     @foreach (var kv in this.DataList)

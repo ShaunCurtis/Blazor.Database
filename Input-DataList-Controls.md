@@ -82,7 +82,7 @@ Add a Text `input` html control to the razor file.
 
 #### Test Page
 
-Add a Test page to *Pages* - or overwrite index if you're using a test site.
+Add a Test page to *Pages* - or overwrite index if you're using a test site.  We'll use this for testing all the controls.
 
 This doesn't need much explanation.  Bootstrap for formatting, classic `EditForm`.  `CheckButton` gives us a easy breakpoint we can hit to check values and objects.
 
@@ -161,7 +161,7 @@ You can see our `MyInput` in the form.
 }
 ```
 
-This should work and update the model values as you change the text in `MyInput`.
+Note the value display update as you change the text in `MyInput`.
 
 Under the hood the Razor compiler builds the section containing `MyInput` into component code like this:
 
@@ -174,6 +174,7 @@ __builder2.AddAttribute(16, "ValueChanged", Microsoft.AspNetCore.Components.Comp
 __builder2.AddAttribute(17, "ValueExpression", Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck<System.Linq.Expressions.Expression<System.Func<System.String>>>(() => model.Value));
 __builder2.CloseComponent();
 ```
+You can see the compiled c# file in the *obj* folder.  On my project this is *\obj\Debug\net5.0\RazorDeclaration\Components\FormControls*.
 
 `@bind-value` has translated into a full mapping to the `Value`, `ValueChanged` and `ValueExpression` triumvirate. The setting of `Value` and `ValueExpression` are easy to understand.  `ValueChanged` uses a code factory to effectively build a runtime method that is mapped to `ValueChanged` and sets model.Value to the value returned by `ValueChanged`.
 
@@ -185,13 +186,14 @@ This explains a common issue raised by many - why can't attach an event handler 
 
 There's no `@onchange` event on the control, and the one on the inner control is already bound so can't be bound a second time.  You get no error message, just no triggering of the event.
 
-## Inheriting from InputBase
+## InputBase
 
-So far we've build the base control, but there's no interaction with the `EditContext` or validation.  We'll get all that with `InputBase`.
+Let's move on to `InputBase`.
 
-The best way to understand what we're doing is to look at an example.  The implementation of `InputText` is shown below.
+First we'll look at `InputText` to see an implementation.
 
-The Html *input* `value` is bound to `CurrentValue` and `onchange` event to `CurrentValueAsString`.  Any change in the value calls the setter for `CurrentValueASsString`.  This calls `TryParseValueFromString` and either sets `CurrentValue` to the returned `result`, or logs any parsing errors to the message store.  In `InputText` it's pretty simple, set the value and return true - we're only dealing with a string.
+1. The Html *input* `value` is bound to `CurrentValue` and `onchange` event to `CurrentValueAsString`.  Any change in the value calls the setter for `CurrentValueASsString`.
+2. `TryParseValueFromString` just passes on `value` (the entered value) as `result`.  There's no string to other type conversion to do.
 
 ```csharp
 public class InputText : InputBase<string?>
@@ -218,6 +220,9 @@ public class InputText : InputBase<string?>
 }
 ``` 
 
+Let's delve into `InputBase`
+
+  This calls `TryParseValueFromString` and either sets `CurrentValue` to the returned `result`, or logs any parsing errors to the message store.  In `InputText` it's pretty simple, set the value and return true - we're only dealing with a string.
 ## Building our DataList Control
 
 First we need a helper class to get a country list.  Get the full list from the Repo.
@@ -291,8 +296,10 @@ public partial class InputDataList : InputBase<string>
     {
         get
         {
-            if (DataList.Any(item => item == this.Value))
+            // check if we have a match to the datalist and get the value from the list
+            if (DataList != null && DataList.Any(item => item == this.Value))
                 return DataList.First(item => item == this.Value);
+            // if not return an empty string
             else if (RestrictToList)
                 return string.Empty;
             else
@@ -300,15 +307,76 @@ public partial class InputDataList : InputBase<string>
         }
         set
         {
-            if (!_valueSetByTab)
+            // Check if we have a ValidationMessageStore
+            // Either get one or clear the existing one
+            if (_parsingValidationMessages == null)
+                _parsingValidationMessages = new ValidationMessageStore(EditContext);
+            else
+                _parsingValidationMessages?.Clear(FieldIdentifier);
+
+            // Set defaults
+            string val = string.Empty;
+            var _havevalue = false;
+            // check if we have a previous valid value - we'll stick with this is the current attempt to set the value is invalid
+            var _havepreviousvalue = DataList != null && DataList.Contains(value);
+
+            // Set the value by tabbing in Strict mode.  We need to select the first entry in the DataList
+            if (_setValueByTab)
             {
-                var val = string.Empty;
-                if (DataList.Contains(value))
-                    val = DataList.First(item => item == value);
-                this.CurrentValue = val;
-                var hasChanged = val != Value;
+                if (!string.IsNullOrWhiteSpace(this._typedText))
+                {
+                    // Check if we have at least one match in the filtered list
+                    _havevalue = DataList != null && DataList.Any(item => item.Contains(_typedText, StringComparison.CurrentCultureIgnoreCase));
+                    if (_havevalue)
+                    {
+                        // the the first value
+                        var filteredList = DataList.Where(item => item.Contains(_typedText, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        val = filteredList[0];
+                    }
+                }
             }
-            _valueSetByTab = false;
+            // Normal set
+            else if (this.RestrictToList)
+            {
+                // Check if we have a match and set it if we do
+                _havevalue = DataList != null && DataList.Contains(value);
+                if (_havevalue)
+                    val = DataList.First(item => item.Equals(value));
+            }
+            else
+            {
+                _havevalue = true;
+                val = value;
+            }
+
+            // check if we have a valid value
+            if (_havevalue)
+            {
+                // assign it to current value - this will kick off a ValueChanged notification on the EditContext
+                this.CurrentValue = val;
+                // Check if the last entry failed validation.  If so notify the EditContext that validation has changed i.e. it's now clear
+                if (_previousParsingAttemptFailed)
+                {
+                    EditContext.NotifyValidationStateChanged();
+                    _previousParsingAttemptFailed = false;
+                }
+            }
+            // We don't have a valid value
+            else
+            {
+                // check if we're reverting to the last entry.  If we don't have one the generate error message
+                if (!_havepreviousvalue)
+                {
+                    // No match so add a message to the message store
+                    _parsingValidationMessages?.Add(FieldIdentifier, "You must choose a valid selection");
+                    // keep track of validation state for the next iteration
+                    _previousParsingAttemptFailed = true;
+                    // notify the EditContext whick will precipitate a Validation Message general update
+                    EditContext.NotifyValidationStateChanged();
+                }
+            }
+            // Clear the Tab notification flag
+            _setValueByTab = false;
         }
     }
 

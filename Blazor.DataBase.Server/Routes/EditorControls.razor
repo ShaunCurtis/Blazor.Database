@@ -22,13 +22,16 @@
             <div class="col-4">
                 <InputDataList @bind-Value="model.StrictValue" DataList="Countries.CountryArray" RestrictToList="true" class="form-control" placeholder="Select a country"></InputDataList>
             </div>
+            <div class="col-4">
+                <ValidationMessage For="(() => model.StrictValue)"></ValidationMessage>
+            </div>
         </div>
         <div class="row mb-2">
             <div class="col-4 form-label" for="txtcountry">
                 Country T Index
             </div>
             <div class="col-4">
-                <InputDataListSelectT TValue="int" @bind-Value="model.TIndex" DataList="Countries.CountryDictionary" class="form-control" placeholder="Select a country"></InputDataListSelectT>
+                <InputDataListSelect TValue="int" @bind-Value="model.TIndex" DataList="Countries.CountryDictionary" class="form-control" placeholder="Select a country"></InputDataListSelect>
             </div>
             <div class="col-4">
                 <ValidationMessage For="(() => model.TIndex)"></ValidationMessage>
@@ -70,14 +73,6 @@
         </div>
         <div class="col-4 form-control">
             @this.model.StrictValue
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-4 form-label">
-            Country Index
-        </div>
-        <div class="col-4 form-control">
-            @this.model.Index
         </div>
     </div>
     <div class="row mb-2">
