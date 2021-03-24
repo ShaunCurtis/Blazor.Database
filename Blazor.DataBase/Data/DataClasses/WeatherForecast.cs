@@ -22,6 +22,9 @@ namespace Blazor.Database.Data
 
         [NotMapped] public string DisplayName => $"Weather Forecast for {this.Date.ToShortDateString()} ";
 
+        // A long string field to demo using a max row in a data table
+        [NotMapped] public string Description => $"The Weather Forecast for this {this.Date.DayOfWeek}, the {this.Date.Day} of the month {this.Date.Month} in the year of {this.Date.Year} is {this.Summary}.  From the font of all knowledge!";
+
         public bool Validate(ValidationMessageStore validationMessageStore, string fieldname, object model = null)
         {
             model = model ?? this;

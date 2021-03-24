@@ -75,11 +75,11 @@
 
                 <UIFormRow>
                     <UIButtonColumn>
-                        <UIButton Show="true" Disabled="this._deleteDisabled" CssColor="btn-outline-danger" ClickEvent="() => Delete()">Delete</UIButton>
-                        <UIButton Show="this._confirmDelete" CssColor="btn-danger" ClickEvent="() => this.ConfirmDelete()">Confirm Delete</UIButton>
-                        <UIButton Show="true" Disabled="this._saveDisabled" Type="submit" CssColor="btn-success">@this._saveButtonText</UIButton>
-                        <UIButton Show="this._dirtyExit" CssColor="btn-danger" ClickEvent="() => this.ConfirmExit()">Exit Without Saving</UIButton>
-                        <UIButton Show="true" Disabled="this._dirtyExit" CssColor="btn-dark" ClickEvent="() => this.Exit()">Exit</UIButton>
+                        <UIButton Show="true" Disabled="this._deleteDisabled" AdditionalClasses="btn-outline-danger" ClickEvent="() => Delete()">Delete</UIButton>
+                        <UIButton Show="this._confirmDelete" AdditionalClasses="btn-danger" ClickEvent="() => this.ConfirmDelete()">Confirm Delete</UIButton>
+                        <UIButton Show="true" Disabled="this._saveDisabled" Type="submit" AdditionalClasses="btn-success">@this._saveButtonText</UIButton>
+                        <UIButton Show="this._dirtyExit" AdditionalClasses="btn-danger" ClickEvent="() => this.ConfirmExit()">Exit Without Saving</UIButton>
+                        <UIButton Show="true" Disabled="this._dirtyExit" AdditionalClasses="btn-dark" ClickEvent="() => this.Exit()">Exit</UIButton>
                     </UIButtonColumn>
                 </UIFormRow>
 

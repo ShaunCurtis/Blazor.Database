@@ -1,0 +1,24 @@
+﻿
+@namespace Blazor.Database.Components
+@inherits UIBase
+
+@if (this.Show)
+{
+    <button class="@this.CssClass" @onclick="ButtonClick" type="@Type" disabled ="@this.Disabled">
+        @this.ChildContent
+    </button>
+}
+
+@code {
+
+    [Parameter] public override string AdditionalClasses { get; set; } = "btn-primary";
+
+    [Parameter] public string Type { get; set; } = "button";
+
+    [Parameter] public EventCallback<MouseEventArgs> ClickEvent { get; set; }
+
+    protected override string PrimaryClass => "btn mr-1";
+
+    protected void ButtonClick(MouseEventArgs e) => this.ClickEvent.InvokeAsync(e);
+
+}

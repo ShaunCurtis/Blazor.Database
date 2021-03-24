@@ -1,4 +1,5 @@
 ﻿@namespace Blazor.Database.Components
+@inherits UIBase
 
 @if (this.Loaded)
 {
@@ -12,7 +13,5 @@ else
 @code {
 
     [Parameter] public bool Loaded { get; set; }
-
-    [Parameter] public RenderFragment ChildContent { get; set; }
 
 }

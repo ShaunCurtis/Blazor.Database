@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Blazor.Database.Services
 {
     public class TestDatabaseDataService :
-        FactoryServerDataService<InMemoryWeatherDbContext>
+        FactoryServerInMemoryDataService<InMemoryWeatherDbContext>
     {
 
         public TestDatabaseDataService(IConfiguration configuration, IDbContextFactory<InMemoryWeatherDbContext> dbContext) : base(configuration, dbContext)

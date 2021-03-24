@@ -9,8 +9,21 @@
     <button class="btn @buttoncolour" @onmousedown="(e) => OnButton(e)">Test Button Down and Up Events</button>
 </div>
 
+<EditForm Model="model">
+    <InputNumber TValue="int" @bind-Value="model.Value"></InputNumber>
 
+</EditForm>
+
+<div>@model.Value</div>
 @code {
+
+    Model model = new Model() { Value = 4 };
+
+    class Model
+    {
+        public int Value { get; set; } = 0;
+    }
+
 
     [Inject] private IJSRuntime _js { get; set; }
 

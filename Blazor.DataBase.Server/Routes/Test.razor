@@ -1,0 +1,49 @@
+﻿@page "/Test"
+
+@implements IDisposable
+
+<EditForm EditContext="this.editContext" class="m-3">
+    Animal: <InputText @bind-Value="this.model.name"></InputText><br />
+    Origin: <InputText @bind-Value="this.model.origin"></InputText><br />
+</EditForm>
+
+<div class="m-3">FieldChanged:<i>@this.FieldChanged</i> </div>
+
+
+@code {
+
+    public class Animal
+    {
+        public int height { get; set; }
+        public string name { get; set; }
+        public string origin { get; set; }
+    }
+
+    private Animal model = new Animal() { height = 2, name = "giraffe", origin = "Africa" };
+
+    private EditContext editContext;
+
+    private string FieldChanged = "none";
+
+    protected override Task OnInitializedAsync()
+    {
+        this.editContext = new EditContext(model);
+        this.editContext.OnFieldChanged += this.OnFieldChanged;
+        return base.OnInitializedAsync();
+    }
+
+    private void OnFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        var x = e.FieldIdentifier;
+        this.FieldChanged = e.FieldIdentifier.FieldName;
+
+    }
+
+    // Need to  Implement IDisosable to unhook event handler
+    public void Dispose ()
+    {
+        this.editContext.OnFieldChanged -= OnFieldChanged;
+    }
+
+}
+

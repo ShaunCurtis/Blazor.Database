@@ -12,9 +12,17 @@ namespace Blazor.Database.Web.Extensions
         {
 
             // Local DB Setup
-            //var dbContext = configuration.GetValue<string>("Configuration:DBContext");
-            //services.AddDbContextFactory<LocalWeatherDbContext>(options => options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
-            //services.AddSingleton<IFactoryDataService, LocalDatabaseDataService>();
+            var dbContext = configuration.GetValue<string>("Configuration:DBContext");
+            services.AddDbContextFactory<LocalWeatherDbContext>(options => options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
+            services.AddSingleton<IFactoryDataService, LocalDatabaseDataService>();
+
+            services.AddScoped<WeatherForecastControllerService>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddInMemoryApplicationServices(this IServiceCollection services, IConfiguration configuration)
+        {
 
             // In Memory DB Setup
             var memdbContext = "Data Source=:memory:";

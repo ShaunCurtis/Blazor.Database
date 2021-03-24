@@ -1,6 +1,6 @@
 ﻿@namespace Blazor.Database.Components
 
-<h1>Weather forecast</h1>
+<h1>Weather Forecast</h1>
 
 @if (!this._isLoaded)
 {
@@ -8,45 +8,41 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-                <th>Modal Actions</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in this.ControllerService.Records)
-            {
-            <tr>
-                <td>@forecast.Date.ToShortDateString()</td>
-                <td>@forecast.TemperatureC</td>
-                <td>@forecast.TemperatureF</td>
-                <td>@forecast.Summary</td>
-                <td class="text-right">
-                    <button class="btn btn-secondary" @onclick="() => this.ViewInModal(forecast.ID)">View in Modal</button>
-                    <button class="btn btn-primary" @onclick="() => this.EditInModal(forecast.ID)">Edit in Modal</button>
-                </td>
-                <td class="text-right">
-                    <button class="btn btn-secondary" @onclick="() => this.View(forecast.ID)">View</button>
-                    <button class="btn btn-primary" @onclick="() => this.Edit(forecast.ID)">Edit</button>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
+    <UIDataTable TRecord="WeatherForecast" Records="this.ControllerService.Records" class="table">
+        <Head>
+            <UIDataTableHeaderColumn>Date</UIDataTableHeaderColumn>
+            <UIDataTableHeaderColumn>Temp. (C)</UIDataTableHeaderColumn>
+            <UIDataTableHeaderColumn>Temp. (F)</UIDataTableHeaderColumn>
+            <UIDataTableHeaderColumn>Summary</UIDataTableHeaderColumn>
+            <UIDataTableHeaderColumn class="max-column">Description</UIDataTableHeaderColumn>
+            <UIDataTableHeaderColumn class="text-right">Modal Actions</UIDataTableHeaderColumn>
+            <UIDataTableHeaderColumn class="text-right">Actions</UIDataTableHeaderColumn>
+        </Head>
+        <RowTemplate>
+            <UIDataTableRow>
+                <UIDataTableColumn> @context.Date.ToShortDateString()</UIDataTableColumn>
+                <UIDataTableColumn>@context.TemperatureC</UIDataTableColumn>
+                <UIDataTableColumn>@context.TemperatureF</UIDataTableColumn>
+                <UIDataTableColumn>@context.Summary</UIDataTableColumn>
+                <UIDataTableMaxColumn>@context.Description</UIDataTableMaxColumn>
+                <UIDataTableColumn class="text-right text-nowrap">
+                    <UIButton AdditionalClasses="btn-sm btn-secondary" ClickEvent="() => this.ViewInModal(context.ID)">View</UIButton>
+                    <UIButton AdditionalClasses="btn-sm btn-primary" ClickEvent="() => this.EditInModal(context.ID)">Edit</UIButton>
+                </UIDataTableColumn>
+                <UIDataTableColumn class="text-right text-nowrap">
+                    <UIButton AdditionalClasses="btn-sm btn-secondary" ClickEvent="() => this.View(context.ID)">View</UIButton>
+                    <UIButton AdditionalClasses="btn-sm btn-primary" ClickEvent="() => this.Edit(context.ID)">Edit</UIButton>
+                </UIDataTableColumn>
+            </UIDataTableRow>
+        </RowTemplate>
+    </UIDataTable>
+    <UIContainer>
+        <UIFormRow>
+            <UIButtonColumn>
+                <UIButton Show="true" AdditionalClasses="btn-success" ClickEvent="() => this.EditInModal(-1)">Add New Record</UIButton>
+                <UIButton Show="true" AdditionalClasses="btn-success" ClickEvent="() => this.New()">Add New Record</UIButton>
+            </UIButtonColumn>
+        </UIFormRow>
+    </UIContainer>
+    <BaseModalDialog @ref="this.Modal"></BaseModalDialog>
 }
-<UIContainer>
-
-    <UIFormRow>
-        <UIButtonColumn>
-            <UIButton Show="true" CssColor="btn-success" ClickEvent="() => this.New()">Add New Record</UIButton>
-        </UIButtonColumn>
-    </UIFormRow>
-
-</UIContainer>
-<BaseModalDialog @ref="this.Modal" ></BaseModalDialog>
