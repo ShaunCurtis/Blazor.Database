@@ -75,6 +75,11 @@ namespace Blazor.Database.Services
         public DbTaskResult DbResult { get; set; } = new DbTaskResult();
 
         /// <summary>
+        /// Property for the Paging object that controls paging and interfaces with the UI Paging Control 
+        /// </summary>
+        public Paginator Paginator { get; private set; }
+
+        /// <summary>
         /// Boolean Property to check if a record exists
         /// </summary>
         public bool IsRecord => this.Record != null && this.RecordId > -1;
@@ -98,6 +103,7 @@ namespace Blazor.Database.Services
         /// Event triggered when the Record has changed
         /// </summary>
         public event EventHandler RecordHasChanged;
+
         /// <summary>
         /// Event triggered when the RecordList has Changed
         /// </summary>
@@ -106,8 +112,9 @@ namespace Blazor.Database.Services
         public FactoryControllerService(IFactoryDataService factoryDataService)
         {
             this.DataService = factoryDataService;
+            this.Paginator = new Paginator(10, 5);
+            this.Paginator.PageChanged += this.OnPageChanged;
         }
-
 
         /// <summary>
         /// Method to reset the service
@@ -146,7 +153,8 @@ namespace Blazor.Database.Services
         /// <returns></returns>
         public async Task GetRecordsAsync()
         {
-            this.Records = await DataService.GetRecordListAsync<TRecord>();
+            this.Records = await DataService.GetRecordListAsync<TRecord>(this.Paginator.Page, this.Paginator.PageSize);
+            this.Paginator.RecordCount = await GetRecordListCountAsync();
             this.ListHasChanged?.Invoke(null, EventArgs.Empty);
         }
 
@@ -195,6 +203,14 @@ namespace Blazor.Database.Services
             this.DbResult = await DataService.DeleteRecordAsync<TRecord>(this.Record);
             return this.DbResult.IsOK;
         }
+
+        /// <summary>
+        /// Event Handler for dealing with Page Change Event from Paginator
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected async void OnPageChanged(object sender, EventArgs e)
+            => await this.GetRecordsAsync();
 
         /// <summary>
         /// Method for inherited class to trigger a RecordHasChanged Event

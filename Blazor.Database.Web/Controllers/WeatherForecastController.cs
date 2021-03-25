@@ -27,7 +27,7 @@ namespace Blazor.Database.Controllers
 
         [MVC.Route("weatherforecast/listpaged")]
         [HttpGet]
-        public async Task<List<WeatherForecast>> Read([FromBody] PagingData data) => await DataService.GetRecordListAsync<WeatherForecast>(page: data.Page, pagesize: data.PageSize);
+        public async Task<List<WeatherForecast>> Read([FromBody] Paginator data) => await DataService.GetRecordListAsync<WeatherForecast>(page: data.Page, pagesize: data.PageSize);
 
         [MVC.Route("weatherforecast/count")]
         [HttpGet]

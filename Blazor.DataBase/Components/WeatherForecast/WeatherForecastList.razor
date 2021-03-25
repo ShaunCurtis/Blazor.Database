@@ -10,6 +10,7 @@ else
 {
     <UIDataTable TRecord="WeatherForecast" Records="this.ControllerService.Records" class="table">
         <Head>
+            <UIDataTableHeaderColumn>ID</UIDataTableHeaderColumn>
             <UIDataTableHeaderColumn>Date</UIDataTableHeaderColumn>
             <UIDataTableHeaderColumn>Temp. (C)</UIDataTableHeaderColumn>
             <UIDataTableHeaderColumn>Temp. (F)</UIDataTableHeaderColumn>
@@ -20,6 +21,7 @@ else
         </Head>
         <RowTemplate>
             <UIDataTableRow>
+                <UIDataTableColumn>@context.ID</UIDataTableColumn>
                 <UIDataTableColumn> @context.Date.ToShortDateString()</UIDataTableColumn>
                 <UIDataTableColumn>@context.TemperatureC</UIDataTableColumn>
                 <UIDataTableColumn>@context.TemperatureF</UIDataTableColumn>
@@ -38,9 +40,12 @@ else
     </UIDataTable>
     <UIContainer>
         <UIFormRow>
-            <UIButtonColumn>
-                <UIButton Show="true" AdditionalClasses="btn-success" ClickEvent="() => this.EditInModal(-1)">Add New Record</UIButton>
-                <UIButton Show="true" AdditionalClasses="btn-success" ClickEvent="() => this.New()">Add New Record</UIButton>
+            <UIColumn Cols="8">
+                <PaginatorControl Paginator="this.ControllerService.Paginator"></PaginatorControl>
+            </UIColumn>
+            <UIButtonColumn Cols="4">
+                <UIButton Show="true" AdditionalClasses="btn-success" ClickEvent="() => this.EditInModal(-1)">Modal New Record</UIButton>
+                <UIButton Show="true" AdditionalClasses="btn-success" ClickEvent="() => this.New()">New Record</UIButton>
             </UIButtonColumn>
         </UIFormRow>
     </UIContainer>

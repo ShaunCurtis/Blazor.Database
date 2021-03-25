@@ -15,7 +15,7 @@ namespace Blazor.Database.Components
     /// </summary>
     public partial class InputDataList : InputBase<string>
     {
-        [Parameter] public IEnumerable<string>? DataList { get; set; }
+        [Parameter] public IEnumerable<string> DataList { get; set; }
 
         [Parameter] public bool RestrictToList { get; set; }
 
@@ -133,7 +133,7 @@ namespace Blazor.Database.Components
             _setValueByTab = RestrictToList && (!string.IsNullOrWhiteSpace(e.Key)) && e.Key.Equals("Tab") && !string.IsNullOrWhiteSpace(this._typedText);
         }
 
-        protected override bool TryParseValueFromString(string value, [MaybeNullWhen(false)] out string? result, [NotNullWhen(false)] out string validationErrorMessage)
+        protected override bool TryParseValueFromString(string value, [MaybeNullWhen(false)] out string result, [NotNullWhen(false)] out string validationErrorMessage)
             => throw new NotSupportedException($"This component does not parse string inputs. Bind to the '{nameof(CurrentValue)}' property, not '{nameof(CurrentValueAsString)}'.");
     }
 }

@@ -1,49 +1,38 @@
 ﻿@page "/Test"
 
-@implements IDisposable
-
-<EditForm EditContext="this.editContext" class="m-3">
-    Animal: <InputText @bind-Value="this.model.name"></InputText><br />
-    Origin: <InputText @bind-Value="this.model.origin"></InputText><br />
-</EditForm>
-
-<div class="m-3">FieldChanged:<i>@this.FieldChanged</i> </div>
-
+<div class="content px-sm-3 m-2">
+    <select @onchange="OnChange">
+        <option value="None">None</option>
+        @foreach (var genre in genres)
+        {
+            <option value="@genre">@genre</option>
+        }
+    </select>
+</div>
+<input @onselect="OnSelect" value="Select some part of me" />
+<div class="m-2">Selected: @SelectedGenre</div>
 
 @code {
 
-    public class Animal
+    private List<string> genres
+        => new List<string>() { "Rock", "Folk", "Blues", "Pop" };
+
+    private string SelectedGenre = string.Empty;
+
+    private async void OnChange(ChangeEventArgs e)
     {
-        public int height { get; set; }
-        public string name { get; set; }
-        public string origin { get; set; }
+        var selected = e.Value.ToString();
+        await Task.Delay(1000);
+        if (selected.Equals("None", StringComparison.CurrentCultureIgnoreCase))
+            this.SelectedGenre = "Give it another Go!";
+        else
+            this.SelectedGenre = selected;
     }
 
-    private Animal model = new Animal() { height = 2, name = "giraffe", origin = "Africa" };
-
-    private EditContext editContext;
-
-    private string FieldChanged = "none";
-
-    protected override Task OnInitializedAsync()
-    {
-        this.editContext = new EditContext(model);
-        this.editContext.OnFieldChanged += this.OnFieldChanged;
-        return base.OnInitializedAsync();
-    }
-
-    private void OnFieldChanged(object sender, FieldChangedEventArgs e)
-    {
-        var x = e.FieldIdentifier;
-        this.FieldChanged = e.FieldIdentifier.FieldName;
-
-    }
-
-    // Need to  Implement IDisosable to unhook event handler
-    public void Dispose ()
-    {
-        this.editContext.OnFieldChanged -= OnFieldChanged;
-    }
-
+    private void OnSelect(EventArgs e)
+        {
+        var y = e.ToString();
+        var x = true;
+        }
 }
 

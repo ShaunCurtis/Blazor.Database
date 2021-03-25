@@ -43,7 +43,7 @@ namespace Blazor.Database.Services
         /// <returns></returns>
         public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize)
         {
-            var paging = new PagingData(page, pagesize);
+            var paging = new Paginator(page, pagesize);
             var recname = new TRecord().GetType().Name;
             var response = await this.HttpClient.PostAsJsonAsync($"{recname}/listpaged", paging );
             var result = await response.Content.ReadFromJsonAsync<List<TRecord>>();
