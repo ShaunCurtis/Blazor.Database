@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Blazor.SPA\Blazor.SPA.csproj" />
     <ProjectReference Include="..\Blazor.DataBase.Server\Blazor.Database.Server.csproj" />
     <ProjectReference Include="..\Blazor.DataBase.WASM\Blazor.Database.WASM.csproj" />
     <ProjectReference Include="..\Blazor.DataBase\Blazor.Database.csproj" />

@@ -1,0 +1,23 @@
+﻿@namespace Blazor.Database.Components
+
+<WeatherForecastListForm EditRecord="this.GoToEditor" ViewRecord="this.GoToViewer" NewRecord="this.GoToNew"></WeatherForecastListForm>
+
+@code {
+
+    [Inject] NavigationManager NavManager { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+    public void GoToEditor(int id)
+    => this.NavManager.NavigateTo($"/weather/edit/{id}");
+
+    public void GoToNew()
+    => this.NavManager.NavigateTo($"/weather/edit/-1");
+
+    public void GoToViewer(int id)
+    => this.NavManager.NavigateTo($"/weather/view/{id}");
+
+}

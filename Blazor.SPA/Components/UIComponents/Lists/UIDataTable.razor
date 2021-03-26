@@ -1,0 +1,34 @@
+﻿@namespace Blazor.SPA.Components
+@typeparam TRecord
+
+<table @attributes="this.AdditionalAttributes">
+    <thead>
+        <tr>
+            @this.Head
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in this.Records)
+        {
+                @RowTemplate(item)
+        }
+
+    </tbody>
+    <tfoot>
+        @this.Foot
+    </tfoot>
+</table>
+
+@code {
+
+    [Parameter] public RenderFragment Head { get; set; }
+
+    [Parameter] public RenderFragment Foot { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)] public IDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, object>();
+
+    [Parameter] public RenderFragment<TRecord> RowTemplate { get; set; }
+
+    [Parameter] public IEnumerable<TRecord> Records { get; set; }
+
+}

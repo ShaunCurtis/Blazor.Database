@@ -1,0 +1,17 @@
+﻿@namespace Blazor.SPA.Components
+@inherits UIBase
+
+@if (this.Loaded)
+{
+    @this.ChildContent
+}
+else
+{
+    <div>Loading....</div>
+}
+
+@code {
+
+    [Parameter] public bool Loaded { get; set; }
+
+}

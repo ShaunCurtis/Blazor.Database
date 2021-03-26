@@ -4,6 +4,7 @@
 /// ==================================
 
 using Blazor.Database.Data;
+using Blazor.SPA.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

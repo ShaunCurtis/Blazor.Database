@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Blazor.SPA\Blazor.SPA.csproj" />
     <ProjectReference Include="..\Blazor.DataBase\Blazor.Database.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-using Blazor.Database.Data.Validators;
+using Blazor.SPA.Data;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.ComponentModel.DataAnnotations;

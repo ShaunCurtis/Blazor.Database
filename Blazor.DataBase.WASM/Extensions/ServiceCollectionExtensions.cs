@@ -1,7 +1,10 @@
-﻿using Blazor.Database.Data;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
+
 using Blazor.Database.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Blazor.SPA.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Blazor.Database.WASM.Extensions

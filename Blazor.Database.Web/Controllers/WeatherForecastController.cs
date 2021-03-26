@@ -1,10 +1,17 @@
-﻿using System.Collections.Generic;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MVC = Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Blazor.Database.Services;
 using Blazor.Database.Data;
+using Blazor.SPA.Services;
+using Blazor.SPA.Data;
 
 namespace Blazor.Database.Controllers
 {

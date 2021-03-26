@@ -1,5 +1,11 @@
-﻿using Blazor.Database.Data;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
+
+using Blazor.Database.Data;
 using Blazor.Database.Services;
+using Blazor.SPA.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

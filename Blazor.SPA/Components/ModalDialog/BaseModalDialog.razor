@@ -1,0 +1,20 @@
+﻿@*
+    /// =================================
+    /// Author: Shaun Curtis, Cold Elm
+    /// License: MIT
+    /// ==================================
+*@
+
+@namespace Blazor.SPA.Components
+@implements IModalDialog
+
+@if (this.Display)
+{
+    <CascadingValue Value="(IModalDialog)this">
+        <div class="base-modal-background">
+            <div class="base-modal-content" style="@this.Width">
+                @this._Content
+            </div>
+        </div>
+    </CascadingValue>
+}

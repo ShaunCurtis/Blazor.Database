@@ -1,0 +1,54 @@
+﻿@namespace Blazor.SPA.Components
+
+@if (this.hasPaginator)
+{
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" @onclick="() => this.Paginator.ToStart()">&vert;&lt;</a>
+            </li>
+            @if (this.Paginator.HasBlocks)
+            {
+                <li class="page-item">
+                    <a class="page-link" @onclick="() => this.Paginator.PreviousBlock()">&lt;&lt;</a>
+                </li>
+            }
+            @for (var i = this.Paginator.StartBlockPage; i < this.Paginator.EndBlockPage; i++)
+            {
+                var pageNo = i;
+                @if (pageNo > this.Paginator.LastPage) break;
+                @if (pageNo == this.Paginator.Page)
+                {
+                    <li class="page-item active">
+                        <span class="page-link">
+                            @pageNo
+                            <span class="sr-only">(current)</span>
+                        </span>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" @onclick="() => this.Paginator.ToPage(pageNo)">@pageNo</a>
+                    </li>
+                }
+
+            }
+            @if (this.Paginator.HasBlocks)
+            {
+                <li class="page-item">
+                    <a class="page-link" @onclick="() => this.Paginator.NextBlock()">&gt;&gt;</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link" @onclick="() => this.Paginator.ToEnd()">&gt;&vert;</a>
+            </li>
+        </ul>
+    </nav>
+}
+
+@code {
+    [Parameter] public Paginator Paginator { get; set; }
+
+    private bool hasPaginator => this.Paginator != null && this.Paginator.HasPagination;
+}
