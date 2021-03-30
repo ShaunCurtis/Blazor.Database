@@ -1,13 +1,9 @@
 ﻿@namespace Blazor.Database.Components
+@inherits ListFormBase<WeatherForecast>
 
-<h1>Weather Forecast</h1>
+<h1>Modal Weather Forecasts</h1>
 
-@if (!this._isLoaded)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
+<UILoader Loaded="this.IsLoaded">
     <UIDataTable TRecord="WeatherForecast" Records="this.ControllerService.Records" class="table">
         <Head>
             <UIDataTableHeaderColumn>ID</UIDataTableHeaderColumn>
@@ -27,8 +23,8 @@ else
                 <UIDataTableColumn>@context.Summary</UIDataTableColumn>
                 <UIDataTableMaxColumn>@context.Description</UIDataTableMaxColumn>
                 <UIDataTableColumn class="text-right text-nowrap">
-                    <UIButton AdditionalClasses="btn-sm btn-secondary" ClickEvent="() => this.ViewInModal(context.ID)">View</UIButton>
-                    <UIButton AdditionalClasses="btn-sm btn-primary" ClickEvent="() => this.EditInModal(context.ID)">Edit</UIButton>
+                    <UIButton AdditionalClasses="btn-sm btn-secondary" ClickEvent="() => this.View(context.ID)">View</UIButton>
+                    <UIButton AdditionalClasses="btn-sm btn-primary" ClickEvent="() => this.Edit(context.ID)">Edit</UIButton>
                 </UIDataTableColumn>
             </UIDataTableRow>
         </RowTemplate>
@@ -39,9 +35,9 @@ else
                 <PaginatorControl Paginator="this.ControllerService.Paginator"></PaginatorControl>
             </UIColumn>
             <UIButtonColumn Cols="4">
-                <UIButton Show="true" AdditionalClasses="btn-success" ClickEvent="() => this.EditInModal(-1)">Modal New Record</UIButton>
+                <UIButton Show="true" AdditionalClasses="btn-success" ClickEvent="() => this.Edit(-1)">Modal New Record</UIButton>
             </UIButtonColumn>
         </UIFormRow>
     </UIContainer>
     <BaseModalDialog @ref="this.Modal"></BaseModalDialog>
-}
+</UILoader>

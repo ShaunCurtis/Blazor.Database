@@ -4,7 +4,7 @@
     <WeatherForecastEditorForm ID="this.editorId" ExitAction="this.CloseDialog"></WeatherForecastEditorForm>
 </UIBase>
 <UIBase Show="this.ShowViewer">
-    <WeatherForecastViewerForm ID="this.editorId" ExitAction="this.CloseDialog"></WeatherForecastViewerForm>
+    <WeatherForecastViewerForm ID="this.viewerId" ExitAction="this.CloseDialog"></WeatherForecastViewerForm>
 </UIBase>
 
 <WeatherForecastListForm EditRecord="this.GoToEditor" ViewRecord="this.GoToViewer" NewRecord="this.GoToNew" ExitAction="Exit"></WeatherForecastListForm>
@@ -19,38 +19,24 @@
     private bool ShowViewer => this.viewerId != 0;
     private bool ShowEditor => this.editorId != 0;
 
-    protected override Task OnInitializedAsync()
-    {
-        return base.OnInitializedAsync();
-    }
-
     public void GoToEditor(int id)
-    {
-        this.editorId = id;
-        this.viewerId = 0;
-    }
+        => SetIds(id, 0);
 
     public void GoToNew()
-    {
-        this.editorId = -1;
-        this.viewerId = 0;
-    }
+        => SetIds(-1, 0);
 
     public void GoToViewer(int id)
-    {
-        this.editorId = 0;
-        this.viewerId = id;
-    }
+        => SetIds(0, id);
 
     public void CloseDialog()
-    {
-        this.editorId = 0;
-        this.viewerId = 0;
-    }
+        => SetIds(0, 0);
 
     public void Exit()
-    {
-        this.NavManager.NavigateTo("/");
-    }
+        => this.NavManager.NavigateTo("/");
 
+    private void SetIds(int editorId, int viewerId)
+    {
+        this.editorId = editorId;
+        this.viewerId = viewerId;
+    }
 }

@@ -20,12 +20,6 @@ namespace Blazor.SPA.Components
         where TRecord : class, IDbRecord<TRecord>, new()
     {
         /// <summary>
-        /// Navigation Manager Service
-        /// </summary>
-        /// </summary>
-        [Inject] protected NavigationManager NavManager { get; set; }
-
-        /// <summary>
         /// Callback for Edit Action
         /// </summary>
         [Parameter] public EventCallback<int> EditRecord { get; set; }
@@ -48,17 +42,23 @@ namespace Blazor.SPA.Components
         /// <summary>
         /// Controller Data Service
         /// </summary>
-        [Inject] private IFactoryControllerService<TRecord> Service { get; set; }
+        protected IFactoryControllerService<TRecord> Service { get; set; }
+
+        /// <summary>
+        /// Navigation Manager Service
+        /// </summary>
+        /// </summary>
+        [Inject] protected NavigationManager NavManager { get; set; }
 
         /// <summary>
         /// Boolean indicating of we have records to display
         /// </summary>
-        private bool _isLoaded => this.Service?.HasRecords ?? false;
+        protected bool IsLoaded => this.Service?.HasRecords ?? false;
 
         /// <summary>
         /// Boolean indicating if we have a service
         /// </summary>
-        private bool _hasService => this.Service != null;
+        protected bool HasService => this.Service != null;
 
         /// <summary>
         /// inherited Initialization
@@ -66,7 +66,7 @@ namespace Blazor.SPA.Components
         /// <returns></returns>
         protected override async Task OnInitializedAsync()
         {
-            if (_hasService)
+            if (HasService)
             {
                 await this.Service.GetRecordsAsync();
                 this.Service.ListHasChanged += OnListChanged;
@@ -78,34 +78,34 @@ namespace Blazor.SPA.Components
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnListChanged(object sender, EventArgs e)
+        protected void OnListChanged(object sender, EventArgs e)
             => this.InvokeAsync(this.StateHasChanged);
 
         /// <summary>
         /// Edit action to invoke the callback
         /// </summary>
         /// <param name="id"></param>
-        private void Edit(int id)
+        protected virtual void Edit(int id)
             => this.EditRecord.InvokeAsync(id);
 
         /// <summary>
         /// View action to invoke the callback
         /// </summary>
         /// <param name="id"></param>
-        private void View(int id)
+        protected virtual void View(int id)
             => this.ViewRecord.InvokeAsync(id);
 
         /// <summary>
         /// New action to invoke the callback
         /// </summary>
-        private void New()
+        protected virtual void New()
             => this.NewRecord.InvokeAsync();
 
         /// <summary>
         /// Exit action to invoke the callback
         /// fallback is to exit to root
         /// </summary>
-        protected void Exit()
+        protected virtual void Exit()
         {
             if (ExitAction.HasDelegate)
                 ExitAction.InvokeAsync();

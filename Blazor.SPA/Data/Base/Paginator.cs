@@ -30,41 +30,29 @@ namespace Blazor.SPA.Data
         public int CurrentBlock => (int)((Page / BlockSize) + 1.5);
         public int StartBlockPage => ((CurrentBlock - 1) * BlockSize) + 1;
         public int EndBlockPage => StartBlockPage + BlockSize;
-        public bool HasBlocks => ((RecordCount / (PageSize * BlockSize))+ 0.5) > 1;
+        public bool HasBlocks => ((RecordCount / (PageSize * BlockSize)) + 0.5) > 1;
         public bool HasPagination => (RecordCount / PageSize) > 1;
-
-        public void NextPage()
-        {
-            this.Page++;
-            this.PageChanged?.Invoke(this, EventArgs.Empty);
-        }
 
         public void ToPage(int page)
         {
-            if (this.Page != page)
+            if (!this.Page.Equals(page))
             {
                 this.Page = page;
                 this.PageChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
+        public void NextPage()
+            => this.ToPage(this.Page + 1);
+
         public void PreviousPage()
-        {
-            this.Page++;
-            this.PageChanged?.Invoke(this, EventArgs.Empty);
-        }
+                    => this.ToPage(this.Page - 1);
 
         public void ToStart()
-        {
-            this.Page = 1;
-            this.PageChanged?.Invoke(this, EventArgs.Empty);
-        }
+            => this.ToPage(1);
 
         public void ToEnd()
-        {
-            this.Page = (int)((RecordCount / PageSize) + 0.5);
-            this.PageChanged?.Invoke(this, EventArgs.Empty);
-        }
+            => this.ToPage((int)((RecordCount / PageSize) + 0.5));
 
         public void NextBlock()
         {
@@ -80,10 +68,9 @@ namespace Blazor.SPA.Data
         {
             if (CurrentBlock != 1)
             {
-                this.Page = ((CurrentBlock - 2) * PageSize * BlockSize) + 1;
+                this.Page = ((CurrentBlock - 1) * PageSize * BlockSize) - 1;
                 this.PageChanged?.Invoke(this, EventArgs.Empty);
             }
         }
-
     }
 }
