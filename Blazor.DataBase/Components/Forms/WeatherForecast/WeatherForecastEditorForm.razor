@@ -1,24 +1,27 @@
-﻿@namespace Blazor.Database.Components
+﻿@*
+/// =================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: MIT
+/// ==================================
+*@
+
+
+@namespace Blazor.Database.Components
 @inherits EditRecordFormBase<WeatherForecast>
 
 <InlineDialog Lock="this._isInlineDirty" Transparent="false">
     <UIContainer>
-
         <UIFormRow>
             <UIColumn>
                 <h2>Weather Forecast Editor</h2>
             </UIColumn>
         </UIFormRow>
-
     </UIContainer>
-
     <UILoader Loaded="this._isLoaded">
-
         <EditForm EditContext="this.EditContext" OnValidSubmit="HandleValidSubmit" class=" px-2 py-3">
-            <EditFormState @ref="this.EditFormState"  EditStateChanged="this.EditStateChanged"></EditFormState>
+            <EditFormState @ref="this.EditFormState" EditStateChanged="this.EditStateChanged"></EditFormState>
             <ValidationFormState ValidStateChanged="this.ValidStateChanged"></ValidationFormState>
             <UIContainer>
-
                 <UIFormRow>
                     <UILabelColumn>
                         Record ID
@@ -31,7 +34,6 @@
                         <ValidationMessage For=@(() => this.Model.Date) />
                     </UIValidationColumn>
                 </UIFormRow>
-
                 <UIFormRow>
                     <UILabelColumn>
                         Date
@@ -44,7 +46,6 @@
                         <ValidationMessage For=@(() => this.Model.Date) />
                     </UIValidationColumn>
                 </UIFormRow>
-
                 <UIFormRow>
                     <UILabelColumn>
                         Temperature &deg;C
@@ -57,7 +58,6 @@
                         <ValidationMessage For=@(() => this.Model.TemperatureC) />
                     </UIValidationColumn>
                 </UIFormRow>
-
                 <UIFormRow>
                     <UILabelColumn>
                         Summary
@@ -69,11 +69,8 @@
                         <ValidationMessage For=@(() => this.Model.Summary) />
                     </UIValidationColumn>
                 </UIFormRow>
-
             </UIContainer>
-
             <UIContainer>
-
                 <UIFormRow>
                     <UIButtonColumn>
                         <UIButton Show="true" Disabled="this._deleteDisabled" AdditionalClasses="btn-outline-danger" ClickEvent="() => Delete()">Delete</UIButton>
@@ -83,9 +80,7 @@
                         <UIButton Show="true" Disabled="this._dirtyExit" AdditionalClasses="btn-dark" ClickEvent="() => this.Exit()">Exit</UIButton>
                     </UIButtonColumn>
                 </UIFormRow>
-
             </UIContainer>
-
         </EditForm>
     </UILoader>
 </InlineDialog>

@@ -1,17 +1,21 @@
-﻿
+﻿@*/// =================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: MIT
+/// ==================================
+*@
+
 @namespace Blazor.SPA.Components
 @inherits UIBase
 
 @if (this.Show)
 {
-    <button class="@this.CssClass" @onclick="ButtonClick" type="@Type" disabled ="@this.Disabled">
+    <button class="@this.CssClass" @onclick="ButtonClick" type="@Type" disabled="@this.Disabled" @attributes="UserAttributes">
         @this.ChildContent
     </button>
 }
 
 @code {
 
-    [Parameter] public override string AdditionalClasses { get; set; } = "btn-primary";
 
     [Parameter] public string Type { get; set; } = "button";
 
@@ -19,6 +23,6 @@
 
     protected override string PrimaryClass => "btn mr-1";
 
-    protected void ButtonClick(MouseEventArgs e) => this.ClickEvent.InvokeAsync(e);
+    protected async Task ButtonClick(MouseEventArgs e) => await this.ClickEvent.InvokeAsync(e);
 
 }

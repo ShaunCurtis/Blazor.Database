@@ -20,5 +20,10 @@ namespace Blazor.SPA.Data
 
         public object Data { get; set; } = null;
 
+        public static DbTaskResult OK(int id = 0)
+            => new DbTaskResult() { IsOK = true, Type = MessageType.Success, NewID = id };
+
+        public static DbTaskResult NotOK(int id = 0)
+            => new DbTaskResult() { IsOK = false, Type = MessageType.Danger};
     }
 }

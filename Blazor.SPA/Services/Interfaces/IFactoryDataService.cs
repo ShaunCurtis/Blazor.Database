@@ -4,11 +4,7 @@
 /// ==================================
 
 using Blazor.SPA.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Blazor.SPA.Services
@@ -32,6 +28,12 @@ namespace Blazor.SPA.Services
         /// </summary>
         /// <returns></returns>
         public Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize) where TRecord : class, IDbRecord<TRecord>, new();
+
+        /// <summary>
+        /// Method to get the Record List
+        /// </summary>
+        /// <returns></returns>
+        public Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize, Sortor sorter, Filtor filter) where TRecord : class, IDbRecord<TRecord>, new();
 
         /// <summary>
         /// Method to get a Record

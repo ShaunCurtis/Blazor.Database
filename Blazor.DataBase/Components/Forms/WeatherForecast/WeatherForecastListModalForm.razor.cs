@@ -42,20 +42,20 @@ namespace Blazor.Database.Components
         {
             var options = new ModalOptions();
             options.Set("Id", id);
-            await this.Modal.ShowAsync<WeatherForecastEditor>(options);
+            await this.Modal.ShowAsync<WeatherForecastEditorForm>(options);
         }
         private async void ViewInModal(int id)
         {
             var options = new ModalOptions();
             options.Set("Id", id);
-            await this.Modal.ShowAsync<WeatherForecastViewer>(options);
+            await this.Modal.ShowAsync<WeatherForecastViewerForm>(options);
         }
 
         private async void NewInModal()
         {
             var options = new ModalOptions();
             options.Set("Id", -1);
-            await this.Modal.ShowAsync<WeatherForecastEditor>(options);
+            await this.Modal.ShowAsync<WeatherForecastEditorForm>(options);
         }
 
         public void Dispose()

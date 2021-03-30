@@ -21,21 +21,14 @@ namespace Blazor.SPA.Services
         protected HttpClient HttpClient { get; set; }
 
         public FactoryWASMDataService(IConfiguration configuration, HttpClient httpClient) : base(configuration)
-        {
-            this.HttpClient = httpClient;
-
-            // Debug.WriteLine($"==> New Instance {this.ToString()} ID:{this.ServiceID.ToString()} ");
-        }
+            => this.HttpClient = httpClient;
 
         /// <summary>
         /// Inherited IDataService Method
         /// </summary>
         /// <returns></returns>
         public override async Task<List<TRecord>> GetRecordListAsync<TRecord>()
-        {
-            var recname = new TRecord().GetType().Name;
-            return await this.HttpClient.GetFromJsonAsync<List<TRecord>>($"{recname}/list");
-        }
+            => await this.HttpClient.GetFromJsonAsync<List<TRecord>>($"{GetRecordName<TRecord>()}/list");
 
         /// <summary>
         /// Inherited IDataService Method
@@ -44,8 +37,7 @@ namespace Blazor.SPA.Services
         public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize)
         {
             var paging = new Paginator(page, pagesize);
-            var recname = new TRecord().GetType().Name;
-            var response = await this.HttpClient.PostAsJsonAsync($"{recname}/listpaged", paging );
+            var response = await this.HttpClient.PostAsJsonAsync($"{GetRecordName<TRecord>()}/listpaged", paging);
             var result = await response.Content.ReadFromJsonAsync<List<TRecord>>();
             return result;
         }
@@ -56,8 +48,7 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public override async Task<TRecord> GetRecordAsync<TRecord>(int id)
         {
-            var recname = new TRecord().GetType().Name;
-            var response = await this.HttpClient.PostAsJsonAsync($"{recname}/read", id);
+            var response = await this.HttpClient.PostAsJsonAsync($"{GetRecordName<TRecord>()}/read", id);
             var result = await response.Content.ReadFromJsonAsync<TRecord>();
             return result;
         }
@@ -67,10 +58,7 @@ namespace Blazor.SPA.Services
         /// </summary>
         /// <returns></returns>
         public override async Task<int> GetRecordListCountAsync<TRecord>()
-        {
-            var recname = new TRecord().GetType().Name;
-            return await this.HttpClient.GetFromJsonAsync<int>($"{recname}/count");
-        }
+            => await this.HttpClient.GetFromJsonAsync<int>($"{GetRecordName<TRecord>()}/count");
 
         /// <summary>
         /// Inherited IDataService Method
@@ -79,8 +67,7 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public override async Task<DbTaskResult> UpdateRecordAsync<TRecord>(TRecord record)
         {
-            var recname = new TRecord().GetType().Name;
-            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"{recname}/update", record);
+            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"{GetRecordName<TRecord>()}/update", record);
             var result = await response.Content.ReadFromJsonAsync<DbTaskResult>();
             return result;
         }
@@ -92,8 +79,7 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public override async Task<DbTaskResult> CreateRecordAsync<TRecord>(TRecord record)
         {
-            var recname = new TRecord().GetType().Name;
-            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"{recname}/create", record);
+            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"{GetRecordName<TRecord>()}/create", record);
             var result = await response.Content.ReadFromJsonAsync<DbTaskResult>();
             return result;
         }
@@ -105,10 +91,13 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public override async Task<DbTaskResult> DeleteRecordAsync<TRecord>(TRecord record)
         {
-            var recname = new TRecord().GetType().Name;
-            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"{recname}/update", record);
+            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"{GetRecordName<TRecord>()}/update", record);
             var result = await response.Content.ReadFromJsonAsync<DbTaskResult>();
             return result;
         }
+
+        protected string GetRecordName<TRecord>() where TRecord : class, IDbRecord<TRecord>, new()
+            => new TRecord().GetType().Name;
+
     }
 }

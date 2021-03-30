@@ -43,21 +43,6 @@ namespace Blazor.SPA.Services
         public int RecordCount => this.Records?.Count ?? 0;
 
         /// <summary>
-        /// Boolean Property to check if a record exists
-        /// </summary>
-        public bool IsRecord => this.Record != null && this.RecordId > -1;
-
-        /// <summary>
-        /// Boolean Property to check if a record exists
-        /// </summary>
-        public bool HasRecords => this.Records != null && this.Records.Count > 0;
-
-        /// <summary>
-        /// Boolean Property to check if a New record exists 
-        /// </summary>
-        public bool IsNewRecord => this.IsRecord && this.RecordId == -1;
-
-        /// <summary>
         /// Property to expose the Record ID.
         /// should be implemented to return 0 if the record is null
         /// </summary>
@@ -76,6 +61,26 @@ namespace Blazor.SPA.Services
         public DbTaskResult DbResult { get; }
 
         /// <summary>
+        /// Property for the Paging object that controls paging and interfaces with the UI Paging Control 
+        /// </summary>
+        public Paginator Paginator { get; }
+
+        /// <summary>
+        /// Boolean Property to check if a record exists
+        /// </summary>
+        public bool IsRecord => this.Record != null && this.RecordId > -1;
+
+        /// <summary>
+        /// Boolean Property to check if a record exists
+        /// </summary>
+        public bool HasRecords => this.Records != null && this.Records.Count > 0;
+
+        /// <summary>
+        /// Boolean Property to check if a New record exists 
+        /// </summary>
+        public bool IsNewRecord => this.IsRecord && this.RecordId == -1;
+
+        /// <summary>
         /// Event raised when the Record has Changed
         /// </summary>
         public event EventHandler RecordHasChanged;
@@ -91,32 +96,6 @@ namespace Blazor.SPA.Services
         public Task Reset();
 
         /// <summary>
-        /// Method to Update or Add the Database Record
-        /// Builds the record from the RecordCollection if one is not provided
-        /// </summary>
-        /// <returns></returns>
-        public Task<bool> SaveRecordAsync();
-
-        /// <summary>
-        /// Method to get a Record from the Database
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Task<bool> GetRecordAsync(int id, bool reload = false) => Task.FromResult(false);
-
-        /// <summary>
-        /// Method to get a new Record
-        /// </summary>
-        /// <returns></returns>
-        public Task<bool> NewRecordAsync() => Task.FromResult(false);
-
-        /// <summary>
-        /// Method to delete the current Record
-        /// </summary>
-        /// <returns></returns>
-        public Task<bool> DeleteRecordAsync() => Task.FromResult(false);
-
-        /// <summary>
         /// Method to reset the record to new
         /// </summary>
         /// <returns></returns>
@@ -128,5 +107,32 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public Task ResetListAsync();
 
+        public Task GetRecordsAsync() => Task.CompletedTask;
+
+        /// <summary>
+        /// Method to Update or Add the Database Record
+        /// Builds the record from the RecordCollection if one is not provided
+        /// </summary>
+        /// <returns></returns>
+        public Task<bool> SaveRecordAsync();
+
+        /// <summary>
+        /// Method to get a Record from the Database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<bool> GetRecordAsync(int id);
+
+        /// <summary>
+        /// Method to get a new Record
+        /// </summary>
+        /// <returns></returns>
+        public Task<bool> NewRecordAsync();
+
+        /// <summary>
+        /// Method to delete the current Record
+        /// </summary>
+        /// <returns></returns>
+        public Task<bool> DeleteRecordAsync();
     }
 }

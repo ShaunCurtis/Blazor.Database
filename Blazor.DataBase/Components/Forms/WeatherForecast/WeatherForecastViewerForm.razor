@@ -2,15 +2,12 @@
 @inherits RecordFormBase<WeatherForecast>
 
 <UIContainer>
-
     <UIFormRow>
         <UIColumn>
             <h2>Weather Forecast Viewer</h2>
         </UIColumn>
     </UIFormRow>
-
 </UIContainer>
-
 <UILoader Loaded="this.IsLoaded">
     <UIContainer>
         <UIFormRow>
@@ -22,7 +19,6 @@
             </UIInputColumn>
             <UIColumn Cols="7"></UIColumn>
         </UIFormRow>
-
         <UIFormRow>
             <UILabelColumn>
                 Temperature &deg;C
@@ -32,7 +28,6 @@
             </UIInputColumn>
             <UIColumn Cols="8"></UIColumn>
         </UIFormRow>
-
         <UIFormRow>
             <UILabelColumn>
                 Temperature &deg;f
@@ -42,7 +37,6 @@
             </UIInputColumn>
             <UIColumn Cols="8"></UIColumn>
         </UIFormRow>
-
         <UIFormRow>
             <UILabelColumn>
                 Summary
@@ -51,17 +45,12 @@
                 <InputReadOnlyText Value="@this.ControllerService.Record.Summary"></InputReadOnlyText>
             </UIInputColumn>
         </UIFormRow>
-
     </UIContainer>
-
 </UILoader>
-
 <UIContainer>
-
     <UIFormRow>
         <UIButtonColumn>
             <UIButton AdditionalClasses="btn-secondary" ClickEvent="this.Exit">Exit</UIButton>
         </UIButtonColumn>
     </UIFormRow>
-
 </UIContainer>

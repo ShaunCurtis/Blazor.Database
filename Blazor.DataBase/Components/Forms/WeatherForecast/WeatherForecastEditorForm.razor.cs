@@ -5,6 +5,7 @@
 
 using Blazor.Database.Data;
 using Blazor.Database.Services;
+using Blazor.SPA.Components;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 namespace Blazor.Database.Components

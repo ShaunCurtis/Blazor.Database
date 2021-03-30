@@ -79,6 +79,8 @@ namespace Blazor.SPA.Services
         /// </summary>
         public Paginator Paginator { get; private set; }
 
+        public Sortor Sorter { get; private set; }
+
         /// <summary>
         /// Boolean Property to check if a record exists
         /// </summary>
@@ -164,12 +166,13 @@ namespace Blazor.SPA.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task GetRecordAsync(int id)
+        public async Task<bool> GetRecordAsync(int id)
         {
             if (id > 0)
                 this.Record = await DataService.GetRecordAsync<TRecord>(id);
             else
                 this.Record = new TRecord();
+            return this.IsRecord;
         }
 
         /// <summary>
@@ -227,6 +230,16 @@ namespace Blazor.SPA.Services
         /// <param name="e"></param>
         protected void NotifyListChanged(object sender, EventArgs e)
             => this.ListHasChanged?.Invoke(sender, e);
+
+        /// <summary>
+        /// Method to get a New Record
+        /// </summary>
+        /// <returns></returns>
+        public Task<bool> NewRecordAsync()
+        {
+            this.Record = default(TRecord);
+            return Task.FromResult(false);
+        }
 
         /// <summary>
         /// IDisposable Implementation

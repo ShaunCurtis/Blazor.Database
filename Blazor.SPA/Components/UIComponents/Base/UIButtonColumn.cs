@@ -1,4 +1,8 @@
-﻿
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: MIT
+/// ==================================
+
 namespace Blazor.SPA.Components
 {
     public class UIButtonColumn : UIColumn

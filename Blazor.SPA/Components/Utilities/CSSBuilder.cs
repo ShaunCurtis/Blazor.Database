@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: MIT
+/// ==================================
+
+using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
@@ -8,7 +13,7 @@ namespace Blazor.SPA.Components
     {
         private Queue<string> _cssQueue = new Queue<string>();
 
-        public static CSSBuilder Default(string cssFragment)
+        public static CSSBuilder Class(string cssFragment)
         {
             var builder = new CSSBuilder(cssFragment);
             return builder.AddClass(cssFragment);

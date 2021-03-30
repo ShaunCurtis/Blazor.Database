@@ -32,14 +32,6 @@ namespace Blazor.SPA.Services
         public FactoryDataService(IConfiguration configuration) => this.AppConfiguration = configuration;
 
         /// <summary>
-        /// Gets the Record Name from TRecord
-        /// </summary>
-        /// <typeparam name="TRecord"></typeparam>
-        /// <returns></returns>
-        protected string GetRecordName<TRecord>() where TRecord : class, IDbRecord<TRecord>, new()
-            => new TRecord().GetType().Name;
-
-        /// <summary>
         /// Method to get the Record List
         /// </summary>
         /// <returns></returns>
@@ -51,6 +43,13 @@ namespace Blazor.SPA.Services
         /// </summary>
         /// <returns></returns>
         public virtual Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize) where TRecord : class, IDbRecord<TRecord>, new()
+            => Task.FromResult(new List<TRecord>());
+
+        /// <summary>
+        /// Method to get the Record List
+        /// </summary>
+        /// <returns></returns>
+        public virtual Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize, Sortor sorter, Filtor filter) where TRecord : class, IDbRecord<TRecord>, new()
             => Task.FromResult(new List<TRecord>());
 
         /// <summary>

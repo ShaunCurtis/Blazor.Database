@@ -1,4 +1,5 @@
-﻿using Blazor.Database.Services;
+﻿using Blazor.Database.Data;
+using Blazor.Database.Services;
 using Blazor.SPA.Components;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Blazor.Database.Components
 {
-    public partial class WeatherForecastListForm : ComponentBase, IDisposable
+    public partial class WeatherForecastListForm : ListFormBase<WeatherForecast>
     {
-        [Inject] private NavigationManager NavManager { get; set; }
 
         [Parameter] public EventCallback<int> EditRecord { get; set; }
 

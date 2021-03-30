@@ -1,4 +1,8 @@
-﻿
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: MIT
+/// ==================================
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using System.Collections.Generic;
@@ -19,17 +23,16 @@ namespace Blazor.SPA.Components
 
         [Parameter] public RenderFragment HideContent { get; set; }
 
-        protected CSSBuilder CSSBuilder = new CSSBuilder();
-
         protected virtual string PrimaryClass => string.Empty;
 
         protected List<string> SecondaryClass { get; private set; } = new List<string>() ;
 
         protected string CssClass
-        => CSSBuilder.AddClass(this.PrimaryClass)
+        => CSSBuilder.Class(this.PrimaryClass)
+            .AddClass(SecondaryClass)
             .AddClass(AdditionalClasses)
-        .AddClassFromAttributes(this.UserAttributes)
-        .Build();
+            .AddClassFromAttributes(this.UserAttributes)
+            .Build();
 
         protected virtual string HtmlTag => "div";
 

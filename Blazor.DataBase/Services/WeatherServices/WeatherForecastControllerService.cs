@@ -10,7 +10,7 @@ using Blazor.Database.Data;
 
 namespace Blazor.Database.Services
 {
-    public class WeatherForecastControllerService : FactoryControllerService<WeatherForecast>
+    public class WeatherForecastControllerService : FactoryControllerService<WeatherForecast>, IFactoryControllerService<WeatherForecast>
     {
         public WeatherForecastControllerService(IFactoryDataService factoryDataService) : base(factoryDataService) { }
     }
