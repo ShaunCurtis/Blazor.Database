@@ -79,8 +79,6 @@ namespace Blazor.SPA.Services
         /// </summary>
         public Paginator Paginator { get; private set; }
 
-        public Sortor Sorter { get; private set; }
-
         /// <summary>
         /// Boolean Property to check if a record exists
         /// </summary>
@@ -155,7 +153,7 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public async Task GetRecordsAsync()
         {
-            this.Records = await DataService.GetRecordListAsync<TRecord>(this.Paginator.Page, this.Paginator.PageSize);
+            this.Records = await DataService.GetRecordListAsync<TRecord>(this.Paginator);
             this.Paginator.RecordCount = await GetRecordListCountAsync();
             this.ListHasChanged?.Invoke(null, EventArgs.Empty);
         }

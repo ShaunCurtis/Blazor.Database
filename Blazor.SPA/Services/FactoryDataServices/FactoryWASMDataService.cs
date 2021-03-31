@@ -34,12 +34,10 @@ namespace Blazor.SPA.Services
         /// Inherited IDataService Method
         /// </summary>
         /// <returns></returns>
-        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize)
+        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(Paginator paginator)
         {
-            var paging = new Paginator(page, pagesize);
-            var response = await this.HttpClient.PostAsJsonAsync($"{GetRecordName<TRecord>()}/listpaged", paging);
-            var result = await response.Content.ReadFromJsonAsync<List<TRecord>>();
-            return result;
+            var response = await this.HttpClient.PostAsJsonAsync($"{GetRecordName<TRecord>()}/listpaged", paginator);
+            return await response.Content.ReadFromJsonAsync<List<TRecord>>();
         }
 
         /// <summary>

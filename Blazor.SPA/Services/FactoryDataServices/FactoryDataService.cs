@@ -42,14 +42,7 @@ namespace Blazor.SPA.Services
         /// Method to get the Record List
         /// </summary>
         /// <returns></returns>
-        public virtual Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize) where TRecord : class, IDbRecord<TRecord>, new()
-            => Task.FromResult(new List<TRecord>());
-
-        /// <summary>
-        /// Method to get the Record List
-        /// </summary>
-        /// <returns></returns>
-        public virtual Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize, Sortor sorter, Filtor filter) where TRecord : class, IDbRecord<TRecord>, new()
+        public virtual Task<List<TRecord>> GetRecordListAsync<TRecord>(Paginator paginator) where TRecord : class, IDbRecord<TRecord>, new()
             => Task.FromResult(new List<TRecord>());
 
         /// <summary>

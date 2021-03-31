@@ -22,18 +22,11 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public Task<List<TRecord>> GetRecordListAsync<TRecord>() where TRecord : class, IDbRecord<TRecord>, new();
 
-
         /// <summary>
         /// Method to get the Record List
         /// </summary>
         /// <returns></returns>
-        public Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize) where TRecord : class, IDbRecord<TRecord>, new();
-
-        /// <summary>
-        /// Method to get the Record List
-        /// </summary>
-        /// <returns></returns>
-        public Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize, Sortor sorter, Filtor filter) where TRecord : class, IDbRecord<TRecord>, new();
+        public Task<List<TRecord>> GetRecordListAsync<TRecord>(Paginator paginator) where TRecord : class, IDbRecord<TRecord>, new();
 
         /// <summary>
         /// Method to get a Record

@@ -6,13 +6,15 @@
 <UILoader Loaded="this.IsLoaded">
     <UIDataTable TRecord="WeatherForecast" Records="this.ControllerService.Records" class="table">
         <Head>
-            <UIDataTableHeaderColumn>ID</UIDataTableHeaderColumn>
-            <UIDataTableHeaderColumn>Date</UIDataTableHeaderColumn>
-            <UIDataTableHeaderColumn>Temp. (C)</UIDataTableHeaderColumn>
-            <UIDataTableHeaderColumn>Temp. (F)</UIDataTableHeaderColumn>
-            <UIDataTableHeaderColumn>Summary</UIDataTableHeaderColumn>
-            <UIDataTableHeaderColumn class="max-column">Description</UIDataTableHeaderColumn>
-            <UIDataTableHeaderColumn class="text-right">Actions</UIDataTableHeaderColumn>
+            <SortControl Paginator="this.Service.Paginator">
+                <UIDataTableHeaderColumn SortField="ID">ID</UIDataTableHeaderColumn>
+                <UIDataTableHeaderColumn SortField="Date">Date</UIDataTableHeaderColumn>
+                <UIDataTableHeaderColumn SortField="TemperatureC">Temp. (C)</UIDataTableHeaderColumn>
+                <UIDataTableHeaderColumn>Temp. (F)</UIDataTableHeaderColumn>
+                <UIDataTableHeaderColumn SortField="Summary">Summary</UIDataTableHeaderColumn>
+                <UIDataTableHeaderColumn class="max-column">Description</UIDataTableHeaderColumn>
+                <UIDataTableHeaderColumn class="text-right">Actions</UIDataTableHeaderColumn>
+            </SortControl>
         </Head>
         <RowTemplate>
             <UIDataTableRow>
@@ -41,3 +43,7 @@
         </UIFormRow>
     </UIContainer>
 </UILoader>
+@if (this.IsModal)
+{
+    <BaseModalDialog @ref="this.Modal"></BaseModalDialog>
+}

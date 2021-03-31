@@ -10,11 +10,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Blazor.SPA.Extensions;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 
 namespace Blazor.SPA.Services
 {
     public class FactoryServerDataService<TDbContext> :
-        FactoryDataService
+        FactoryDataService,
+        IFactoryDataService
         where TDbContext : DbContext
     {
 
@@ -37,45 +39,30 @@ namespace Blazor.SPA.Services
         /// Method to get the Record List
         /// </summary>
         /// <returns></returns>
-        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize)
+        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(Paginator paginator)
         {
-            var startpage = page <= 1
+            var startpage = paginator.Page <= 1
                 ? 0
-                : (page - 1) * pagesize;
+                : (paginator.Page - 1) * paginator.PageSize;
             var context = this.DBContext.CreateDbContext();
             var dbset = this.DBContext
                 .CreateDbContext()
                 .GetDbSet<TRecord>();
-            return await dbset.Skip(startpage).Take(pagesize).ToListAsync() ?? new List<TRecord>();
-        }
-
-        /// <summary>
-        /// Method to get the Record List
-        /// </summary>
-        /// <returns></returns>
-        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize, Sortor sorter, Filtor filter)
-        {
-            var startpage = page <= 1
-                ? 0
-                : (page - 1) * pagesize;
-            var context = this.DBContext.CreateDbContext();
-            var dbset = this.DBContext
-                .CreateDbContext()
-                .GetDbSet<TRecord>();
-            if (sorter.Descending)
+            var x = typeof(TRecord).GetProperty(paginator.SortColumn);
+            var isSortable = typeof(TRecord).GetProperty(paginator.SortColumn) != null;
+            if (isSortable)
             {
                 var list = await dbset
-                    .OrderByDescending(item => item.GetType().GetProperty(sorter.SortColumn).GetValue(item, null))
+                    .OrderBy(paginator.SortDescending ? $"{paginator.SortColumn} descending" : paginator.SortColumn)
                     .Skip(startpage)
-                    .Take(pagesize).ToListAsync() ?? new List<TRecord>();
+                    .Take(paginator.PageSize).ToListAsync() ?? new List<TRecord>();
                 return list;
             }
             else
             {
                 var list = await dbset
-                    .OrderBy(item => item.GetType().GetProperty(sorter.SortColumn).GetValue(item, null))
                     .Skip(startpage)
-                    .Take(pagesize).ToListAsync() ?? new List<TRecord>();
+                    .Take(paginator.PageSize).ToListAsync() ?? new List<TRecord>();
                 return list;
             }
         }

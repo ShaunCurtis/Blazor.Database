@@ -53,6 +53,13 @@ namespace Blazor.SPA.Components
             return this;
         }
 
+        public CSSBuilder AddClassFromAttributes(IDictionary<string, object> additionalAttributes)
+        {
+            if (additionalAttributes != null && additionalAttributes.TryGetValue("class", out var val))
+                _cssQueue.Enqueue(val.ToString());
+            return this;
+        }
+
         public string Build(string CssFragment = null)
         {
             if (!string.IsNullOrWhiteSpace(CssFragment)) _cssQueue.Enqueue(CssFragment);

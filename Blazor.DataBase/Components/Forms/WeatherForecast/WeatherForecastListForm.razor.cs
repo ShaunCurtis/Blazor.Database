@@ -11,10 +11,49 @@ namespace Blazor.Database.Components
     {
         [Inject] private WeatherForecastControllerService ControllerService { get; set; }
 
+        [Parameter] public bool IsModal {get; set;}
+
+        private BaseModalDialog Modal { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             this.Service = this.ControllerService;
             await base.OnInitializedAsync();
         }
+        protected override async void Edit(int id)
+        {
+            if (this.IsModal)
+            {
+                var options = new ModalOptions();
+                options.Set("Id", id);
+                await this.Modal.ShowAsync<WeatherForecastEditorForm>(options);
+            }
+            else
+                base.Edit(id);
+        }
+        protected override async void View(int id)
+        {
+            if (this.IsModal)
+            {
+                var options = new ModalOptions();
+                options.Set("Id", id);
+                await this.Modal.ShowAsync<WeatherForecastViewerForm>(options);
+            }
+            else
+                base.View(id);
+        }
+
+        protected override async void New()
+        {
+            if (this.IsModal)
+            {
+                var options = new ModalOptions();
+                options.Set("Id", -1);
+                await this.Modal.ShowAsync<WeatherForecastEditorForm>(options);
+            }
+            else
+                base.New();
+        }
+
     }
 }

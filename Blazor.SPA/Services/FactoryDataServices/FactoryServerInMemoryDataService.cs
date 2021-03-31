@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System;
 using Blazor.SPA.Extensions;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 
 namespace Blazor.SPA.Services
 {
@@ -42,20 +43,28 @@ namespace Blazor.SPA.Services
             return await dbset.ToListAsync() ?? new List<TRecord>();
         }
 
-        /// <summary>
-        /// Method to get the Record List
-        /// </summary>
-        /// <returns></returns>
-        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(int page, int pagesize)
+        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(Paginator paginator)
         {
-            var startpage = 0;
-            if (page <=  1) 
-                startpage = 0 ;
-            else
-                startpage = (page - 1) * pagesize;
+            var startpage = paginator.Page <= 1
+                ? 0
+                : (paginator.Page - 1) * paginator.PageSize;
             var dbset = _dbContext.GetDbSet<TRecord>();
-            //var dbset = this.GetDbSet<TRecord>();
-            return await dbset.Skip(startpage).Take(pagesize).ToListAsync() ?? new List<TRecord>();
+            var isSortable = typeof(TRecord).GetProperty(paginator.SortColumn) != null;
+            if (isSortable)
+            {
+                var list = await dbset
+                    .OrderBy(paginator.SortDescending ? $"{paginator.SortColumn} descending" : paginator.SortColumn)
+                    .Skip(startpage)
+                    .Take(paginator.PageSize).ToListAsync() ?? new List<TRecord>();
+                return list;
+            }
+            else
+            {
+                var list = await dbset
+                    .Skip(startpage)
+                    .Take(paginator.PageSize).ToListAsync() ?? new List<TRecord>();
+                return list;
+            }
         }
 
         /// <summary>
