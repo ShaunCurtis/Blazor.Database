@@ -26,7 +26,7 @@ namespace Blazor.SPA.Services
         /// Method to get the Record List
         /// </summary>
         /// <returns></returns>
-        public Task<List<TRecord>> GetRecordListAsync<TRecord>(Paginator paginator) where TRecord : class, IDbRecord<TRecord>, new();
+        public Task<List<TRecord>> GetRecordListAsync<TRecord>(PaginatorData paginatorData) where TRecord : class, IDbRecord<TRecord>, new();
 
         /// <summary>
         /// Method to get a Record

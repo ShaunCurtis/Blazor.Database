@@ -28,11 +28,7 @@ namespace Blazor.SPA.Components
         /// The ID passed to the form when it's declared as a component
         /// </summary>
         [Parameter]
-        public int ID
-        {
-            get => this._Id;
-            set => this._Id = value;
-        }
+        public int ID { get; set; } = 0;
 
         /// <summary>
         /// Callback to the host component to tell it the user has exited this form
@@ -65,9 +61,14 @@ namespace Blazor.SPA.Components
         protected bool _isModal => this.Modal != null;
 
         /// <summary>
+        /// Modal Id value
+        /// </summary>
+        protected int _modalId { get; set; } = 0;
+
+        /// <summary>
         /// Internal Id value
         /// </summary>
-        protected int _Id = -1;
+        protected int _Id => _modalId != 0 ? _modalId : this.ID;
 
         /// <summary>
         /// Inherited
@@ -100,7 +101,7 @@ namespace Blazor.SPA.Components
         {
             if (this._isModal && this.Modal.Options.TryGet<int>("Id", out int value))
             {
-                this._Id = value;
+                this._modalId = value;
                 return true;
             }
             return false;

@@ -7,7 +7,7 @@ namespace Blazor.SPA.Components
     {
         [Parameter] public override int Cols { get; set; } = 6;
 
-        [Parameter] public string FormCss { get; set; } = "form-control";
+        [Parameter] public string FormCss { get; set; } = string.Empty;
 
         public UIInputColumn()
         {

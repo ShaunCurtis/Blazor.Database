@@ -64,20 +64,13 @@ namespace Blazor.SPA.Components
         protected string _saveButtonText => this._isNew ? "Save" : "Update";
 
         /// <summary>
-        /// inherited
-        /// </summary>
-        /// <returns></returns>
-        protected async override Task OnInitializedAsync()
-            => await LoadRecordAsync();
-
-        /// <summary>
         /// Method to load the record
         /// calls the base method to load the record and then sets up the EditContext
         /// </summary>
         /// <returns></returns>
         protected override async Task LoadRecordAsync()
         {
-            await base.OnInitializedAsync();
+            await base.LoadRecordAsync();
             this.EditContext = new EditContext(this.Model);
             _isLoaded = true;
             this.EditContext.OnFieldChanged += FieldChanged;

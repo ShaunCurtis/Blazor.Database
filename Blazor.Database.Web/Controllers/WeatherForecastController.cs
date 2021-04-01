@@ -28,35 +28,35 @@ namespace Blazor.Database.Controllers
             this.logger = logger;
         }
 
-        [MVC.Route("weatherforecast/list")]
+        [MVC.Route("/api/weatherforecast/list")]
         [HttpGet]
         public async Task<List<WeatherForecast>> GetList() => await DataService.GetRecordListAsync<WeatherForecast>();
 
-        [MVC.Route("weatherforecast/listpaged")]
-        [HttpGet]
-        public async Task<List<WeatherForecast>> Read([FromBody] Paginator data) => await DataService.GetRecordListAsync<WeatherForecast>( paginator: data);
+        [MVC.Route("/api/weatherforecast/listpaged")]
+        [HttpPost]
+        public async Task<List<WeatherForecast>> Read([FromBody] PaginatorData data) => await DataService.GetRecordListAsync<WeatherForecast>(data);
 
-        [MVC.Route("weatherforecast/count")]
+        [MVC.Route("/api/weatherforecast/count")]
         [HttpGet]
         public async Task<int> Count() => await DataService.GetRecordListCountAsync<WeatherForecast>();
 
-        [MVC.Route("weatherforecast/get")]
+        [MVC.Route("/api/weatherforecast/get")]
         [HttpGet]
         public async Task<WeatherForecast> GetRec(int id) => await DataService.GetRecordAsync<WeatherForecast>(id);
 
-        [MVC.Route("weatherforecast/read")]
+        [MVC.Route("/api/weatherforecast/read")]
         [HttpPost]
         public async Task<WeatherForecast> Read([FromBody]int id) => await DataService.GetRecordAsync<WeatherForecast>(id);
 
-        [MVC.Route("weatherforecast/update")]
+        [MVC.Route("/api/weatherforecast/update")]
         [HttpPost]
         public async Task<DbTaskResult> Update([FromBody]WeatherForecast record) => await DataService.UpdateRecordAsync<WeatherForecast>(record);
 
-        [MVC.Route("weatherforecast/create")]
+        [MVC.Route("/api/weatherforecast/create")]
         [HttpPost]
         public async Task<DbTaskResult> Create([FromBody]WeatherForecast record) => await DataService.CreateRecordAsync<WeatherForecast>(record);
 
-        [MVC.Route("weatherforecast/delete")]
+        [MVC.Route("/api/weatherforecast/delete")]
         [HttpPost]
         public async Task<DbTaskResult> Delete([FromBody] WeatherForecast record) => await DataService.DeleteRecordAsync<WeatherForecast>(record);
     }

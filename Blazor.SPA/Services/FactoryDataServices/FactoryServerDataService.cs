@@ -39,30 +39,30 @@ namespace Blazor.SPA.Services
         /// Method to get the Record List
         /// </summary>
         /// <returns></returns>
-        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(Paginator paginator)
+        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(PaginatorData paginatorData)
         {
-            var startpage = paginator.Page <= 1
+            var startpage = paginatorData.Page <= 1
                 ? 0
-                : (paginator.Page - 1) * paginator.PageSize;
+                : (paginatorData.Page - 1) * paginatorData.PageSize;
             var context = this.DBContext.CreateDbContext();
             var dbset = this.DBContext
                 .CreateDbContext()
                 .GetDbSet<TRecord>();
-            var x = typeof(TRecord).GetProperty(paginator.SortColumn);
-            var isSortable = typeof(TRecord).GetProperty(paginator.SortColumn) != null;
+            var x = typeof(TRecord).GetProperty(paginatorData.SortColumn);
+            var isSortable = typeof(TRecord).GetProperty(paginatorData.SortColumn) != null;
             if (isSortable)
             {
                 var list = await dbset
-                    .OrderBy(paginator.SortDescending ? $"{paginator.SortColumn} descending" : paginator.SortColumn)
+                    .OrderBy(paginatorData.SortDescending ? $"{paginatorData.SortColumn} descending" : paginatorData.SortColumn)
                     .Skip(startpage)
-                    .Take(paginator.PageSize).ToListAsync() ?? new List<TRecord>();
+                    .Take(paginatorData.PageSize).ToListAsync() ?? new List<TRecord>();
                 return list;
             }
             else
             {
                 var list = await dbset
                     .Skip(startpage)
-                    .Take(paginator.PageSize).ToListAsync() ?? new List<TRecord>();
+                    .Take(paginatorData.PageSize).ToListAsync() ?? new List<TRecord>();
                 return list;
             }
         }

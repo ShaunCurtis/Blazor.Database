@@ -28,15 +28,15 @@ namespace Blazor.SPA.Services
         /// </summary>
         /// <returns></returns>
         public override async Task<List<TRecord>> GetRecordListAsync<TRecord>()
-            => await this.HttpClient.GetFromJsonAsync<List<TRecord>>($"{GetRecordName<TRecord>()}/list");
+            => await this.HttpClient.GetFromJsonAsync<List<TRecord>>($"/api/{GetRecordName<TRecord>()}/list");
 
         /// <summary>
         /// Inherited IDataService Method
         /// </summary>
         /// <returns></returns>
-        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(Paginator paginator)
+        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(PaginatorData paginatorData)
         {
-            var response = await this.HttpClient.PostAsJsonAsync($"{GetRecordName<TRecord>()}/listpaged", paginator);
+            var response = await this.HttpClient.PostAsJsonAsync($"/api/{GetRecordName<TRecord>()}/listpaged", paginatorData);
             return await response.Content.ReadFromJsonAsync<List<TRecord>>();
         }
 
@@ -46,7 +46,7 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public override async Task<TRecord> GetRecordAsync<TRecord>(int id)
         {
-            var response = await this.HttpClient.PostAsJsonAsync($"{GetRecordName<TRecord>()}/read", id);
+            var response = await this.HttpClient.PostAsJsonAsync($"/api/{GetRecordName<TRecord>()}/read", id);
             var result = await response.Content.ReadFromJsonAsync<TRecord>();
             return result;
         }
@@ -56,7 +56,7 @@ namespace Blazor.SPA.Services
         /// </summary>
         /// <returns></returns>
         public override async Task<int> GetRecordListCountAsync<TRecord>()
-            => await this.HttpClient.GetFromJsonAsync<int>($"{GetRecordName<TRecord>()}/count");
+            => await this.HttpClient.GetFromJsonAsync<int>($"/api/{GetRecordName<TRecord>()}/count");
 
         /// <summary>
         /// Inherited IDataService Method
@@ -65,7 +65,7 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public override async Task<DbTaskResult> UpdateRecordAsync<TRecord>(TRecord record)
         {
-            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"{GetRecordName<TRecord>()}/update", record);
+            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"/api/{GetRecordName<TRecord>()}/update", record);
             var result = await response.Content.ReadFromJsonAsync<DbTaskResult>();
             return result;
         }
@@ -77,7 +77,7 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public override async Task<DbTaskResult> CreateRecordAsync<TRecord>(TRecord record)
         {
-            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"{GetRecordName<TRecord>()}/create", record);
+            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"/api/{GetRecordName<TRecord>()}/create", record);
             var result = await response.Content.ReadFromJsonAsync<DbTaskResult>();
             return result;
         }
@@ -89,7 +89,7 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public override async Task<DbTaskResult> DeleteRecordAsync<TRecord>(TRecord record)
         {
-            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"{GetRecordName<TRecord>()}/update", record);
+            var response = await this.HttpClient.PostAsJsonAsync<TRecord>($"/api/{GetRecordName<TRecord>()}/update", record);
             var result = await response.Content.ReadFromJsonAsync<DbTaskResult>();
             return result;
         }

@@ -153,7 +153,7 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public async Task GetRecordsAsync()
         {
-            this.Records = await DataService.GetRecordListAsync<TRecord>(this.Paginator);
+            this.Records = await DataService.GetRecordListAsync<TRecord>(this.Paginator.GetData);
             this.Paginator.RecordCount = await GetRecordListCountAsync();
             this.ListHasChanged?.Invoke(null, EventArgs.Empty);
         }

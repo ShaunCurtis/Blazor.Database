@@ -137,5 +137,15 @@ namespace Blazor.SPA.Data
         /// </summary>
         public void NotifySortingChanged()
             => this.ToPage(1, true);
+
+        public PaginatorData GetData => new PaginatorData()
+        {
+            Page = this.Page,
+            PageSize = this.PageSize,
+            BlockSize = this.BlockSize,
+            RecordCount = this.RecordCount,
+            SortColumn = this.SortColumn,
+            SortDescending = this.SortDescending
+        };
     }
 }

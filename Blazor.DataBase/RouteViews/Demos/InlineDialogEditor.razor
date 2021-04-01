@@ -1,0 +1,63 @@
+﻿@page "/inlinedialogEditor"
+@using Blazor.Database.Data
+
+<InlineDialog Lock="this._isDirty" Transparent="false">
+    <EditForm Model="@Model" OnValidSubmit="@HandleValidSubmit" class="p-3">
+        <EditFormState @ref="editFormState" EditStateChanged="this.EditStateChanged"></EditFormState>
+        <ValidationFormState @ref="validationFormState"></ValidationFormState>
+
+        <label class="form-label">ID:</label>
+        <InputNumber class="form-control" @bind-Value="Model.ID" />
+        <label class="form-label">Date:</label>
+        <InputDate class="form-control" @bind-Value="Model.Date" />
+        <ValidationMessage For="@(() => Model.Date)" />
+        <label class="form-label">Temp C:</label>
+        <InputNumber class="form-control" @bind-Value="Model.TemperatureC" />
+        <ValidationMessage For="@(() => Model.TemperatureC)" />
+        <label class="form-label">Summary:</label>
+        <InputText class="form-control" @bind-Value="Model.Summary" />
+        <ValidationMessage For="@(() => Model.Summary)" />
+
+        <div class="mt-2">
+            <div>Validation Messages:</div>
+            <ValidationSummary />
+        </div>
+
+        <div class="text-right mt-2">
+            <button class="btn @btnStateColour" disabled>@btnStateText</button>
+            <button class="btn @btnValidColour" disabled>@btnValidText</button>
+            <button class="btn btn-primary" type="submit" disabled="@_btnSubmitDisabled">Submit</button>
+        </div>
+
+    </EditForm>
+</InlineDialog>
+
+@code {
+
+    protected bool _isDirty = false;
+    protected bool _isValid => validationFormState?.IsValid ?? true;
+    protected string btnStateColour => _isDirty ? "btn-danger" : "btn-success";
+    protected string btnStateText => _isDirty ? "Dirty" : "Clean";
+    protected string btnValidColour => !_isValid ? "btn-danger" : "btn-success";
+    protected string btnValidText => !_isValid ? "Invalid" : "Valid";
+    protected bool _btnSubmitDisabled => !(_isValid && _isDirty);
+
+    protected EditFormState editFormState { get; set; }
+    protected ValidationFormState validationFormState { get; set; }
+
+    private WeatherForecast Model = new WeatherForecast()
+    {
+        ID = 1,
+        Date = DateTime.Now,
+        TemperatureC = 22,
+        Summary = "Balmy"
+    };
+
+    private void HandleValidSubmit()
+    {
+        this.editFormState.UpdateState();
+    }
+
+    private void EditStateChanged(bool editstate)
+        => this._isDirty = editstate;
+}

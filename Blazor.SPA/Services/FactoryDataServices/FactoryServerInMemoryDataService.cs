@@ -43,26 +43,26 @@ namespace Blazor.SPA.Services
             return await dbset.ToListAsync() ?? new List<TRecord>();
         }
 
-        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(Paginator paginator)
+        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(PaginatorData paginatorData)
         {
-            var startpage = paginator.Page <= 1
+            var startpage = paginatorData.Page <= 1
                 ? 0
-                : (paginator.Page - 1) * paginator.PageSize;
+                : (paginatorData.Page - 1) * paginatorData.PageSize;
             var dbset = _dbContext.GetDbSet<TRecord>();
-            var isSortable = typeof(TRecord).GetProperty(paginator.SortColumn) != null;
+            var isSortable = typeof(TRecord).GetProperty(paginatorData.SortColumn) != null;
             if (isSortable)
             {
                 var list = await dbset
-                    .OrderBy(paginator.SortDescending ? $"{paginator.SortColumn} descending" : paginator.SortColumn)
+                    .OrderBy(paginatorData.SortDescending ? $"{paginatorData.SortColumn} descending" : paginatorData.SortColumn)
                     .Skip(startpage)
-                    .Take(paginator.PageSize).ToListAsync() ?? new List<TRecord>();
+                    .Take(paginatorData.PageSize).ToListAsync() ?? new List<TRecord>();
                 return list;
             }
             else
             {
                 var list = await dbset
                     .Skip(startpage)
-                    .Take(paginator.PageSize).ToListAsync() ?? new List<TRecord>();
+                    .Take(paginatorData.PageSize).ToListAsync() ?? new List<TRecord>();
                 return list;
             }
         }
