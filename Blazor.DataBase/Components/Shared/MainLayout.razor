@@ -3,8 +3,8 @@
 @inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <ServerNavMenu />
+    <div class="@_sidebarCss">
+        <NavMenu />
     </div>
 
     <div class="main">
@@ -18,3 +18,13 @@
     </div>
 </div>
 
+@code {
+
+    [Inject] NavigationManager NavManager { get; set; }
+
+    private bool _isWasm => NavManager?.Uri.Contains("wasm", StringComparison.CurrentCultureIgnoreCase) ?? false;
+
+    private string _sidebarCss => _isWasm ? "sidebar sidebar-teal" : "sidebar sidebar-steel";
+
+
+}

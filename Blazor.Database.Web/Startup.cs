@@ -64,13 +64,13 @@ namespace Blazor.Database.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/WASM"), app1 =>
+            app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/wasm"), app1 =>
             {
-                app1.UseBlazorFrameworkFiles("/WASM");
+                app1.UseBlazorFrameworkFiles("/wasm");
                 app1.UseRouting();
                 app1.UseEndpoints(endpoints =>
                 {
-                    endpoints.MapFallbackToPage("/red/{*path:nonfile}", "/_WASM");
+                    endpoints.MapFallbackToPage("/wasm/{*path:nonfile}", "/_WASM");
                 });
             });
 

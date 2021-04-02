@@ -5,6 +5,8 @@
 
     [Inject] NavigationManager NavManager { get; set; }
 
+    private bool _isWasm => NavManager?.Uri.Contains("wasm", StringComparison.CurrentCultureIgnoreCase) ?? false;
+
     protected override Task OnInitializedAsync()
     {
         return base.OnInitializedAsync();
@@ -20,6 +22,11 @@
     => this.NavManager.NavigateTo($"weather/view/{id}");
 
     public void Exit()
-    => this.NavManager.NavigateTo($"");
+    {
+        if (_isWasm)
+            this.NavManager.NavigateTo($"/wasm");
+        else
+            this.NavManager.NavigateTo($"/");
+    }
 
 }

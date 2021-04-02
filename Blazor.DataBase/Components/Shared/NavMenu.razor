@@ -1,7 +1,7 @@
 ﻿@namespace Blazor.Database.Components
 
 <div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Blazor.Database.Web</a>
+    <a class="navbar-brand" href="">@_title</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -9,11 +9,22 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/WASM" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> WASM Home
-            </NavLink>
-        </li>
+        @if (_isWasm)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Server Home
+                </NavLink>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="/WASM" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> WASM Home
+                </NavLink>
+            </li>
+        }
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
@@ -66,6 +77,13 @@
 </div>
 
 @code {
+
+    [Inject] NavigationManager NavManager { get; set; }
+
+    private bool _isWasm => NavManager?.Uri.Contains("wasm", StringComparison.CurrentCultureIgnoreCase) ?? false;
+
+    private string _title => _isWasm ? "Blazor.Database.WASM" : "Blazor.Database.Server";
+
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;

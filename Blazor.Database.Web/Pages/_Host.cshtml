@@ -14,9 +14,10 @@
     <base href="~/" />
     <link rel="stylesheet" href="css/site.min.css" />
     <link href="Blazor.Database.Web.styles.css" rel="stylesheet" />
+    <link href="/wasm/Blazor.Database.styles.css" rel="stylesheet" />
 </head>
 <body>
-    <component type="typeof(Blazor.Database.Components.ServerApp)" render-mode="ServerPrerendered" />
+    <component type="typeof(Blazor.Database.Components.WeatherApp)" render-mode="ServerPrerendered" />
 
     <div id="blazor-error-ui">
         <environment include="Staging,Production">
@@ -29,7 +30,7 @@
         <a class="dismiss">🗙</a>
     </div>
 
-    <script src="_content/Blazor.Database/site.js"></script>
+    <script src="/wasm/site.js"></script>
     <script src="_framework/blazor.server.js"></script>
 </body>
 </html>

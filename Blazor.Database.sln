@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Database.WASM", "Blazor.DataBase.WASM\Blazor.Database.WASM.csproj", "{6B1A98B4-794F-48F5-9F9E-2D80B2D9014D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Database.Web", "Blazor.Database.Web\Blazor.Database.Web.csproj", "{7E11628B-1A8A-4D10-9AD5-FE9F3F9B3BC0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Database", "Blazor.DataBase\Blazor.Database.csproj", "{34EC4D48-489B-480C-8484-AF33931073E6}"
@@ -22,10 +20,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6B1A98B4-794F-48F5-9F9E-2D80B2D9014D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B1A98B4-794F-48F5-9F9E-2D80B2D9014D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B1A98B4-794F-48F5-9F9E-2D80B2D9014D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B1A98B4-794F-48F5-9F9E-2D80B2D9014D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E11628B-1A8A-4D10-9AD5-FE9F3F9B3BC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E11628B-1A8A-4D10-9AD5-FE9F3F9B3BC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E11628B-1A8A-4D10-9AD5-FE9F3F9B3BC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
