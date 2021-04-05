@@ -138,6 +138,9 @@ namespace Blazor.SPA.Data
         public void NotifySortingChanged()
             => this.ToPage(1, true);
 
+        /// <summary>
+        ///  Builds a PaginatorData Instance on the current data set
+        /// </summary>
         public PaginatorData GetData => new PaginatorData()
         {
             Page = this.Page,
