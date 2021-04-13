@@ -1,4 +1,5 @@
 ﻿@page "/EditorControls"
+@namespace Blazor.Database.Components
 
 <EditForm Model="this.model" OnValidSubmit="this.ValidSubmit">
     <div class="container m-5 p-4 border border-secondary">
@@ -99,16 +100,14 @@
 
     private void CheckButton()
     {
-        var x = true;
     }
 
     private void ValidSubmit()
     {
-        var x = true;
     }
 
     private SortedDictionary<int, string> opinion => new SortedDictionary<int, string>()
-    {
+{
         {1, "Agree"},
         {2, "Ambivalent"},
         {3, "Disagree"},

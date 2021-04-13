@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using Blazor.Database.Web.Extensions;
+using Blazor.SPA.Services;
 
 namespace Blazor.Database.Web
 {
@@ -53,6 +54,7 @@ namespace Blazor.Database.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //app.UseWebAssemblyDebugging();
             }
             else
             {

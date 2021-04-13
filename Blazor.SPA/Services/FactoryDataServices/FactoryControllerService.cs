@@ -235,7 +235,7 @@ namespace Blazor.SPA.Services
         /// <returns></returns>
         public Task<bool> NewRecordAsync()
         {
-            this.Record = default(TRecord);
+            this.Record = new TRecord();
             return Task.FromResult(false);
         }
 

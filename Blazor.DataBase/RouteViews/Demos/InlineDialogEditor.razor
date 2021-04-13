@@ -1,5 +1,5 @@
 ﻿@page "/inlinedialogEditor"
-@using Blazor.Database.Data
+@namespace Blazor.Database.Components
 
 <InlineDialog Lock="this._isDirty" Transparent="false">
     <EditForm Model="@Model" OnValidSubmit="@HandleValidSubmit" class="p-3">

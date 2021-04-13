@@ -8,10 +8,19 @@
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
+
+    [Parameter] public int ID { get; set; } = 0;
+
     private int currentCount = 0;
 
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        currentCount = ID;
+        return base.OnInitializedAsync();
     }
 }

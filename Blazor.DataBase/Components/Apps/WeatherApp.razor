@@ -2,11 +2,28 @@
 
 <Router AppAssembly="@typeof(WeatherForecast).Assembly" PreferExactMatches="@true">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <RouteViewManager RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
     <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
+        <RouteNotFoundManager DefaultLayout="@typeof(MainLayout)">
             <p>Sorry, there's nothing at this address.</p>
-        </LayoutView>
+        </RouteNotFoundManager>
     </NotFound>
 </Router>
+
+@code {
+
+    [Inject] private RouteViewService RouteViewService { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        var componentParameters = new SortedDictionary<string, object>();
+        componentParameters.Add("ID", 0);
+        var route = new CustomRouteData() { PageType = typeof(Counter), RouteMatch = @"^\/counted\/(\d+)", ComponentParameters = componentParameters };
+        this.RouteViewService.Routes.Add(route);
+        this.RouteViewService.Routes.Add(new CustomRouteData() { PageType = typeof(Counter), RouteMatch = @"^\/counters" });
+        this.RouteViewService.Routes.Add(new CustomRouteData() { PageType = typeof(RouteViewer), RouteMatch = @"^\/routeviewer" });
+
+        return base.OnInitializedAsync();
+    }
+}

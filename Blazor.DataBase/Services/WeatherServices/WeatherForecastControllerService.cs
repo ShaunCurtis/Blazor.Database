@@ -12,6 +12,8 @@ namespace Blazor.Database.Services
 {
     public class WeatherForecastControllerService : FactoryControllerService<WeatherForecast>, IFactoryControllerService<WeatherForecast>
     {
+        public int FormStep { get; set; } = 1;
+        
         public WeatherForecastControllerService(IFactoryDataService factoryDataService) : base(factoryDataService) { }
     }
 }

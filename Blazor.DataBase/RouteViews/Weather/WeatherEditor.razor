@@ -1,5 +1,7 @@
 ﻿@page "/weather/edit/{ID:int}"
 
+@namespace Blazor.Database.RouteViews
+
 <WeatherForecastEditorForm ID="this.ID" ExitAction="this.ExitToList"></WeatherForecastEditorForm>
 
 @code {

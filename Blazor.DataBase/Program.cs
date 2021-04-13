@@ -6,7 +6,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Blazor.DataBase
+namespace Blazor.Database
 {
     public class Program
     {

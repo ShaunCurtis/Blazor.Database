@@ -21,6 +21,7 @@ namespace Blazor.Database.Web.Extensions
             var dbContext = configuration.GetValue<string>("Configuration:DBContext");
             services.AddDbContextFactory<LocalWeatherDbContext>(options => options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
             services.AddSingleton<IFactoryDataService, LocalDatabaseDataService>();
+            services.AddSingleton<RouteViewService>();
 
             services.AddScoped<WeatherForecastControllerService>();
 
@@ -34,6 +35,7 @@ namespace Blazor.Database.Web.Extensions
             var memdbContext = "Data Source=:memory:";
             services.AddDbContextFactory<InMemoryWeatherDbContext>(options => options.UseSqlite(memdbContext), ServiceLifetime.Singleton);
             services.AddSingleton<IFactoryDataService, TestDatabaseDataService>();
+            services.AddSingleton<RouteViewService>();
 
             services.AddScoped<WeatherForecastControllerService>();
 

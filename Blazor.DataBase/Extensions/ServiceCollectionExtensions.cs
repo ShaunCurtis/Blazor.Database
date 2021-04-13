@@ -15,6 +15,7 @@ namespace Blazor.Database.Extensions
         {
             services.AddScoped<IFactoryDataService, FactoryWASMDataService>();
             services.AddScoped<WeatherForecastControllerService>();
+            services.AddSingleton<RouteViewService>();
 
             return services;
         }
