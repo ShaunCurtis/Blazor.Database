@@ -1,0 +1,93 @@
+﻿@page "/Random"
+@namespace Blazor.Database.Components
+
+<div class="container m-2 px-3 p-t bg-primary text-white">
+    <div class="row">
+        <div class="col-12">
+            <h3>@this.Title</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">Number</div>
+        <div class="col-2">@RdmService.Value</div>
+        <div class="col-2"><button class="btn btn-secondary" @onclick="(e) => NewRandomNumber()">New Number</button></div>
+    </div>
+    <div class="row bg-dark mt-2">
+        <div class="col-3">
+            Initialized:
+        </div>
+        <div class="col-1">
+            @this.InitRun
+        </div>
+        <div class="col-3">
+            Params Set:
+        </div>
+        <div class="col-1">
+            @this.ParamsSetRun
+        </div>
+        <div class="col-3">
+            Rendered:
+        </div>
+        <div class="col-1">
+            @this.Rendered
+        </div>
+    </div>
+</div>
+
+<div class="container m-2 px-3 p-t bg-dark text-white">
+    <div class="row">
+        <div class="col-3">
+            Initialized:
+        </div>
+        <div class="col-1">
+            @this.InitRun
+        </div>
+        <div class="col-3">
+            Params Set:
+        </div>
+        <div class="col-1">
+            @this.ParamsSetRun
+        </div>
+        <div class="col-3">
+            Rendered:
+        </div>
+        <div class="col-1">
+            @this.Rendered
+        </div>
+    </div>
+</div>
+
+<ValueDisplay Title="Unwired Display"></ValueDisplay>
+<ValueDisplay WireEvent="true" Title="Wired Display"></ValueDisplay>
+<ValueDisplay Value="RdmService.Value" Title="Parameter Display"></ValueDisplay>
+
+@code {
+    private string Title = "Parameter Demonstrator";
+
+    [Inject] private RandomNumberService RdmService { get; set; }
+
+    private void NewRandomNumber()
+        => RdmService.NewNumber();
+
+    private int InitRun = 0;
+    private int ParamsSetRun = 0;
+    private int Rendered = 1;
+
+    protected override Task OnInitializedAsync()
+    {
+        InitRun++;
+        return base.OnInitializedAsync();
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        this.ParamsSetRun++;
+        return base.OnParametersSetAsync();
+    }
+
+    protected override bool ShouldRender()
+    {
+        Rendered++;
+        return true;
+    }
+}

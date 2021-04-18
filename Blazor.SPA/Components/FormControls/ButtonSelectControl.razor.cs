@@ -4,11 +4,13 @@
 /// ==================================
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using System;
 using System.Collections.Generic;
 
 namespace Blazor.SPA.Components
 {
-    public partial class ButtonSelectControl : BaseInputControl<int>
+    public partial class ButtonSelectControl : InputBase<int>
     {
         public enum ButtonSize { Large, Normal, Small }
 
@@ -57,6 +59,8 @@ namespace Blazor.SPA.Components
             return css.Trim();
         }
 
+        protected override bool TryParseValueFromString(string value, out int result, out string validationErrorMessage)
+            => throw new NotSupportedException($"This component does not parse string inputs. Bind to the '{nameof(CurrentValue)}' property, not '{nameof(CurrentValueAsString)}'.");
 
     }
 }

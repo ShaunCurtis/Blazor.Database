@@ -1,0 +1,18 @@
+﻿<button class="@buttonClass" @onclick="BtnClicked">@ChildContent</button>
+
+@code {
+    [Parameter] public EventCallback<MouseEventArgs> Clicked { get; set; }
+
+    [Parameter]public RenderFragment ChildContent { get; set; }
+
+    private string buttonClass => inAction ? "btn btn-danger" : "btn btn-dark" ;
+
+    private bool inAction;
+
+    private async Task BtnClicked(MouseEventArgs e)
+    {
+        inAction = true;
+        if (Clicked.HasDelegate) await Clicked.InvokeAsync(e);
+        inAction = false;
+    }
+}
