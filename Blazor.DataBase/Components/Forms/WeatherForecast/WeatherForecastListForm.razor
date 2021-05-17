@@ -19,7 +19,7 @@
         <RowTemplate>
             <UIDataTableRow>
                 <UIDataTableColumn>@context.ID</UIDataTableColumn>
-                <UIDataTableColumn> @context.Date.ToShortDateString()</UIDataTableColumn>
+                <UIDataTableColumn> @context.Date.LocalDateTime.ToShortDateString()</UIDataTableColumn>
                 <UIDataTableColumn>@context.TemperatureC</UIDataTableColumn>
                 <UIDataTableColumn>@context.TemperatureF</UIDataTableColumn>
                 <UIDataTableColumn>@context.Summary</UIDataTableColumn>

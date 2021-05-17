@@ -10,7 +10,7 @@ namespace Blazor.Database.Data
     {
         [Key] public int ID { get; set; } = -1;
 
-        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTimeOffset Date { get; set; } = DateTimeOffset.Now;
 
         public int TemperatureC { get; set; } = 0;
 
@@ -20,7 +20,7 @@ namespace Blazor.Database.Data
 
         [NotMapped] public Guid GUID { get; init; } = Guid.NewGuid();
 
-        [NotMapped] public string DisplayName => $"Weather Forecast for {this.Date.ToShortDateString()} ";
+        [NotMapped] public string DisplayName => $"Weather Forecast for {this.Date.LocalDateTime.ToShortDateString()} ";
 
         // A long string field to demo using a max row in a data table
         [NotMapped] public string Description => $"The Weather Forecast for this {this.Date.DayOfWeek}, the {this.Date.Day} of the month {this.Date.Month} in the year of {this.Date.Year} is {this.Summary}.  From the font of all knowledge!";

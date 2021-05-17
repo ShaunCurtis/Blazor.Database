@@ -1,7 +1,7 @@
-﻿/// =================================
-/// Author: Shaun Curtis, Cold Elm
+﻿/// ======================================
+/// Author: Shaun Curtis, Cold Elm Coders
 /// License: MIT
-/// ==================================
+/// ======================================
 
 using Blazor.Database.Data;
 using Blazor.Database.Services;

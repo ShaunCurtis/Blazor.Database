@@ -15,7 +15,7 @@
                 Date
             </UILabelColumn>
             <UIInputColumn Cols="3">
-                <InputReadOnlyText Value="@this.ViewService.Record.Date.ToShortDateString()"></InputReadOnlyText>
+                <InputReadOnlyText Value="@this.ViewService.Record.Date.LocalDateTime.ToShortDateString()"></InputReadOnlyText>
             </UIInputColumn>
             <UIColumn Cols="7"></UIColumn>
         </UIFormRow>

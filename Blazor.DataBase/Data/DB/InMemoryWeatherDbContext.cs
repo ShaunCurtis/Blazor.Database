@@ -42,7 +42,7 @@ namespace Blazor.Database.Data
             cmd.ExecuteNonQuery();
             foreach (var forecast in this.NewForecasts)
             {
-                cmd.CommandText = $"INSERT INTO WeatherForecast([Date], [TemperatureC], [Summary]) VALUES('{forecast.Date.ToLongDateString()}', {forecast.TemperatureC}, '{forecast.Summary}')";
+                cmd.CommandText = $"INSERT INTO WeatherForecast([Date], [TemperatureC], [Summary]) VALUES('{forecast.Date.LocalDateTime.ToLongDateString()}', {forecast.TemperatureC}, '{forecast.Summary}')";
                 cmd.ExecuteNonQuery();
             }
         }

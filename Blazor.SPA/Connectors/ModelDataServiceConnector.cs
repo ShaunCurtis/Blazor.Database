@@ -38,7 +38,7 @@ namespace Blazor.SPA.Connectors
         public async ValueTask<DbTaskResult> ModifyRecordAsync<TModel>(TModel model) where TModel : class, IDbRecord<TModel>, new()
             => await this.dataBroker.UpdateRecordAsync<TModel>(model);
 
-        public async ValueTask<DbTaskResult> RemoveRecordByIdAsync<TModel>(TModel model) where TModel : class, IDbRecord<TModel>, new()
+        public async ValueTask<DbTaskResult> RemoveRecordAsync<TModel>(TModel model) where TModel : class, IDbRecord<TModel>, new()
             => await this.dataBroker.DeleteRecordAsync<TModel>(model);
 
         public async ValueTask<int> GetRecordCountAsync<TModel>() where TModel : class, IDbRecord<TModel>, new()
