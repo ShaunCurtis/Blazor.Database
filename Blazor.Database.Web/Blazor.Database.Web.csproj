@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Blazor.DataBase\Blazor.Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewServices\" />
+  </ItemGroup>
+
 </Project>

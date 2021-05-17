@@ -15,7 +15,7 @@
                 Date
             </UILabelColumn>
             <UIInputColumn Cols="3">
-                <InputReadOnlyText Value="@this.ControllerService.Record.Date.ToShortDateString()"></InputReadOnlyText>
+                <InputReadOnlyText Value="@this.ViewService.Record.Date.ToShortDateString()"></InputReadOnlyText>
             </UIInputColumn>
             <UIColumn Cols="7"></UIColumn>
         </UIFormRow>
@@ -24,7 +24,7 @@
                 Temperature &deg;C
             </UILabelColumn>
             <UIInputColumn Cols="2">
-                <InputReadOnlyText Value="@this.ControllerService.Record.TemperatureC.ToString()"></InputReadOnlyText>
+                <InputReadOnlyText Value="@this.ViewService.Record.TemperatureC.ToString()"></InputReadOnlyText>
             </UIInputColumn>
             <UIColumn Cols="8"></UIColumn>
         </UIFormRow>
@@ -33,7 +33,7 @@
                 Temperature &deg;f
             </UILabelColumn>
             <UIInputColumn Cols="2">
-                <InputReadOnlyText Value="@this.ControllerService.Record.TemperatureF.ToString()"></InputReadOnlyText>
+                <InputReadOnlyText Value="@this.ViewService.Record.TemperatureF.ToString()"></InputReadOnlyText>
             </UIInputColumn>
             <UIColumn Cols="8"></UIColumn>
         </UIFormRow>
@@ -42,7 +42,7 @@
                 Summary
             </UILabelColumn>
             <UIInputColumn Cols="9">
-                <InputReadOnlyText Value="@this.ControllerService.Record.Summary"></InputReadOnlyText>
+                <InputReadOnlyText Value="@this.ViewService.Record.Summary"></InputReadOnlyText>
             </UIInputColumn>
         </UIFormRow>
     </UIContainer>

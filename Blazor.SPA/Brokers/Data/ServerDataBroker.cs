@@ -12,34 +12,30 @@ using Blazor.SPA.Extensions;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 
-namespace Blazor.SPA.Services
+namespace Blazor.SPA.Brokers
 {
-    public class FactoryServerDataService<TDbContext> :
-        FactoryDataService,
-        IFactoryDataService
+    /// <summary>
+    /// Blazor Server Data Broker
+    /// Interfaces through EF with SQL Database
+    /// </summary>
+    public class ServerDataBroker<TDbContext> :
+        BaseDataBroker,
+        IDataBroker
         where TDbContext : DbContext
     {
 
         protected virtual IDbContextFactory<TDbContext> DBContext { get; set; } = null;
 
-        public FactoryServerDataService(IConfiguration configuration, IDbContextFactory<TDbContext> dbContext) : base(configuration)
+        public ServerDataBroker(IConfiguration configuration, IDbContextFactory<TDbContext> dbContext)
             => this.DBContext = dbContext;
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <returns></returns>
-        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>()
+        public override async ValueTask<List<TRecord>> SelectAllRecordsAsync<TRecord>()
             => await this.DBContext
             .CreateDbContext()
             .GetDbSet<TRecord>()
             .ToListAsync() ?? new List<TRecord>();
 
-        /// <summary>
-        /// Method to get the Record List
-        /// </summary>
-        /// <returns></returns>
-        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(PaginatorData paginatorData)
+        public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(PaginatorData paginatorData)
         {
             var startpage = paginatorData.Page <= 1
                 ? 0
@@ -67,64 +63,37 @@ namespace Blazor.SPA.Services
             }
         }
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <returns></returns>
-        public override async Task<TRecord> GetRecordAsync<TRecord>(int id)
+        public override async ValueTask<TRecord> SelectRecordAsync<TRecord>(int id)
             => await this.DBContext.
                 CreateDbContext().
                 GetDbSet<TRecord>().
                 FirstOrDefaultAsync(item => ((IDbRecord<TRecord>)item).ID == id) ?? default;
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <returns></returns>
-        public override async Task<int> GetRecordListCountAsync<TRecord>()
+        public override async ValueTask<int> SelectRecordListCountAsync<TRecord>()
             => await this.DBContext.CreateDbContext().GetDbSet<TRecord>().CountAsync();
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        public override async Task<DbTaskResult> UpdateRecordAsync<TRecord>(TRecord record)
+        public override async ValueTask<DbTaskResult> UpdateRecordAsync<TRecord>(TRecord record)
         {
             var context = this.DBContext.CreateDbContext();
             context.Entry(record).State = EntityState.Modified;
             return await this.UpdateContext(context);
         }
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        public override async Task<DbTaskResult> CreateRecordAsync<TRecord>(TRecord record)
+        public override async ValueTask<DbTaskResult> InsertRecordAsync<TRecord>(TRecord record)
         {
             var context = this.DBContext.CreateDbContext();
             context.GetDbSet<TRecord>().Add(record);
             return await this.UpdateContext(context);
         }
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public override async Task<DbTaskResult> DeleteRecordAsync<TRecord>(TRecord record)
+        public override async ValueTask<DbTaskResult> DeleteRecordAsync<TRecord>(TRecord record)
         {
             var context = this.DBContext.CreateDbContext();
             context.Entry(record).State = EntityState.Deleted;
             return await this.UpdateContext(context);
         }
 
-        /// <summary>
         /// Helper method to update the context and return a DBTaskResult
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
         protected async Task<DbTaskResult> UpdateContext(DbContext context)
             => await context.SaveChangesAsync() > 0 ? DbTaskResult.OK() : DbTaskResult.NotOK();
     }

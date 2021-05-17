@@ -3,12 +3,16 @@
 /// License: MIT
 /// ==================================
 
-using Blazor.Database.Services;
-using Blazor.SPA.Services;
-using Microsoft.Extensions.DependencyInjection;
+using Blazor.Database.Brokers;
 using Blazor.Database.Data;
+using Blazor.Database.Services;
+using Blazor.SPA.Brokers;
+using Blazor.SPA.Connectors;
+using Blazor.SPA.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Blazor.Database.Extensions
 {
@@ -16,7 +20,7 @@ namespace Blazor.Database.Extensions
     {
         public static IServiceCollection AddWASMApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<IFactoryDataService, FactoryWASMDataService>();
+            services.AddScoped<IDataBroker, APIDataBroker>();
             AddCommonServices(services);
 
             return services;
@@ -27,7 +31,7 @@ namespace Blazor.Database.Extensions
             // Local DB Setup
             var dbContext = configuration.GetValue<string>("Configuration:DBContext");
             services.AddDbContextFactory<LocalWeatherDbContext>(options => options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
-            services.AddSingleton<IFactoryDataService, LocalDatabaseDataService>();
+            services.AddSingleton<IDataBroker, WeatherForecastSQLDataBroker>();
             AddCommonServices(services);
 
             return services;
@@ -39,7 +43,7 @@ namespace Blazor.Database.Extensions
             // In Memory DB Setup
             var memdbContext = "Data Source=:memory:";
             services.AddDbContextFactory<InMemoryWeatherDbContext>(options => options.UseSqlite(memdbContext), ServiceLifetime.Singleton);
-            services.AddSingleton<IFactoryDataService, TestDatabaseDataService>();
+            services.AddSingleton<IDataBroker, WeatherForecastInMemoryDataBroker>();
             AddCommonServices(services);
 
             return services;
@@ -48,8 +52,11 @@ namespace Blazor.Database.Extensions
         private static void AddCommonServices(this IServiceCollection services)
         {
             services.AddSingleton<RouteViewService>();
-            services.AddScoped<WeatherForecastControllerService>();
-            services.AddScoped<WeatherForecastControllerService>();
+            services.AddScoped<ILogger, Logger<LoggingBroker>>();
+            services.AddScoped<ILoggingBroker, LoggingBroker>();
+            services.AddScoped<IDateTimeBroker, DateTimeBroker>();
+            services.AddScoped<IDataServiceConnector, ModelDataServiceConnector>();
+            services.AddScoped<WeatherForecastViewService>();
             services.AddSingleton<RandomNumberService>();
         }
     }

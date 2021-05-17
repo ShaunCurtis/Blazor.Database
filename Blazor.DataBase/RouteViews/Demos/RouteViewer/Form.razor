@@ -26,7 +26,7 @@
 @code {
     [CascadingParameter] protected RouteViewManager RouteViewManager { get; set; }
 
-    [Inject] protected WeatherForecastControllerService DataService { get; set; }
+    [Inject] protected WeatherForecastViewService DataService { get; set; }
 
     protected WeatherForecast Model => this.DataService?.Record ?? null;
 

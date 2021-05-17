@@ -1,5 +1,5 @@
 /// =================================
-/// Author: Shaun Curtis, Cold Elm
+/// Author: Shaun Curtis, Cold Elm Coders
 /// License: MIT
 /// ==================================
 
@@ -8,17 +8,20 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using System.Diagnostics;
 using System;
 using Blazor.SPA.Extensions;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 
-namespace Blazor.SPA.Services
+namespace Blazor.SPA.Brokers
 {
-    public class FactoryServerInMemoryDataService<TDbContext> :
-        FactoryDataService,
-        IFactoryDataService
+    /// <summary>
+    /// Blazor In-Memory SQLite Server Data Broker
+    /// Interfaces through EF with SQL Database
+    /// </summary>
+    public class InMemoryDataBroker<TDbContext> :
+        BaseDataBroker,
+        IDataBroker
         where TDbContext : DbContext
     {
 
@@ -26,24 +29,20 @@ namespace Blazor.SPA.Services
 
         private DbContext _dbContext;
 
-        public FactoryServerInMemoryDataService(IConfiguration configuration, IDbContextFactory<TDbContext> dbContext) : base(configuration)
+        public InMemoryDataBroker(IConfiguration configuration, IDbContextFactory<TDbContext> dbContext)
         {
             this.DBContext = dbContext;
             _dbContext = this.DBContext.CreateDbContext();
             // Debug.WriteLine($"==> New Instance {this.ToString()} ID:{this.ServiceID.ToString()} ");
         }
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <returns></returns>
-        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>()
+        public override async ValueTask<List<TRecord>> SelectAllRecordsAsync<TRecord>()
         {
             var dbset = _dbContext.GetDbSet<TRecord>();
             return await dbset.ToListAsync() ?? new List<TRecord>();
         }
 
-        public override async Task<List<TRecord>> GetRecordListAsync<TRecord>(PaginatorData paginatorData)
+        public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(PaginatorData paginatorData)
         {
             var startpage = paginatorData.Page <= 1
                 ? 0
@@ -67,45 +66,26 @@ namespace Blazor.SPA.Services
             }
         }
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <returns></returns>
-        public override async Task<TRecord> GetRecordAsync<TRecord>(int id)
+        public override async ValueTask<TRecord> SelectRecordAsync<TRecord>(int id)
         {
             var dbset = _dbContext.GetDbSet<TRecord>();
             return await dbset.FirstOrDefaultAsync(item => ((IDbRecord<TRecord>)item).ID == id) ?? default;
-
         }
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <returns></returns>
-        public override async Task<int> GetRecordListCountAsync<TRecord>()
+        public override async ValueTask<int> SelectRecordListCountAsync<TRecord>()
         {
             var dbset = _dbContext.GetDbSet<TRecord>();
             return await dbset.CountAsync();
         }
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        public override async Task<DbTaskResult> UpdateRecordAsync<TRecord>(TRecord record)
+        public override async ValueTask<DbTaskResult> UpdateRecordAsync<TRecord>(TRecord record)
         {
             _dbContext.Entry(record).State = EntityState.Modified;
             var x = await _dbContext.SaveChangesAsync();
             return new DbTaskResult() { IsOK = true, Type = MessageType.Success };
         }
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        public override async Task<DbTaskResult> CreateRecordAsync<TRecord>(TRecord record)
+        public override async ValueTask<DbTaskResult> InsertRecordAsync<TRecord>(TRecord record)
         {
             var dbset = _dbContext.GetDbSet<TRecord>();
             dbset.Add(record);
@@ -113,12 +93,7 @@ namespace Blazor.SPA.Services
             return new DbTaskResult() { IsOK = true, Type = MessageType.Success, NewID = record.ID };
         }
 
-        /// <summary>
-        /// Inherited IDataService Method
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public override async Task<DbTaskResult> DeleteRecordAsync<TRecord>(TRecord record)
+        public override async ValueTask<DbTaskResult> DeleteRecordAsync<TRecord>(TRecord record)
         {
             _dbContext.Entry(record).State = EntityState.Deleted;
             var x = await _dbContext.SaveChangesAsync();

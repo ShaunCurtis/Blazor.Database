@@ -1,23 +1,27 @@
-﻿using Blazor.Database.Data;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: MIT
+/// ==================================
+
+using Blazor.Database.Data;
 using Blazor.Database.Services;
 using Blazor.SPA.Components;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Threading.Tasks;
 
 namespace Blazor.Database.Components
 {
     public partial class WeatherForecastListForm : ListFormBase<WeatherForecast>
     {
-        [Inject] private WeatherForecastControllerService ControllerService { get; set; }
+        [Inject] private WeatherForecastViewService ViewService { get; set; }
 
-        [Parameter] public bool IsModal {get; set;}
+        [Parameter] public bool IsModal { get; set; }
 
         private BaseModalDialog Modal { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            this.Service = this.ControllerService;
+            this.Service = this.ViewService;
             await base.OnInitializedAsync();
         }
         protected override async void Edit(int id)

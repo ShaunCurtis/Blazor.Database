@@ -4,7 +4,7 @@
 <h1>Weather Forecasts</h1>
 
 <UILoader Loaded="this.IsLoaded">
-    <UIDataTable TRecord="WeatherForecast" Records="this.ControllerService.Records" class="table">
+    <UIDataTable TRecord="WeatherForecast" Records="this.ViewService.Records" class="table">
         <Head>
             <SortControl Paginator="this.Service.Paginator">
                 <UIDataTableHeaderColumn SortField="ID">ID</UIDataTableHeaderColumn>
@@ -34,7 +34,7 @@
     <UIContainer>
         <UIFormRow>
             <UIColumn Cols="8">
-                <PaginatorControl Paginator="this.ControllerService.Paginator"></PaginatorControl>
+                <PaginatorControl Paginator="this.ViewService.Paginator"></PaginatorControl>
             </UIColumn>
             <UIButtonColumn Cols="4">
                 <UIButton Show="true" AdditionalClasses="btn-success" ClickEvent="() => this.New()">New Record</UIButton>

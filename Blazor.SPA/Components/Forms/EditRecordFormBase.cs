@@ -19,14 +19,8 @@ namespace Blazor.SPA.Components
         IDisposable
         where TRecord : class, IDbRecord<TRecord>, new()
     {
-        /// <summary>
-        /// Edit Context for the Editor - built from the service record
-        /// </summary>
         protected EditContext EditContext { get; set; }
 
-        /// <summary>
-        /// Boolean Property tracking the Edit state of the form
-        /// </summary>
         protected bool IsDirty
         {
             get => this._isDirty;
@@ -40,14 +34,8 @@ namespace Blazor.SPA.Components
             }
         }
 
-        /// <summary>
-        /// model used by the Edit Context
-        /// </summary>
         protected TRecord Model => this.Service?.Record ?? null;
 
-        /// <summary>
-        /// Reference to the form EditContextState control
-        /// </summary>
         protected EditFormState EditFormState { get; set; }
 
         // Set of boolean properties/fields used in the razor code and methods to track 
@@ -63,11 +51,6 @@ namespace Blazor.SPA.Components
         protected bool _isInlineDirty => (!this._isModal) && this._isDirty;
         protected string _saveButtonText => this._isNew ? "Save" : "Update";
 
-        /// <summary>
-        /// Method to load the record
-        /// calls the base method to load the record and then sets up the EditContext
-        /// </summary>
-        /// <returns></returns>
         protected override async Task LoadRecordAsync()
         {
             await base.LoadRecordAsync();
@@ -78,35 +61,19 @@ namespace Blazor.SPA.Components
                 this.EditContext.Validate();
         }
 
-        /// <summary>
-        /// Event handler for EditContext OnFieldChanged Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected void FieldChanged(object sender, FieldChangedEventArgs e)
         {
             this._dirtyExit = false;
             this._confirmDelete = false;
         }
 
-        /// <summary>
-        /// Method to change edit state
-        /// </summary>
-        /// <param name="dirty"></param>
         protected void EditStateChanged(bool dirty)
             => this.IsDirty = dirty;
 
 
-        /// <summary>
-        /// Method to change the Validation state
-        /// </summary>
-        /// <param name="valid"></param>
         protected void ValidStateChanged(bool valid)
             => this._isValid = valid;
 
-        /// <summary>
-        /// Method to handle EditForm submission
-        /// </summary>
         protected async void HandleValidSubmit()
         {
             await this.Service.SaveRecordAsync();
@@ -115,18 +82,12 @@ namespace Blazor.SPA.Components
             await this.InvokeAsync(this.StateHasChanged);
         }
 
-        /// <summary>
-        /// Handler for Delete action
-        /// </summary>
         protected void Delete()
         {
             if (!this._isNew)
                 this._confirmDelete = true;
         }
 
-        /// <summary>
-        /// Handler for Delete confirmation
-        /// </summary>
         protected async void ConfirmDelete()
         {
             if (this._confirmDelete)
@@ -137,19 +98,12 @@ namespace Blazor.SPA.Components
             }
         }
 
-        /// <summary>
-        /// Handler for a confirmed exit - i.e. dirty exit
-        /// </summary>
         protected void ConfirmExit()
         {
             this.IsDirty = false;
             this.DoExit();
         }
 
-        /// <summary>
-        /// Handler to Exit the form, dependant on it context
-        /// </summary>
-        /// <param name="result"></param>
         protected void DoExit(ModalResult result = null)
         {
             result = result ?? ModalResult.OK();
@@ -161,9 +115,6 @@ namespace Blazor.SPA.Components
                 this.NavManager.NavigateTo("/");
         }
 
-        /// <summary>
-        /// IDisposable Interface Implementation
-        /// </summary>
         public void Dispose()
             => this.EditContext.OnFieldChanged -= FieldChanged;
     }
