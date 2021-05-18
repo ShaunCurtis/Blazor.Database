@@ -31,7 +31,7 @@ namespace Blazor.Database.Extensions
             // Local DB Setup
             var dbContext = configuration.GetValue<string>("Configuration:DBContext");
             services.AddDbContextFactory<LocalWeatherDbContext>(options => options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
-            services.AddSingleton<IDataBroker, WeatherForecastSQLDataBroker>();
+            services.AddSingleton<IDataBroker, WeatherSQLDataBroker>();
             AddCommonServices(services);
 
             return services;
@@ -43,7 +43,7 @@ namespace Blazor.Database.Extensions
             // In Memory DB Setup
             var memdbContext = "Data Source=:memory:";
             services.AddDbContextFactory<InMemoryWeatherDbContext>(options => options.UseSqlite(memdbContext), ServiceLifetime.Singleton);
-            services.AddSingleton<IDataBroker, WeatherForecastInMemoryDataBroker>();
+            services.AddSingleton<IDataBroker, WeatherInMemoryDataBroker>();
             AddCommonServices(services);
 
             return services;

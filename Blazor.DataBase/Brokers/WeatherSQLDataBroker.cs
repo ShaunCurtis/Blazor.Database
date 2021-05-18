@@ -10,10 +10,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace Blazor.Database.Brokers
 {
-    public class WeatherForecastSQLDataBroker :
+    public class WeatherSQLDataBroker :
         ServerDataBroker<LocalWeatherDbContext>
     {
-        public WeatherForecastSQLDataBroker(IConfiguration configuration, IDbContextFactory<LocalWeatherDbContext> dbContext) : base(configuration, dbContext) { }
+        public WeatherSQLDataBroker(IConfiguration configuration, IDbContextFactory<LocalWeatherDbContext> dbContext) : base(configuration, dbContext) { }
 
     }
 }
