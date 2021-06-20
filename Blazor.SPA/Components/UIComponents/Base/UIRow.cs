@@ -1,9 +1,16 @@
-﻿
+﻿/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
+
 namespace Blazor.SPA.Components
 {
-    class UIRow : UIBase
+    class UIRow : UIComponent
     {
-        protected override string PrimaryClass => "row";
-
+        public UIRow()
+        {
+            CssClasses.Add("row");
+        }
     }
 }

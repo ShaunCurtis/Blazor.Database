@@ -4,13 +4,18 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
+using Microsoft.AspNetCore.Components;
+
 namespace Blazor.SPA.Components
 {
-    public class UIFormRow : UIComponent
+    class UIButton : UIComponent
     {
-        public UIFormRow()
+        [Parameter] public string Type { get; set; } = "button";
+
+        public UIButton()
         {
-            CssClasses.Add("row form-group");
+            CssClasses.Add("btn mr-1");
+            this.UserAttributes.Add("type", Type);
         }
     }
 }

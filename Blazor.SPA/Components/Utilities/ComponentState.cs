@@ -4,13 +4,14 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
+
 namespace Blazor.SPA.Components
 {
-    public class UIFormRow : UIComponent
+    public enum ComponentState
     {
-        public UIFormRow()
-        {
-            CssClasses.Add("row form-group");
-        }
+        New,
+        Loading,
+        Loaded,
+        InError
     }
 }

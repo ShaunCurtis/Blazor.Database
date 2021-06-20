@@ -1,7 +1,8 @@
-﻿/// =================================
+﻿/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using System.Collections.Generic;
 using System.Text;
@@ -13,11 +14,12 @@ namespace Blazor.SPA.Components
     {
         private Queue<string> _cssQueue = new Queue<string>();
 
-        public static CSSBuilder Class(string cssFragment)
+        public static CSSBuilder Class(string cssFragment = null)
         {
             var builder = new CSSBuilder(cssFragment);
             return builder.AddClass(cssFragment);
         }
+
         public CSSBuilder()
         {
         }

@@ -1,17 +1,25 @@
 ﻿@namespace Blazor.SPA.Components
-@inherits UIBase
-
-@if (this.Loaded)
+@inherits ComponentBase
+@if (this.State == ComponentState.Loaded)
 {
     @this.ChildContent
 }
+else if (this.State == ComponentState.InError)
+{
+    @this.ErrorContent
+}
 else
 {
-    <div>Loading....</div>
+    @this.LoadingContent
 }
+@code{
 
-@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
 
-    [Parameter] public bool Loaded { get; set; }
+    [Parameter] public RenderFragment LoadingContent { get; set; }
+
+    [Parameter] public RenderFragment ErrorContent { get; set; }
+
+    [Parameter] public ComponentState State { get; set; } = ComponentState.Loaded;
 
 }

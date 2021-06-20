@@ -1,7 +1,8 @@
-﻿/// =================================
+﻿/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;

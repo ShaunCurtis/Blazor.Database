@@ -1,16 +1,20 @@
-﻿/// =================================
+﻿/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using Microsoft.AspNetCore.Components;
 
 namespace Blazor.SPA.Components
 {
-    public class UIColumn : UIBase
+    public class UIColumn : UIComponent
     {
         [Parameter] public virtual int Cols { get; set; } = 0;
 
-        protected override string PrimaryClass => this.Cols > 0 ? $"col-{this.Cols}" : $"col";
+        public UIColumn()
+        {
+            CssClasses.Add(this.Cols > 0 ? $"col-{this.Cols}" : $"col");
+        }
     }
 }

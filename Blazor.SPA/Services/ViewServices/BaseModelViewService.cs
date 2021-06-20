@@ -117,7 +117,7 @@ namespace Blazor.SPA.Services
 
         public async ValueTask<bool> DeleteRecordAsync()
         {
-            this.DbResult = await DataServiceConnector.RemoveRecordByIdAsync<TRecord>(this.Record);
+            this.DbResult = await DataServiceConnector.RemoveRecordAsync<TRecord>(this.Record);
             return this.DbResult.IsOK;
         }
 
