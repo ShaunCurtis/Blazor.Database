@@ -21,7 +21,7 @@ namespace Blazor.SPA.Brokers
         public virtual ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(PaginatorData paginatorData) where TRecord : class, IDbRecord<TRecord>, new()
             => ValueTask.FromResult(new List<TRecord>());
 
-        public virtual ValueTask<TRecord> SelectRecordAsync<TRecord>(int id) where TRecord : class, IDbRecord<TRecord>, new()
+        public virtual ValueTask<TRecord> SelectRecordAsync<TRecord>(Guid id) where TRecord : class, IDbRecord<TRecord>, new()
             => ValueTask.FromResult(new TRecord());
 
         public virtual ValueTask<int> SelectRecordListCountAsync<TRecord>() where TRecord : class, IDbRecord<TRecord>, new()

@@ -1,15 +1,18 @@
-﻿/// =================================
+﻿/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using Blazor.Database.Data;
 using Blazor.Database.Services;
 using Blazor.SPA.Components;
+using Blazor.SPA.Forms;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Threading.Tasks;
 
-namespace Blazor.Database.Components
+namespace Blazor.Database.Forms
 {
     public partial class WeatherForecastListForm : ListFormBase<WeatherForecast>
     {
@@ -24,7 +27,7 @@ namespace Blazor.Database.Components
             this.Service = this.ViewService;
             await base.OnInitializedAsync();
         }
-        protected override async void Edit(int id)
+        protected override async void Edit(Guid id)
         {
             if (this.IsModal)
             {
@@ -35,7 +38,7 @@ namespace Blazor.Database.Components
             else
                 base.Edit(id);
         }
-        protected override async void View(int id)
+        protected override async void View(Guid id)
         {
             if (this.IsModal)
             {

@@ -1,15 +1,17 @@
-﻿/// =================================
-/// Author: Shaun Curtis, Cold Elm
-/// License: MIT
-/// ==================================
+﻿/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
+using Blazor.SPA.Components;
 using Blazor.SPA.Data;
 using Blazor.SPA.Services;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 
-namespace Blazor.SPA.Components
+namespace Blazor.SPA.Forms
 {
     /// <summary>
     /// Abstract class to implement the boilerplate code used in list forms
@@ -18,11 +20,11 @@ namespace Blazor.SPA.Components
     public abstract class ListFormBase<TRecord> : ComponentBase, IDisposable
         where TRecord : class, IDbRecord<TRecord>, new()
     {
-        [Parameter] public EventCallback<int> EditRecord { get; set; }
+        [Parameter] public EventCallback<Guid> EditRecord { get; set; }
 
-        [Parameter] public EventCallback<int> ViewRecord { get; set; }
+        [Parameter] public EventCallback<Guid> ViewRecord { get; set; }
 
-        [Parameter] public EventCallback<int> NewRecord { get; set; }
+        [Parameter] public EventCallback<Guid> NewRecord { get; set; }
 
         [Parameter] public EventCallback ExitAction { get; set; }
 
@@ -31,6 +33,8 @@ namespace Blazor.SPA.Components
         [Inject] protected NavigationManager NavManager { get; set; }
 
         protected bool IsLoaded => this.Service?.HasRecords ?? false;
+
+        protected ComponentState LoadState => IsLoaded ? ComponentState.Loaded : ComponentState.Loading;
 
         protected bool HasService => this.Service != null;
 
@@ -46,10 +50,10 @@ namespace Blazor.SPA.Components
         protected void OnListChanged(object sender, EventArgs e)
             => this.InvokeAsync(this.StateHasChanged);
 
-        protected virtual void Edit(int id)
+        protected virtual void Edit(Guid id)
             => this.EditRecord.InvokeAsync(id);
 
-        protected virtual void View(int id)
+        protected virtual void View(Guid id)
             => this.ViewRecord.InvokeAsync(id);
 
         protected virtual void New()

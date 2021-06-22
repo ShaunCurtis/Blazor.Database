@@ -1,11 +1,11 @@
-﻿@page "/weather/view/{ID:int}"
+﻿@page "/weather/view/{ID:guid}"
 
 @namespace Blazor.Database.RouteViews
 
 <WeatherForecastViewerForm ID="this.ID" ExitAction="this.ExitToList"></WeatherForecastViewerForm>
 
 @code {
-    [Parameter] public int ID { get; set; }
+    [Parameter] public Guid ID { get; set; }
 
     [Inject] public NavigationManager NavManager { get; set; }
 

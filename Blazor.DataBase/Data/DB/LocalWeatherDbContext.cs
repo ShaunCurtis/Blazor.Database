@@ -33,5 +33,8 @@ namespace Blazor.Database.Data
         /// </summary>
         public DbSet<WeatherForecast> WeatherForecast { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        }
     }
 }

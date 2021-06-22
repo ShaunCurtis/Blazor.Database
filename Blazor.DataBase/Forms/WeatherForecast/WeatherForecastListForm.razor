@@ -1,13 +1,20 @@
-﻿@namespace Blazor.Database.Components
+﻿@*
+    /// ============================================================
+    /// Author: Shaun Curtis, Cold Elm Coders
+    /// License: Use And Donate
+    /// If you use it, donate something to a charity somewhere
+    /// ============================================================
+*@
+
+@namespace Blazor.Database.Forms
 @inherits ListFormBase<WeatherForecast>
 
 <h1>Weather Forecasts</h1>
 
-<UILoader Loaded="this.IsLoaded">
+<UILoader State="this.LoadState">
     <UIDataTable TRecord="WeatherForecast" Records="this.ViewService.Records" class="table">
         <Head>
             <SortControl Paginator="this.Service.Paginator">
-                <UIDataTableHeaderColumn SortField="ID">ID</UIDataTableHeaderColumn>
                 <UIDataTableHeaderColumn SortField="Date">Date</UIDataTableHeaderColumn>
                 <UIDataTableHeaderColumn SortField="TemperatureC">Temp. (C)</UIDataTableHeaderColumn>
                 <UIDataTableHeaderColumn>Temp. (F)</UIDataTableHeaderColumn>
@@ -18,15 +25,14 @@
         </Head>
         <RowTemplate>
             <UIDataTableRow>
-                <UIDataTableColumn>@context.ID</UIDataTableColumn>
                 <UIDataTableColumn> @context.Date.LocalDateTime.ToShortDateString()</UIDataTableColumn>
                 <UIDataTableColumn>@context.TemperatureC</UIDataTableColumn>
                 <UIDataTableColumn>@context.TemperatureF</UIDataTableColumn>
                 <UIDataTableColumn>@context.Summary</UIDataTableColumn>
                 <UIDataTableMaxColumn>@context.Description</UIDataTableMaxColumn>
                 <UIDataTableColumn class="text-right text-nowrap">
-                    <UIButton AdditionalClasses="btn-sm btn-secondary" ClickEvent="() => this.View(context.ID)">View</UIButton>
-                    <UIButton AdditionalClasses="btn-sm btn-primary" ClickEvent="() => this.Edit(context.ID)">Edit</UIButton>
+                    <UIButton type="button" class="btn-sm btn-secondary" ClickEvent="() => this.View(context.ID)">View</UIButton>
+                    <UIButton type="button" class="btn-sm btn-primary" ClickEvent="() => this.Edit(context.ID)">Edit</UIButton>
                 </UIDataTableColumn>
             </UIDataTableRow>
         </RowTemplate>
@@ -37,8 +43,8 @@
                 <PaginatorControl Paginator="this.ViewService.Paginator"></PaginatorControl>
             </UIColumn>
             <UIButtonColumn Cols="4">
-                <UIButton Show="true" AdditionalClasses="btn-success" ClickEvent="() => this.New()">New Record</UIButton>
-                <UIButton AdditionalClasses="btn-secondary" ClickEvent="this.Exit">Exit</UIButton>
+                <UIButton type="button" Show="true" class="btn-success" ClickEvent="() => this.New()">New Record</UIButton>
+                <UIButton type="button" class="btn-secondary" ClickEvent="this.Exit">Exit</UIButton>
             </UIButtonColumn>
         </UIFormRow>
     </UIContainer>

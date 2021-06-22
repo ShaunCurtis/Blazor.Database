@@ -7,19 +7,21 @@
 /// =================================
 /// Mods Author: Shaun Curtis, Cold Elm Coders
 /// This would be an Inherits,  but too many of the methods/Properties/Fields are private and not inheritable!!!!!
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
+
 
 #nullable disable warnings
 
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using Microsoft.AspNetCore.Components.Rendering;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
 using System.Threading.Tasks;
 
 

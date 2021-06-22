@@ -2,12 +2,12 @@
 
 @namespace Blazor.Database.RouteViews
 
-<UIBase Show="this.ShowEditor">
+<UIComponent Show="this.ShowEditor">
     <WeatherForecastEditorForm ID="this.editorId" ExitAction="this.CloseDialog"></WeatherForecastEditorForm>
-</UIBase>
-<UIBase Show="this.ShowViewer">
+</UIComponent>
+<UIComponent Show="this.ShowViewer">
     <WeatherForecastViewerForm ID="this.viewerId" ExitAction="this.CloseDialog"></WeatherForecastViewerForm>
-</UIBase>
+</UIComponent>
 
 <WeatherForecastListForm EditRecord="this.GoToEditor" ViewRecord="this.GoToViewer" NewRecord="this.GoToNew" ExitAction="Exit"></WeatherForecastListForm>
 
@@ -15,28 +15,28 @@
 
     [Inject] NavigationManager NavManager { get; set; }
 
-    private int editorId = 0;
-    private int viewerId = 0;
+    private Guid editorId = Guid.Empty;
+    private Guid viewerId = Guid.Empty;
 
-    private bool ShowViewer => this.viewerId != 0;
-    private bool ShowEditor => this.editorId != 0;
+    private bool ShowViewer => this.viewerId != Guid.Empty;
+    private bool ShowEditor => this.editorId != Guid.Empty;
 
-    public void GoToEditor(int id)
-        => SetIds(id, 0);
+    public void GoToEditor(Guid id)
+        => SetIds(id, Guid.Empty);
 
     public void GoToNew()
-        => SetIds(-1, 0);
+        => SetIds(Guid.Empty, Guid.Empty);
 
-    public void GoToViewer(int id)
-        => SetIds(0, id);
+    public void GoToViewer(Guid id)
+        => SetIds(Guid.Empty, id);
 
     public void CloseDialog()
-        => SetIds(0, 0);
+        => SetIds(Guid.Empty, Guid.Empty);
 
     public void Exit()
         => this.NavManager.NavigateTo("index");
 
-    private void SetIds(int editorId, int viewerId)
+    private void SetIds(Guid editorId, Guid viewerId)
     {
         this.editorId = editorId;
         this.viewerId = viewerId;

@@ -19,8 +19,17 @@ namespace Blazor.SPA.Components
         protected virtual List<string> UnwantedAttributes { get; set; } = new List<string>();
 
         protected Dictionary<string, object> SplatterAttributes
-            => UserAttributes.Where(item => !item.Key.Equals(UnwantedAttributes.Contains(item.Key)))
-               .ToDictionary(item => item.Key, item => item.Value);
-
+        {
+            get
+            {
+                var list = new Dictionary<string, object>();
+                foreach (var item in UserAttributes)
+                {
+                    if (!UnwantedAttributes.Any(item1 => item1.Equals(item.Key)))
+                        list.Add(item.Key, item.Value);
+                }
+                return list;
+            }
+        }
     }
 }

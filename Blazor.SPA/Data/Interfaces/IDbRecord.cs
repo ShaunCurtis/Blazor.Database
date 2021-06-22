@@ -1,7 +1,8 @@
-﻿/// =================================
-/// Author: Shaun Curtis, Cold Elm
-/// License: MIT
-/// ==================================
+﻿/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using System;
 
@@ -16,7 +17,7 @@ namespace Blazor.SPA.Data
         /// <summary>
         /// ID to ensure we have a unique key
         /// </summary>
-        public int ID { get; }
+        public Guid ID { get; }
 
         /// <summary>
         /// ID to ensure we have a unique key

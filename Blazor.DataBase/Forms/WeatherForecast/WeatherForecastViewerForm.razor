@@ -1,4 +1,12 @@
-﻿@namespace Blazor.Database.Components
+﻿@*
+    /// ============================================================
+    /// Author: Shaun Curtis, Cold Elm Coders
+    /// License: Use And Donate
+    /// If you use it, donate something to a charity somewhere
+    /// ============================================================
+*@
+
+@namespace Blazor.Database.Forms
 @inherits RecordFormBase<WeatherForecast>
 
 <UIContainer>
@@ -8,7 +16,7 @@
         </UIColumn>
     </UIFormRow>
 </UIContainer>
-<UILoader Loaded="this.IsLoaded">
+<UILoader State="this.LoadState">
     <UIContainer>
         <UIFormRow>
             <UILabelColumn>
@@ -50,7 +58,7 @@
 <UIContainer>
     <UIFormRow>
         <UIButtonColumn>
-            <UIButton AdditionalClasses="btn-secondary" ClickEvent="this.Exit">Exit</UIButton>
+            <UIButton type="button" class="btn-secondary" ClickEvent="this.Exit">Exit</UIButton>
         </UIButtonColumn>
     </UIFormRow>
 </UIContainer>

@@ -1,4 +1,4 @@
-﻿@page "/weather/edit/{ID:int}"
+﻿@page "/weather/edit/{ID:guid}"
 
 @namespace Blazor.Database.RouteViews
 
@@ -8,7 +8,7 @@
 
     [Inject] public NavigationManager NavManager { get; set; }
 
-    [Parameter] public int ID { get; set; }
+    [Parameter] public Guid ID { get; set; }
 
     private void ExitToList()
         => this.NavManager.NavigateTo("/fetchdata");

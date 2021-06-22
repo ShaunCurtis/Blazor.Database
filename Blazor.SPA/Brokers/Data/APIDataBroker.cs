@@ -36,7 +36,7 @@ namespace Blazor.SPA.Brokers
             return await response.Content.ReadFromJsonAsync<List<TRecord>>();
         }
 
-        public override async ValueTask<TRecord> SelectRecordAsync<TRecord>(int id)
+        public override async ValueTask<TRecord> SelectRecordAsync<TRecord>(Guid id)
         {
             var response = await this.HttpClient.PostAsJsonAsync($"/api/{GetRecordName<TRecord>()}/read", id);
             var result = await response.Content.ReadFromJsonAsync<TRecord>();

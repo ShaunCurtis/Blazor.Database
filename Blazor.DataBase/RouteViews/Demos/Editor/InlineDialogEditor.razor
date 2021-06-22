@@ -45,9 +45,9 @@
     protected EditFormState editFormState { get; set; }
     protected ValidationFormState validationFormState { get; set; }
 
-    private WeatherForecast Model = new WeatherForecast()
+    private Weather Model = new Weather()
     {
-        ID = 1,
+        ID = Guid.NewGuid(),
         Date = DateTime.Now,
         TemperatureC = 22,
         Summary = "Balmy"

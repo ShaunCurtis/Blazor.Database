@@ -4,6 +4,7 @@
 /// ==================================
 
 using Blazor.SPA.Data;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,7 +20,7 @@ namespace Blazor.SPA.Brokers
 
         public ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(PaginatorData paginatorData) where TRecord : class, IDbRecord<TRecord>, new();
 
-        public ValueTask<TRecord> SelectRecordAsync<TRecord>(int id) where TRecord : class, IDbRecord<TRecord>, new();
+        public ValueTask<TRecord> SelectRecordAsync<TRecord>(Guid id) where TRecord : class, IDbRecord<TRecord>, new();
 
         public ValueTask<int> SelectRecordListCountAsync<TRecord>() where TRecord : class, IDbRecord<TRecord>, new();
 

@@ -1,29 +1,50 @@
+/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
+
 using Blazor.SPA.Data;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazor.Database.Data
 {
-    public class WeatherForecast : IValidation, IDbRecord<WeatherForecast>
+    public class EditWeatherForecast : IValidation, IEditRecord<WeatherForecast>
     {
-        [Key] public int ID { get; set; } = -1;
+        public Guid ID { get; set; } = Guid.Empty;
 
         public DateTimeOffset Date { get; set; } = DateTimeOffset.Now;
 
+        [Required]
         public int TemperatureC { get; set; } = 0;
 
-        [NotMapped] public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
+        [Required]
         public string Summary { get; set; } = string.Empty;
 
-        [NotMapped] public Guid GUID { get; init; } = Guid.NewGuid();
+        public Guid GUID { get; init; } = Guid.NewGuid();
 
-        [NotMapped] public string DisplayName => $"Weather Forecast for {this.Date.LocalDateTime.ToShortDateString()} ";
+        public string DisplayName => $"Weather Forecast for {this.Date.LocalDateTime.ToShortDateString()} ";
 
-        // A long string field to demo using a max row in a data table
-        [NotMapped] public string Description => $"The Weather Forecast for this {this.Date.DayOfWeek}, the {this.Date.Day} of the month {this.Date.Month} in the year of {this.Date.Year} is {this.Summary}.  From the font of all knowledge!";
+        public WeatherForecast GetRecord() => new WeatherForecast
+        {
+            ID = this.ID,
+            Date = this.Date,
+            TemperatureC = this.TemperatureC,
+            Summary = this.Summary
+        };
+
+        public void Populate(IDbRecord<WeatherForecast> dbRecord)
+        {
+            var rec = (WeatherForecast)dbRecord;
+            this.ID = rec.ID;
+            this.Date = rec.Date;
+            this.TemperatureC = rec.TemperatureC;
+            this.Summary = rec.Summary;
+        }
 
         public bool Validate(ValidationMessageStore validationMessageStore, string fieldname, object model = null)
         {

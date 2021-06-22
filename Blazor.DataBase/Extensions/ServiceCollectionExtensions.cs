@@ -1,7 +1,8 @@
-﻿/// =================================
-/// Author: Shaun Curtis, Cold Elm
-/// License: MIT
-/// ==================================
+﻿/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using Blazor.Database.Brokers;
 using Blazor.Database.Data;
@@ -58,6 +59,7 @@ namespace Blazor.Database.Extensions
             services.AddScoped<IDataServiceConnector, ModelDataServiceConnector>();
             services.AddScoped<WeatherForecastViewService>();
             services.AddSingleton<RandomNumberService>();
+            services.AddScoped<DummyWeatherService>();
         }
     }
 }

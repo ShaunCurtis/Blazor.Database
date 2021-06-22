@@ -4,18 +4,13 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Microsoft.AspNetCore.Components;
-
 namespace Blazor.SPA.Components
 {
-    class UIButton : UIComponent
+    public class UIButtonColumn : UIColumn
     {
-        [Parameter] public string Type { get; set; } = "button";
-
-        public UIButton()
+        public UIButtonColumn()
         {
-            CssClasses.Add("btn mr-1");
-            this.UserAttributes.Add("type", Type);
+            CssClasses.Add(this.Cols > 0 ? $"col-{this.Cols} text-right" : $"col text-right");
         }
     }
 }

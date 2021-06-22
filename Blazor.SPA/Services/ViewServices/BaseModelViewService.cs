@@ -1,7 +1,8 @@
-﻿/// =================================
-/// Author: Shaun Curtis, Cold Elm
-/// License: MIT
-/// ==================================
+﻿/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using Blazor.SPA.Connectors;
 using Blazor.SPA.Data;
@@ -48,7 +49,7 @@ namespace Blazor.SPA.Services
 
         public bool HasRecords => this.Records != null && this.Records.Count > 0;
 
-        public bool IsNewRecord { get; protected set; }
+        public bool IsNewRecord { get; protected set; } = true;
 
         protected IDataServiceConnector DataServiceConnector { get; set; }
 
@@ -91,25 +92,30 @@ namespace Blazor.SPA.Services
             this.ListHasChanged?.Invoke(null, EventArgs.Empty);
         }
 
-        public async ValueTask<bool> GetRecordAsync(int id)
+        public async ValueTask<bool> GetRecordAsync(Guid id)
         {
-            if (id > 0)
+            if (!id.Equals(Guid.Empty))
+            {
+                this.IsNewRecord = false;
                 this.Record = await DataServiceConnector.GetRecordByIdAsync<TRecord>(id);
+            }
             else
+            {
                 this.Record = new TRecord();
-            this.IsNewRecord = false;
+                this.IsNewRecord = true;
+            }
             return this.IsRecord;
         }
 
         public async ValueTask<int> GetRecordListCountAsync()
             => await DataServiceConnector.GetRecordCountAsync<TRecord>();
 
-        public async ValueTask<bool> SaveRecordAsync()
+        public async ValueTask<bool> SaveRecordAsync(TRecord record)
         {
             if (this.IsNewRecord)
-                this.DbResult = await DataServiceConnector.AddRecordAsync<TRecord>(this.Record);
+                this.DbResult = await DataServiceConnector.AddRecordAsync<TRecord>(record);
             else
-                this.DbResult = await DataServiceConnector.ModifyRecordAsync(this.Record);
+                this.DbResult = await DataServiceConnector.ModifyRecordAsync(record);
             await this.GetRecordsAsync();
             this.IsNewRecord = false;
             return this.DbResult.IsOK;

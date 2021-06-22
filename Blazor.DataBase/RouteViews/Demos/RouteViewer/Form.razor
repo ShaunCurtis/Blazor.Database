@@ -26,9 +26,9 @@
 @code {
     [CascadingParameter] protected RouteViewManager RouteViewManager { get; set; }
 
-    [Inject] protected WeatherForecastViewService DataService { get; set; }
+    [Inject] protected DummyWeatherService DataService { get; set; }
 
-    protected WeatherForecast Model => this.DataService?.Record ?? null;
+    protected Weather Model => this.DataService?.Record ?? null;
 
     protected SortedDictionary<int, Type> Forms = new SortedDictionary<int, Type>()
     {

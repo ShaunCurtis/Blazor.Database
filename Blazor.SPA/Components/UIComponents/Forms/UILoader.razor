@@ -10,7 +10,14 @@ else if (this.State == ComponentState.InError)
 }
 else
 {
-    @this.LoadingContent
+    if (this.LoadingContent != null)
+    {
+        @this.LoadingContent
+    }
+    else 
+    { 
+        <div class="m-2 p-2">Loading......</div>
+    }
 }
 @code{
 

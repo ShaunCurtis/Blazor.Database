@@ -1,7 +1,8 @@
-﻿/// =================================
+﻿/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using Blazor.SPA.Utilities;
 using Microsoft.AspNetCore.Components;
@@ -45,7 +46,7 @@ namespace Blazor.SPA.Components
         public bool IsMatch(string url)
         {
             // get the match
-            var match = Regex.Match(url, this.RouteMatch,RegexOptions.IgnoreCase);
+            var match = Regex.Match(url, this.RouteMatch, RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 var dict = new Dictionary<string, object>();

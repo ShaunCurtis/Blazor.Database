@@ -1,7 +1,8 @@
-﻿/// =================================
-/// Author: Shaun Curtis, Cold Elm
-/// License: MIT
-/// ==================================
+﻿/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using System;
 
@@ -62,7 +63,7 @@ namespace Blazor.SPA.Data
         public event EventHandler PageChanged;
 
         // Set of read only properties for calculations and control in the Paging Control
-        public int LastPage => (int)((RecordCount / PageSize) + 0.5);
+        public int LastPage => (int)Math.Ceiling((RecordCount / PageSize) + 0.5);
         public int LastBlock => (int)((LastPage / BlockSize) + 1.5);
         public int CurrentBlock => (int)((Page / BlockSize) + 1.5);
         public int StartBlockPage => ((CurrentBlock - 1) * BlockSize) + 1;
@@ -105,7 +106,7 @@ namespace Blazor.SPA.Data
         /// Go to the Last Page
         /// </summary>
         public void ToEnd()
-            => this.ToPage((int)((RecordCount / PageSize) + 0.5));
+            => this.ToPage((int)Math.Ceiling((RecordCount / PageSize) + 0.5));
 
         /// <summary>
         /// Go to the next block and load the first page in the block
@@ -114,7 +115,7 @@ namespace Blazor.SPA.Data
         {
             if (CurrentBlock != LastBlock)
             {
-                var calcpage = (CurrentBlock * PageSize * BlockSize) + 1;
+                var calcpage = (CurrentBlock * BlockSize) + 1;
                 this.Page = calcpage > LastPage ? LastPage : LastPage;
                 this.PageChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -127,7 +128,7 @@ namespace Blazor.SPA.Data
         {
             if (CurrentBlock != 1)
             {
-                this.Page = ((CurrentBlock - 1) * PageSize * BlockSize) - 1;
+                this.Page = ((CurrentBlock - 2) * PageSize) + 1;
                 this.PageChanged?.Invoke(this, EventArgs.Empty);
             }
         }

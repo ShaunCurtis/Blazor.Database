@@ -1,10 +1,12 @@
-﻿/// =================================
+﻿/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using Blazor.SPA.Brokers;
 using Blazor.SPA.Data;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -32,7 +34,7 @@ namespace Blazor.SPA.Connectors
         public async ValueTask<List<TModel>> GetPagedRecordsAsync<TModel>(PaginatorData paginatorData) where TModel : class, IDbRecord<TModel>, new()
             => await this.dataBroker.SelectPagedRecordsAsync<TModel>(paginatorData);
 
-        public async ValueTask<TModel> GetRecordByIdAsync<TModel>(int modelId) where TModel : class, IDbRecord<TModel>, new()
+        public async ValueTask<TModel> GetRecordByIdAsync<TModel>(Guid modelId) where TModel : class, IDbRecord<TModel>, new()
             => await this.dataBroker.SelectRecordAsync<TModel>(modelId);
 
         public async ValueTask<DbTaskResult> ModifyRecordAsync<TModel>(TModel model) where TModel : class, IDbRecord<TModel>, new()

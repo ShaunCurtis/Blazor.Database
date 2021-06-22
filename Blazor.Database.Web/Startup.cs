@@ -29,8 +29,9 @@ namespace Blazor.Database.Web
             services.AddControllersWithViews();
 
             // services.AddApplicationServices(this.Configuration);
-            services.AddInMemoryApplicationServices(this.Configuration);
-            
+            // services.AddInMemoryApplicationServices(this.Configuration);
+            services.AddServerApplicationServices(this.Configuration);
+
             // Server Side Blazor doesn't register HttpClient by default
             // Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode
             if (!services.Any(x => x.ServiceType == typeof(HttpClient)))

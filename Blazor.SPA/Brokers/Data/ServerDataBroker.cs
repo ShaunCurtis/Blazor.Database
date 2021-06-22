@@ -1,16 +1,18 @@
-/// =================================
+/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using Blazor.SPA.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Blazor.SPA.Extensions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Threading.Tasks;
 
 namespace Blazor.SPA.Brokers
 {
@@ -40,11 +42,9 @@ namespace Blazor.SPA.Brokers
             var startpage = paginatorData.Page <= 1
                 ? 0
                 : (paginatorData.Page - 1) * paginatorData.PageSize;
-            var context = this.DBContext.CreateDbContext();
             var dbset = this.DBContext
                 .CreateDbContext()
                 .GetDbSet<TRecord>();
-            var x = typeof(TRecord).GetProperty(paginatorData.SortColumn);
             var isSortable = typeof(TRecord).GetProperty(paginatorData.SortColumn) != null;
             if (isSortable)
             {
@@ -63,7 +63,7 @@ namespace Blazor.SPA.Brokers
             }
         }
 
-        public override async ValueTask<TRecord> SelectRecordAsync<TRecord>(int id)
+        public override async ValueTask<TRecord> SelectRecordAsync<TRecord>(Guid id)
             => await this.DBContext.
                 CreateDbContext().
                 GetDbSet<TRecord>().

@@ -1,14 +1,17 @@
-﻿/// =================================
+﻿/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
+using Blazor.SPA.Components;
 using Blazor.SPA.Data;
 using Blazor.SPA.Services;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Threading.Tasks;
 
-namespace Blazor.SPA.Components
+namespace Blazor.SPA.Forms
 {
     /// <summary>
     /// Abstract class to implement the boilerplate code used to Display a record
@@ -21,7 +24,7 @@ namespace Blazor.SPA.Components
         [CascadingParameter] public IModalDialog Modal { get; set; }
 
         [Parameter]
-        public int ID { get; set; } = 0;
+        public Guid ID { get; set; } = Guid.Empty;
 
         [Parameter] public EventCallback ExitAction { get; set; }
 
@@ -31,13 +34,15 @@ namespace Blazor.SPA.Components
 
         protected virtual bool IsLoaded => this.Service != null && this.Service.Record != null;
 
+        protected virtual ComponentState LoadState => IsLoaded ? ComponentState.Loaded : ComponentState.Loading;
+
         protected virtual bool HasServices => this.Service != null;
 
         protected bool _isModal => this.Modal != null;
 
-        protected int _modalId { get; set; } = 0;
+        protected Guid _modalId { get; set; } = Guid.Empty;
 
-        protected int _Id => _modalId != 0 ? _modalId : this.ID;
+        protected Guid _Id => TryGetModalID() ? _modalId : this.ID;
 
         protected async override Task OnInitializedAsync()
         {
@@ -48,15 +53,13 @@ namespace Blazor.SPA.Components
 
         protected virtual async Task LoadRecordAsync()
         {
-            // If we're in a modal context we nee to get the id from the Modal Options object
-            this.TryGetModalID();
             // Get the record
             await this.Service.GetRecordAsync(this._Id);
         }
 
         protected virtual bool TryGetModalID()
         {
-            if (this._isModal && this.Modal.Options.TryGet<int>("Id", out int value))
+            if (this._isModal && this.Modal.Options.TryGet<Guid>("Id", out Guid value))
             {
                 this._modalId = value;
                 return true;
@@ -64,14 +67,14 @@ namespace Blazor.SPA.Components
             return false;
         }
 
-        protected virtual void Exit()
+        protected virtual async Task Exit()
         {
             // If we're in a modal context, call Close on the cascaded Modal object
             if (this._isModal)
                 this.Modal.Close(ModalResult.OK());
             // If there's a delegate registered on the ExitAction, execute it. 
             else if (ExitAction.HasDelegate)
-                ExitAction.InvokeAsync();
+                await ExitAction.InvokeAsync();
             // else fallback action is to navigate to root
             else
                 this.NavManager.NavigateTo("/");

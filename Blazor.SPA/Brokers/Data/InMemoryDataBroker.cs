@@ -66,7 +66,7 @@ namespace Blazor.SPA.Brokers
             }
         }
 
-        public override async ValueTask<TRecord> SelectRecordAsync<TRecord>(int id)
+        public override async ValueTask<TRecord> SelectRecordAsync<TRecord>(Guid id)
         {
             var dbset = _dbContext.GetDbSet<TRecord>();
             return await dbset.FirstOrDefaultAsync(item => ((IDbRecord<TRecord>)item).ID == id) ?? default;
@@ -90,7 +90,7 @@ namespace Blazor.SPA.Brokers
             var dbset = _dbContext.GetDbSet<TRecord>();
             dbset.Add(record);
             var x = await _dbContext.SaveChangesAsync();
-            return new DbTaskResult() { IsOK = true, Type = MessageType.Success, NewID = record.ID };
+            return new DbTaskResult() { IsOK = true, Type = MessageType.Success };
         }
 
         public override async ValueTask<DbTaskResult> DeleteRecordAsync<TRecord>(TRecord record)

@@ -1,7 +1,8 @@
-﻿/// =================================
-/// Author: Shaun Curtis, Cold Elm
-/// License: MIT
-/// ==================================
+﻿/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using Blazor.SPA.Data;
 using Microsoft.AspNetCore.Components;
@@ -14,25 +15,15 @@ namespace Blazor.SPA.Components
 {
     /// <summary>
     /// Component Class that adds Edit State and Validation State to a Blazor EditForm Control
-    /// Should be placed within thr EditForm ontrol
+    /// Should be placed within thr EditForm Control
     /// </summary>
     public class EditFormState : ComponentBase, IDisposable
     {
 
-        /// <summary>
-        /// EditContext - cascaded from EditForm
-        /// </summary>
         [CascadingParameter] public EditContext EditContext { get; set; }
 
-        /// <summary>
-        /// EventCallback for parent to link into for Edit State Change Events
-        /// passes the the current Dirty state
-        /// </summary>
         [Parameter] public EventCallback<bool> EditStateChanged { get; set; }
 
-        /// <summary>
-        /// Property to expose the Edit/Dirty state of the control
-        /// </summary>
         public bool IsDirty => EditFields?.IsDirty ?? false;
 
         private EditFieldCollection EditFields = new EditFieldCollection();
@@ -53,9 +44,6 @@ namespace Blazor.SPA.Components
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Method to populate the edit field collection
-        /// </summary>
         protected void GetEditFields()
         {
             // Gets the model from the EditContext and populates the EditFieldCollection
@@ -69,11 +57,6 @@ namespace Blazor.SPA.Components
             }
         }
 
-        /// <summary>
-        /// Event Handler for Editcontext.OnFieldChanged
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void FieldChanged(object sender, FieldChangedEventArgs e)
         {
             // Get the PropertyInfo object for the model property
@@ -90,9 +73,6 @@ namespace Blazor.SPA.Components
             }
         }
 
-        /// <summary>
-        /// Method to Update the Edit State to current values 
-        /// </summary>
         public void UpdateState()
         {
             this.GetEditFields();

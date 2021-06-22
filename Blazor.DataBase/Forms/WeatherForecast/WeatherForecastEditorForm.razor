@@ -1,13 +1,13 @@
 ﻿@*
-/// =================================
-/// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+    /// ============================================================
+    /// Author: Shaun Curtis, Cold Elm Coders
+    /// License: Use And Donate
+    /// If you use it, donate something to a charity somewhere
+    /// ============================================================
 *@
 
-
-@namespace Blazor.Database.Components
-@inherits EditRecordFormBase<WeatherForecast>
+@namespace Blazor.Database.Forms
+@inherits EditRecordFormBase<WeatherForecast, EditWeatherForecast>
 
 <InlineDialog Lock="this._isInlineDirty" Transparent="false">
     <UIContainer>
@@ -17,8 +17,8 @@
             </UIColumn>
         </UIFormRow>
     </UIContainer>
-    <UILoader Loaded="this._isLoaded">
-        <EditForm EditContext="this.EditContext" OnValidSubmit="HandleValidSubmit" class=" px-2 py-3">
+    <UILoader State="this.LoadState">
+            <EditForm EditContext="this.EditContext" OnValidSubmit="HandleValidSubmit" class=" px-2 py-3">
             <EditFormState @ref="this.EditFormState" EditStateChanged="this.EditStateChanged"></EditFormState>
             <ValidationFormState ValidStateChanged="this.ValidStateChanged"></ValidationFormState>
             <UIContainer>
@@ -73,11 +73,12 @@
             <UIContainer>
                 <UIFormRow>
                     <UIButtonColumn>
-                        <UIButton Show="true" Disabled="this._deleteDisabled" AdditionalClasses="btn-outline-danger" ClickEvent="() => Delete()">Delete</UIButton>
-                        <UIButton Show="this._confirmDelete" AdditionalClasses="btn-danger" ClickEvent="() => this.ConfirmDelete()">Confirm Delete</UIButton>
-                        <UIButton Show="true" Disabled="this._saveDisabled" Type="submit" AdditionalClasses="btn-success">@this._saveButtonText</UIButton>
-                        <UIButton Show="this._dirtyExit" AdditionalClasses="btn-danger" ClickEvent="() => this.ConfirmExit()">Exit Without Saving</UIButton>
-                        <UIButton Show="true" Disabled="this._dirtyExit" AdditionalClasses="btn-dark" ClickEvent="() => this.Exit()">Exit</UIButton>
+                        <UIButton type="button" Show="true" Disabled="this._deleteDisabled" class="btn-outline-danger" ClickEvent="() => Delete()">Delete</UIButton>
+                        <UIButton type="button" Show="this._confirmDelete" class="btn-danger" ClickEvent="() => this.ConfirmDelete()">Confirm Delete</UIButton>
+                        <UIButton type="button" Show="this.IsDirty" class="btn-outline-warning" ClickEvent="() => this.ResetToRecord()">Reset</UIButton>
+                        <UIButton type="button" Show="this.IsDirty" class="btn-danger" ClickEvent="() => this.ConfirmExit()">Exit Without Saving</UIButton>
+                        <UIButton type="submit" Show="true" Disabled="this._saveDisabled" class="btn-success">@this._saveButtonText</UIButton>
+                        <UIButton type="button" Show="true" Disabled="this.IsDirty" class="btn-dark" ClickEvent="() => this.Exit()">Exit</UIButton>
                     </UIButtonColumn>
                 </UIFormRow>
             </UIContainer>

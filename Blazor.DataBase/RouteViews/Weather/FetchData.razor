@@ -9,13 +9,13 @@
 
     private bool _isWasm => NavManager?.Uri.Contains("wasm", StringComparison.CurrentCultureIgnoreCase) ?? false;
 
-    public void GoToEditor(int id)
+    public void GoToEditor(Guid id)
     => this.NavManager.NavigateTo($"weather/edit/{id}");
 
     public void GoToNew()
-    => this.NavManager.NavigateTo($"weather/edit/-1");
+    => this.NavManager.NavigateTo($"weather/edit/{Guid.Empty}");
 
-    public void GoToViewer(int id)
+    public void GoToViewer(Guid id)
     => this.NavManager.NavigateTo($"weather/view/{id}");
 
     public void Exit()

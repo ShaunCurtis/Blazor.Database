@@ -11,7 +11,7 @@ namespace Blazor.SPA.Components
 
         public UIInputColumn()
         {
-            this.SecondaryClass.Add(this.FormCss);
+            this.CssClasses.Add(this.FormCss);
         }
 
     }

@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
+
+using System.Collections.Generic;
 
 namespace Blazor.Database.Data
 {

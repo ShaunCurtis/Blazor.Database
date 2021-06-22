@@ -8,6 +8,7 @@ using Blazor.SPA.Brokers;
 using Blazor.SPA.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MVC = Microsoft.AspNetCore.Mvc;
@@ -41,11 +42,11 @@ namespace Blazor.Database.Controllers
 
         [MVC.Route("/api/weatherforecast/get")]
         [HttpGet]
-        public async Task<WeatherForecast> GetRec(int id) => await DataService.SelectRecordAsync<WeatherForecast>(id);
+        public async Task<WeatherForecast> GetRec(Guid id) => await DataService.SelectRecordAsync<WeatherForecast>(id);
 
         [MVC.Route("/api/weatherforecast/read")]
         [HttpPost]
-        public async Task<WeatherForecast> Read([FromBody] int id) => await DataService.SelectRecordAsync<WeatherForecast>(id);
+        public async Task<WeatherForecast> Read([FromBody] Guid id) => await DataService.SelectRecordAsync<WeatherForecast>(id);
 
         [MVC.Route("/api/weatherforecast/update")]
         [HttpPost]

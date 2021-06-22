@@ -26,9 +26,9 @@
     protected string btncolour => _isDirty ? "btn-danger" : "btn-success";
     protected string btntext => _isDirty ? "Dirty" : "Clean";
 
-    private WeatherForecast Model = new WeatherForecast()
+    private Weather Model = new Weather()
     {
-        ID = 1,
+        ID = Guid.NewGuid(),
         Date = DateTime.Now,
         TemperatureC = 22,
         Summary = "Balmy"
