@@ -37,7 +37,7 @@ namespace Blazor.SPA.Brokers
             .GetDbSet<TRecord>()
             .ToListAsync() ?? new List<TRecord>();
 
-        public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(PaginatorData paginatorData)
+        public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(RecordPagingData paginatorData)
         {
             var startpage = paginatorData.Page <= 1
                 ? 0

@@ -8,7 +8,7 @@ using System;
 
 namespace Blazor.SPA.Data
 {
-    public class Paginator
+    public class RecordPager
     {
         /// <summary>
         /// Current Page
@@ -51,7 +51,7 @@ namespace Blazor.SPA.Data
         /// </summary>
         public bool SortDescending { get; set; }
 
-        public Paginator(int pageSize, int blockSize)
+        public RecordPager(int pageSize, int blockSize)
         {
             this.BlockSize = blockSize;
             this.PageSize = pageSize;
@@ -142,7 +142,7 @@ namespace Blazor.SPA.Data
         /// <summary>
         ///  Builds a PaginatorData Instance on the current data set
         /// </summary>
-        public PaginatorData GetData => new PaginatorData()
+        public RecordPagingData GetData => new RecordPagingData()
         {
             Page = this.Page,
             PageSize = this.PageSize,

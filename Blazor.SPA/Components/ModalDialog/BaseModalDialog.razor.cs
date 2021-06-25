@@ -5,6 +5,7 @@
 /// ============================================================
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
 
@@ -23,6 +24,8 @@ namespace Blazor.SPA.Components
         protected RenderFragment _Content { get; set; }
 
         protected string Width => this.Options.TryGet<string>(ModalOptions.__Width, out string value) ? $"width:{value}" : string.Empty;
+
+        protected bool ExitOnBackGroundClick => this.Options.TryGet<bool>(ModalOptions.__ExitOnBackGroundClick, out bool value) ? value : false;
 
         protected TaskCompletionSource<ModalResult> _ModalTask { get; set; } = new TaskCompletionSource<ModalResult>();
 
@@ -93,5 +96,12 @@ namespace Blazor.SPA.Components
                 this.SetPageExitCheck(false);
             }
         }
+
+        private void OnBackClick(MouseEventArgs e)
+        {
+            if (ExitOnBackGroundClick && !IsLocked)
+                this.Close(ModalResult.Exit());
+        }
+
     }
 }

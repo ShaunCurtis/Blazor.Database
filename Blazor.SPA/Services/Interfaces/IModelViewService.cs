@@ -24,7 +24,7 @@ namespace Blazor.SPA.Services
 
         public DbTaskResult DbResult { get; }
 
-        public Paginator Paginator { get; }
+        public RecordPager RecordPager { get; }
 
         public bool IsRecord { get; }
 

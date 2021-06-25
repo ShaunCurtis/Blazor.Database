@@ -43,7 +43,7 @@ namespace Blazor.SPA.Services
 
         public DbTaskResult DbResult { get; set; } = new DbTaskResult();
 
-        public Paginator Paginator { get; private set; }
+        public RecordPager RecordPager { get; private set; }
 
         public bool IsRecord => this.Record != null;
 
@@ -62,8 +62,8 @@ namespace Blazor.SPA.Services
         public BaseModelViewService(IDataServiceConnector dataServiceConnector)
         {
             this.DataServiceConnector = dataServiceConnector;
-            this.Paginator = new Paginator(10, 5);
-            this.Paginator.PageChanged += this.OnPageChanged;
+            this.RecordPager = new RecordPager(10, 5);
+            this.RecordPager.PageChanged += this.OnPageChanged;
         }
 
         public async ValueTask ResetServiceAsync()
@@ -87,8 +87,8 @@ namespace Blazor.SPA.Services
 
         public async ValueTask GetRecordsAsync()
         {
-            this.Records = await DataServiceConnector.GetPagedRecordsAsync<TRecord>(this.Paginator.GetData);
-            this.Paginator.RecordCount = await GetRecordListCountAsync();
+            this.Records = await DataServiceConnector.GetPagedRecordsAsync<TRecord>(this.RecordPager.GetData);
+            this.RecordPager.RecordCount = await GetRecordListCountAsync();
             this.ListHasChanged?.Invoke(null, EventArgs.Empty);
         }
 

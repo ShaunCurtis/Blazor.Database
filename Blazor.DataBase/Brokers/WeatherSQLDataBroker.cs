@@ -11,9 +11,9 @@ using Microsoft.Extensions.Configuration;
 namespace Blazor.Database.Brokers
 {
     public class WeatherSQLDataBroker :
-        ServerDataBroker<LocalWeatherDbContext>
+        ServerDataBroker<MSSQLWeatherDbContext>
     {
-        public WeatherSQLDataBroker(IConfiguration configuration, IDbContextFactory<LocalWeatherDbContext> dbContext) : base(configuration, dbContext) { }
+        public WeatherSQLDataBroker(IConfiguration configuration, IDbContextFactory<MSSQLWeatherDbContext> dbContext) : base(configuration, dbContext) { }
 
     }
 }

@@ -13,8 +13,8 @@
 @if (this.Display)
 {
     <CascadingValue Value="(IModalDialog)this">
-        <div class="base-modal-background">
-            <div class="base-modal-content" style="@this.Width">
+        <div class="base-modal-background" @onclick="OnBackClick">
+            <div class="base-modal-content" style="@this.Width" @onclick:stopPropagation="true">
                 @this._Content
             </div>
         </div>

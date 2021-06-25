@@ -23,8 +23,6 @@ namespace Blazor.Database.Data
 
         [NotMapped] public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
-        [NotMapped] public Guid GUID { get; init; } = Guid.NewGuid();
-
         [NotMapped] public string DisplayName => $"Weather Forecast for {this.Date.LocalDateTime.ToShortDateString()} ";
 
         // A long string field to demo using a max row in a data table

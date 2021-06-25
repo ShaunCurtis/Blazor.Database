@@ -31,8 +31,8 @@ namespace Blazor.SPA.Connectors
         public async ValueTask<List<TModel>> GetAllRecordsAsync<TModel>() where TModel : class, IDbRecord<TModel>, new()
             => await this.dataBroker.SelectAllRecordsAsync<TModel>();
 
-        public async ValueTask<List<TModel>> GetPagedRecordsAsync<TModel>(PaginatorData paginatorData) where TModel : class, IDbRecord<TModel>, new()
-            => await this.dataBroker.SelectPagedRecordsAsync<TModel>(paginatorData);
+        public async ValueTask<List<TModel>> GetPagedRecordsAsync<TModel>(RecordPagingData pagingData) where TModel : class, IDbRecord<TModel>, new()
+            => await this.dataBroker.SelectPagedRecordsAsync<TModel>(pagingData);
 
         public async ValueTask<TModel> GetRecordByIdAsync<TModel>(Guid modelId) where TModel : class, IDbRecord<TModel>, new()
             => await this.dataBroker.SelectRecordAsync<TModel>(modelId);

@@ -1,7 +1,8 @@
-﻿/// =================================
+﻿/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 using Blazor.SPA.Data;
 using System;
@@ -18,7 +19,7 @@ namespace Blazor.SPA.Brokers
 
         public ValueTask<List<TRecord>> SelectAllRecordsAsync<TRecord>() where TRecord : class, IDbRecord<TRecord>, new();
 
-        public ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(PaginatorData paginatorData) where TRecord : class, IDbRecord<TRecord>, new();
+        public ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(RecordPagingData pagingData) where TRecord : class, IDbRecord<TRecord>, new();
 
         public ValueTask<TRecord> SelectRecordAsync<TRecord>(Guid id) where TRecord : class, IDbRecord<TRecord>, new();
 

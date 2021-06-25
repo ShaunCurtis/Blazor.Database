@@ -16,7 +16,7 @@
 
     [Parameter] public EventCallback<SortingEventArgs> Sort { get; set; }
 
-    [Parameter] public Paginator Paginator { get; set; }
+    [Parameter] public RecordPager RecordPager { get; set; }
 
     public string SortColumm { get; private set; } = string.Empty;
 
@@ -44,11 +44,11 @@
 
     private void Notify()
     {
-        if (Paginator != null)
+        if (RecordPager != null)
             {
-            Paginator.SortDescending = this.Descending;
-            Paginator.SortColumn = this.SortColumm;
-            Paginator.NotifySortingChanged();
+            RecordPager.SortDescending = this.Descending;
+            RecordPager.SortColumn = this.SortColumm;
+            RecordPager.NotifySortingChanged();
             }
         var args = SortingEventArgs.Get(this.SortColumm, this.Descending);
         if (Sort.HasDelegate) this.Sort.InvokeAsync(args);

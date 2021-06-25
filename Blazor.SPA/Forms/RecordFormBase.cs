@@ -52,10 +52,7 @@ namespace Blazor.SPA.Forms
         }
 
         protected virtual async Task LoadRecordAsync()
-        {
-            // Get the record
-            await this.Service.GetRecordAsync(this._Id);
-        }
+            => await this.Service.GetRecordAsync(this._Id);
 
         protected virtual bool TryGetModalID()
         {

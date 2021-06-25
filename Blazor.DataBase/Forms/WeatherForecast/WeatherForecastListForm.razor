@@ -40,7 +40,7 @@
     <UIContainer>
         <UIFormRow>
             <UIColumn Cols="8">
-                <PaginatorControl Paginator="this.ViewService.Paginator"></PaginatorControl>
+                <DataPagingControl RecordPager="this.ViewService.RecordPager"></DataPagingControl>
             </UIColumn>
             <UIButtonColumn Cols="4">
                 <UIButton type="button" Show="true" class="btn-success" ClickEvent="() => this.New()">New Record</UIButton>

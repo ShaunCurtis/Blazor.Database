@@ -1,13 +1,12 @@
-﻿/// =================================
-/// Author: Shaun Curtis, Cold Elm
-/// License: MIT
-/// ==================================
-
-using System;
+﻿/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
 namespace Blazor.SPA.Data
 {
-    public class PaginatorData
+    public class RecordPagingData
     {
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 25;

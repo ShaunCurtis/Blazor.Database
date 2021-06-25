@@ -26,6 +26,6 @@ namespace Blazor.SPA.Connectors
 
         ValueTask<List<TModel>> GetAllRecordsAsync<TModel>() where TModel : class, IDbRecord<TModel>, new();
 
-        ValueTask<List<TModel>> GetPagedRecordsAsync<TModel>(PaginatorData paginatorData) where TModel : class, IDbRecord<TModel>, new();
+        ValueTask<List<TModel>> GetPagedRecordsAsync<TModel>(RecordPagingData paginatorData) where TModel : class, IDbRecord<TModel>, new();
     }
 }

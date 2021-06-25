@@ -31,7 +31,7 @@ namespace Blazor.Database.Extensions
 
             // Local DB Setup
             var dbContext = configuration.GetValue<string>("Configuration:DBContext");
-            services.AddDbContextFactory<LocalWeatherDbContext>(options => options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
+            services.AddDbContextFactory<MSSQLWeatherDbContext>(options => options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
             services.AddSingleton<IDataBroker, WeatherSQLDataBroker>();
             AddCommonServices(services);
 

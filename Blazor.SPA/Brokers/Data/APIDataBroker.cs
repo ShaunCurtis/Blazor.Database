@@ -21,7 +21,6 @@ namespace Blazor.SPA.Brokers
         BaseDataBroker,
         IDataBroker
     {
-
         protected HttpClient HttpClient { get; set; }
 
         public APIDataBroker(IConfiguration configuration, HttpClient httpClient)
@@ -30,7 +29,7 @@ namespace Blazor.SPA.Brokers
         public override async ValueTask<List<TRecord>> SelectAllRecordsAsync<TRecord>()
             => await this.HttpClient.GetFromJsonAsync<List<TRecord>>($"/api/{GetRecordName<TRecord>()}/list");
 
-        public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(PaginatorData paginatorData)
+        public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(RecordPagingData paginatorData)
         {
             var response = await this.HttpClient.PostAsJsonAsync($"/api/{GetRecordName<TRecord>()}/listpaged", paginatorData);
             return await response.Content.ReadFromJsonAsync<List<TRecord>>();
