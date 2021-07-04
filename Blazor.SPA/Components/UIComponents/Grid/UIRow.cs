@@ -9,8 +9,6 @@ namespace Blazor.SPA.Components
     class UIRow : UIComponent
     {
         public UIRow()
-        {
-            CssClasses.Add("row");
-        }
+            => CssClasses.Add("row");
     }
 }

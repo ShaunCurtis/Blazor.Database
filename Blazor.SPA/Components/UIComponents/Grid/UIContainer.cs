@@ -9,8 +9,6 @@ namespace Blazor.SPA.Components
     public class UIContainer : UIComponent
     {
         public UIContainer()
-        {
-            CssClasses.Add("container - fluid");
-        }
+            => CssClasses.Add("container - fluid");
     }
 }

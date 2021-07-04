@@ -14,7 +14,7 @@
 <UILoader State="this.LoadState">
     <UIDataTable TRecord="WeatherForecast" Records="this.ViewService.Records" class="table">
         <Head>
-            <SortControl Paginator="this.Service.Paginator">
+            <SortControl RecordPager="this.Service.RecordPager">
                 <UIDataTableHeaderColumn SortField="Date">Date</UIDataTableHeaderColumn>
                 <UIDataTableHeaderColumn SortField="TemperatureC">Temp. (C)</UIDataTableHeaderColumn>
                 <UIDataTableHeaderColumn>Temp. (F)</UIDataTableHeaderColumn>

@@ -28,9 +28,9 @@ namespace Blazor.SPA.Forms
 
         [Parameter] public EventCallback ExitAction { get; set; }
 
-        protected IModelViewService<TRecord> Service { get; set; }
-
         [Inject] protected NavigationManager NavManager { get; set; }
+
+        protected IModelViewService<TRecord> Service { get; set; }
 
         protected bool IsLoaded => this.Service?.HasRecords ?? false;
 

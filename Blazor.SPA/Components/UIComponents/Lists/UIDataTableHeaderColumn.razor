@@ -1,15 +1,16 @@
 ﻿@namespace Blazor.SPA.Components
+@inherits AppComponentBase
 
 @if (_isSortField)
 {
-    <th class="@this.CssClass" @attributes="UserAttributes" @onclick="SortClick">
+    <th class="@this.CssClass" @attributes="this.SplatterAttributes" @onclick="SortClick">
         <span class="@_iconclass"></span>
         @this.ChildContent
     </th>
 }
 else
 {
-    <th class="@this.CssClass" @attributes="UserAttributes">
+    <th class="@this.CssClass" @attributes="this.SplatterAttributes">
         @this.ChildContent
     </th>
 }
@@ -18,11 +19,7 @@ else
 
     [CascadingParameter] public SortControl SortControl { get; set; }
 
-    [Parameter] public RenderFragment ChildContent { get; set; }
-
     [Parameter] public string SortField { get; set; } = string.Empty;
-
-    [Parameter(CaptureUnmatchedValues = true)] public IDictionary<string, object> UserAttributes { get; set; } = new Dictionary<string, object>();
 
     private string CssClass => CSSBuilder.Class("grid-col")
         .AddClass("cursor-hand", _isSortField)

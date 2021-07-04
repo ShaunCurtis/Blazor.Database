@@ -15,9 +15,6 @@ namespace Blazor.SPA.Components
         [Parameter] public string FormCss { get; set; } = "form-label";
 
         public UILabelColumn()
-        {
-            this.CssClasses.Add(this.FormCss);
-        }
-
+            => this.CssClasses.Add(this.FormCss);
     }
 }

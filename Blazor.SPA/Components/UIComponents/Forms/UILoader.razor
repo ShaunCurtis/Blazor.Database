@@ -6,7 +6,14 @@
 }
 else if (this.State == ComponentState.InError)
 {
-    @this.ErrorContent
+    if (this.ErrorContent != null)
+    {
+        @this.ErrorContent
+    }
+    else
+    {
+        <div class="m-2 p-2">Error Loading Content</div>
+    }
 }
 else
 {
@@ -14,8 +21,8 @@ else
     {
         @this.LoadingContent
     }
-    else 
-    { 
+    else
+    {
         <div class="m-2 p-2">Loading......</div>
     }
 }

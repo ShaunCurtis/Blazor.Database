@@ -2,7 +2,11 @@
 
 This is my current working Repository for developing a CRUD Database Template for Blazor.
 
-Included in that are controls covered by specific articles on my [Personal Github Site](https://shauncurtis.github.io/) and published on various sites (*\Blazor.DataBase\Components\Controls*):
+There are a set of articles associated with this Repository on my personal GitHub site - [Building a Database Application in Blazor](https://shauncurtis.github.io/Building-a-Database-Application-in-Blazor/).
+
+This site also includes controls and pages for other specific articles on my [Personal Github Site](https://shauncurtis.github.io/) and published on various sites
+
+Currently these are:
 
 1. EditFormState
 2. ValidationFormState

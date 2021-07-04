@@ -10,29 +10,14 @@ namespace Blazor.SPA.Data
 {
     public class RecordPager
     {
-        /// <summary>
-        /// Current Page
-        /// </summary>
         public int Page { get; set; } = 1;
 
-        /// <summary>
-        /// No of items to display on a page
-        /// </summary>
         public int PageSize { get; set; } = 25;
 
-        /// <summary>
-        /// No of pages to show in the block
-        /// </summary>
         public int BlockSize { get; set; } = 10;
 
-        /// <summary>
-        /// Records in the current list
-        /// </summary>
         public int RecordCount { get; set; } = 0;
 
-        /// <summary>
-        /// Column to sort the list on
-        /// </summary>
         public string SortColumn
         {
             get => (!string.IsNullOrWhiteSpace(_sortColumn)) ? _sortColumn : DefaultSortColumn;
@@ -41,14 +26,8 @@ namespace Blazor.SPA.Data
 
         private string _sortColumn = string.Empty;
 
-        /// <summary>
-        /// Default sort column when list first loads
-        /// </summary>
         public string DefaultSortColumn { get; set; } = "ID";
 
-        /// <summary>
-        /// sort order - default is ascending
-        /// </summary>
         public bool SortDescending { get; set; }
 
         public RecordPager(int pageSize, int blockSize)
@@ -57,9 +36,6 @@ namespace Blazor.SPA.Data
             this.PageSize = pageSize;
         }
 
-        /// <summary>
-        /// Event triggered when the page changes
-        /// </summary>
         public event EventHandler PageChanged;
 
         // Set of read only properties for calculations and control in the Paging Control
@@ -71,10 +47,6 @@ namespace Blazor.SPA.Data
         public bool HasBlocks => ((RecordCount / (PageSize * BlockSize)) + 0.5) > 1;
         public bool HasPagination => (RecordCount / PageSize) > 1;
 
-        /// <summary>
-        /// Go to a specific page
-        /// </summary>
-        /// <param name="page"></param>
         public void ToPage(int page, bool forceUpdate = false)
         {
             if ((forceUpdate | !this.Page.Equals(page)) && page > 0)
@@ -84,33 +56,18 @@ namespace Blazor.SPA.Data
             }
         }
 
-        /// <summary>
-        /// Go to the next page
-        /// </summary>
         public void NextPage()
             => this.ToPage(this.Page + 1);
 
-        /// <summary>
-        /// Got to the previous page
-        /// </summary>
         public void PreviousPage()
                     => this.ToPage(this.Page - 1);
 
-        /// <summary>
-        /// Go to the start
-        /// </summary>
         public void ToStart()
             => this.ToPage(1);
 
-        /// <summary>
-        /// Go to the Last Page
-        /// </summary>
         public void ToEnd()
             => this.ToPage((int)Math.Ceiling((RecordCount / PageSize) + 0.5));
 
-        /// <summary>
-        /// Go to the next block and load the first page in the block
-        /// </summary>
         public void NextBlock()
         {
             if (CurrentBlock != LastBlock)
@@ -121,9 +78,6 @@ namespace Blazor.SPA.Data
             }
         }
 
-        /// <summary>
-        /// Go to the previous block and load the last page in the block
-        /// </summary>
         public void PreviousBlock()
         {
             if (CurrentBlock != 1)
@@ -133,15 +87,9 @@ namespace Blazor.SPA.Data
             }
         }
 
-        /// <summary>
-        /// Method to notify the paginator that some aspecy of sorting has changed
-        /// </summary>
         public void NotifySortingChanged()
             => this.ToPage(1, true);
 
-        /// <summary>
-        ///  Builds a PaginatorData Instance on the current data set
-        /// </summary>
         public RecordPagingData GetData => new RecordPagingData()
         {
             Page = this.Page,

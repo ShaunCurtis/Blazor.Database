@@ -9,19 +9,8 @@ namespace Blazor.SPA.Components
     public class UIButton : UIComponent
     {
         public UIButton()
-        {
-            this.CssClasses.Add("btn mr-1");
-        }
+            => this.CssClasses.Add("btn mr-1");
 
         protected override string HtmlTag => "button";
-
-        protected override void OnParametersSet()
-        {
-            base.OnParametersSet();
-        }
-        protected override bool ShouldRender()
-        {
-            return base.ShouldRender();
-        }
     }
 }
