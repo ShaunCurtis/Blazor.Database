@@ -66,6 +66,11 @@ namespace Blazor.SPA.Services
             this.RecordPager.PageChanged += this.OnPageChanged;
         }
 
+        public void SetRecord(TRecord record)
+        {
+            this.Record = record;
+        }
+
         public async ValueTask ResetServiceAsync()
         {
             await this.ResetListAsync();

@@ -25,3 +25,10 @@ function CallBlazorMouseUp(event) {
     DotNet.invokeMethodAsync("Blazor.Database.Server", "ButtonMouseUpOut");
 }
 
+windows.cecblazor_disableBack = function () {
+    window.history.forward();
+}
+
+windows.cecblazor_NoBack = function () {
+    setTimeout("cecblazor_disableBack()", 0);
+}

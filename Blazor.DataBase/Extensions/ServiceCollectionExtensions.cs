@@ -33,6 +33,7 @@ namespace Blazor.Database.Extensions
             var dbContext = configuration.GetValue<string>("Configuration:DBContext");
             services.AddDbContextFactory<MSSQLWeatherDbContext>(options => options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
             services.AddSingleton<IDataBroker, WeatherSQLDataBroker>();
+            services.AddSingleton<IEditStateService, ServerEditStateService>();
             AddCommonServices(services);
 
             return services;
