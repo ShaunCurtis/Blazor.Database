@@ -14,6 +14,8 @@ namespace Blazor.SPA.Data
     public interface IEditRecord<TRecord>
         where TRecord : class, IDbRecord<TRecord>, new()
     {
+        public Guid ID { get; }
+
         public Guid GUID { get; }
 
         public void Populate(IDbRecord<TRecord> dbRecord);

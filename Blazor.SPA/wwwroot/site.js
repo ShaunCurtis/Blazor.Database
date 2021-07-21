@@ -24,4 +24,3 @@ window.blazor_setMouseUpEvent = function (show) {
 function CallBlazorMouseUp(event) {
     DotNet.invokeMethodAsync("Blazor.SPA.Server", "ButtonMouseUpOut");
 }
-

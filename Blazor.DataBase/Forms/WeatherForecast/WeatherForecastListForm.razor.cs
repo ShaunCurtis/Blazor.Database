@@ -27,6 +27,7 @@ namespace Blazor.Database.Forms
             this.Service = this.ViewService;
             await base.OnInitializedAsync();
         }
+
         protected override async void Edit(Guid id)
         {
             if (this.IsModal)
@@ -61,6 +62,5 @@ namespace Blazor.Database.Forms
             else
                 base.New();
         }
-
     }
 }

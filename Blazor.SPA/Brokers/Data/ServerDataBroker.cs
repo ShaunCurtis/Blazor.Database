@@ -32,65 +32,91 @@ namespace Blazor.SPA.Brokers
             => this.DBContext = dbContext;
 
         public override async ValueTask<List<TRecord>> SelectAllRecordsAsync<TRecord>()
-            => await this.DBContext
-            .CreateDbContext()
+        {
+            var dbContext = this.DBContext.CreateDbContext();
+            var list = await dbContext
             .GetDbSet<TRecord>()
             .ToListAsync() ?? new List<TRecord>();
+            dbContext?.Dispose();
+            return list;
+        }
 
         public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(RecordPagingData paginatorData)
         {
+            var dbContext = this.DBContext.CreateDbContext();
             var startpage = paginatorData.Page <= 1
                 ? 0
                 : (paginatorData.Page - 1) * paginatorData.PageSize;
-            var dbset = this.DBContext
-                .CreateDbContext()
+            
+            var dbset = dbContext
                 .GetDbSet<TRecord>();
+            
             var isSortable = typeof(TRecord).GetProperty(paginatorData.SortColumn) != null;
+            List<TRecord> list;
             if (isSortable)
             {
-                var list = await dbset
+                list = await dbset
                     .OrderBy(paginatorData.SortDescending ? $"{paginatorData.SortColumn} descending" : paginatorData.SortColumn)
                     .Skip(startpage)
                     .Take(paginatorData.PageSize).ToListAsync() ?? new List<TRecord>();
-                return list;
             }
             else
             {
-                var list = await dbset
+                list = await dbset
                     .Skip(startpage)
                     .Take(paginatorData.PageSize).ToListAsync() ?? new List<TRecord>();
-                return list;
             }
+            dbContext?.Dispose();
+            return list;
         }
 
         public override async ValueTask<TRecord> SelectRecordAsync<TRecord>(Guid id)
-            => await this.DBContext.
-                CreateDbContext().
-                GetDbSet<TRecord>().
-                FirstOrDefaultAsync(item => ((IDbRecord<TRecord>)item).ID == id) ?? default;
+        {
+            var dbContext = this.DBContext.CreateDbContext();
+            var list = await dbContext
+                .GetDbSet<TRecord>()
+                .FirstOrDefaultAsync(item => ((IDbRecord<TRecord>)item).ID == id) ?? default;
+            
+            dbContext?.Dispose();
+            return list;
+        }
 
         public override async ValueTask<int> SelectRecordListCountAsync<TRecord>()
-            => await this.DBContext.CreateDbContext().GetDbSet<TRecord>().CountAsync();
+        {
+            var dbContext = this.DBContext.CreateDbContext();
+            var count = await dbContext
+                .GetDbSet<TRecord>()
+                .CountAsync();
+
+            dbContext?.Dispose();
+            return count;
+        }
 
         public override async ValueTask<DbTaskResult> UpdateRecordAsync<TRecord>(TRecord record)
         {
             var context = this.DBContext.CreateDbContext();
             context.Entry(record).State = EntityState.Modified;
-            return await this.UpdateContext(context);
+            var result =  await this.UpdateContext(context);
+            context?.Dispose();
+            return result;
         }
 
         public override async ValueTask<DbTaskResult> InsertRecordAsync<TRecord>(TRecord record)
         {
             var context = this.DBContext.CreateDbContext();
             context.GetDbSet<TRecord>().Add(record);
-            return await this.UpdateContext(context);
+            var result = await this.UpdateContext(context);
+            context?.Dispose();
+            return result;
         }
 
         public override async ValueTask<DbTaskResult> DeleteRecordAsync<TRecord>(TRecord record)
         {
             var context = this.DBContext.CreateDbContext();
             context.Entry(record).State = EntityState.Deleted;
-            return await this.UpdateContext(context);
+            var result =  await this.UpdateContext(context);
+            context?.Dispose();
+            return result;
         }
 
         /// Helper method to update the context and return a DBTaskResult

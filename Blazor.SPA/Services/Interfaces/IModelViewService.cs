@@ -36,6 +36,8 @@ namespace Blazor.SPA.Services
 
         public event EventHandler ListHasChanged;
 
+        public void SetRecord(TRecord record);
+
         public ValueTask ResetServiceAsync();
 
         public ValueTask ResetRecordAsync();
