@@ -1,0 +1,18 @@
+﻿@*/// ============================================================
+    /// Author: Shaun Curtis, Cold Elm Coders
+    /// License: Use And Donate
+    /// If you use it, donate something to a charity somewhere
+    /// ============================================================*@
+
+@namespace Blazor.UIComponents
+
+<UIContainer Size="this.ContainerSize">
+    <UIFormRow>
+        <UIColumn XLargeColumns=this.AlertColumns Columns=12>
+            <UIAlert AlertData="this.AlertData"></UIAlert>
+        </UIColumn>
+        <UIButtonColumn XLargeColumns=this.ButtonColumns Columns=12>
+            @ChildContent
+        </UIButtonColumn>
+    </UIFormRow>
+</UIContainer>

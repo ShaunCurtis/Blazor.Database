@@ -6,15 +6,18 @@
 
 using Microsoft.AspNetCore.Components;
 
-namespace Blazor.SPA.Components
+namespace Blazor.UIComponents
 {
-    public class UILabelColumn : UIColumn
+    public class UIInputColumn : UIColumn
     {
-        [Parameter] public override int Cols { get; set; } = 2;
+        [Parameter] public override int Columns { get; set; } = 6;
 
-        [Parameter] public string FormCss { get; set; } = "form-label";
+        [Parameter] public string FormCss { get; set; } = string.Empty;
 
-        public UILabelColumn()
-            => this.CssClasses.Add(this.FormCss);
+        public UIInputColumn()
+        {
+            this.CssClasses.Add(this.FormCss);
+        }
+
     }
 }

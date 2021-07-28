@@ -1,16 +1,16 @@
-﻿@namespace Blazor.SPA.Components
-@inherits AppComponentBase
+﻿@namespace Blazor.UIComponents
+@inherits UIComponentBase
 
 @if (_isSortField)
 {
-    <th class="@this.CssClass" @attributes="this.SplatterAttributes" @onclick="SortClick">
+    <th class="header-column @this.CssClass" @attributes="this.SplatterAttributes" @onclick="SortClick">
         <span class="@_iconclass"></span>
         @this.ChildContent
     </th>
 }
 else
 {
-    <th class="@this.CssClass" @attributes="this.SplatterAttributes">
+    <th class="header-column @this.CssClass" @attributes="this.SplatterAttributes">
         @this.ChildContent
     </th>
 }

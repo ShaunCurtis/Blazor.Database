@@ -4,13 +4,13 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-namespace Blazor.SPA.Components
+namespace Blazor.UIComponents
 {
-    public class UIButton : UIComponent
+    public class UIFormRow : UIComponent
     {
-        public UIButton()
-            => this.CssClasses.Add("btn mr-1");
-
-        protected override string HtmlTag => "button";
+        public UIFormRow()
+        {
+            CssClasses.Add("row form-group");
+        }
     }
 }

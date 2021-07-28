@@ -4,13 +4,14 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-namespace Blazor.SPA.Components
+using Microsoft.AspNetCore.Components;
+
+namespace Blazor.UIComponents
 {
-    public class UIButtonColumn : UIColumn
+    public partial class FormViewTitle
     {
-        public UIButtonColumn()
-        {
-            CssClasses.Add(this.Cols > 0 ? $"col-{this.Cols} text-right" : $"col text-right");
-        }
+        [Parameter] public RenderFragment ChildContent { get; set; }
+
+        [Parameter] public string Title { get; set; } = "No Title Set";
     }
 }
