@@ -6,15 +6,18 @@
 
 using Microsoft.AspNetCore.Components;
 
-namespace Blazor.SPA.Components
+namespace Blazor.UIComponents
 {
-    public class UIColumn : UIComponent
+    public class UIValidationColumn : UIColumn
     {
-        [Parameter] public virtual int Cols { get; set; } = 0;
+        [Parameter] public override int Columns { get; set; } = 4;
 
-        public UIColumn()
+        [Parameter] public string FormCss { get; set; } = "form-label";
+
+        public UIValidationColumn()
         {
-            CssClasses.Add(this.Cols > 0 ? $"col-{this.Cols}" : $"col");
+            this.CssClasses.Add(this.FormCss);
         }
+
     }
 }

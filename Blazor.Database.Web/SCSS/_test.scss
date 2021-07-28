@@ -1,0 +1,35 @@
+div.dirty-exit {
+    width: 400px;
+    margin: 10px auto 10px auto;
+}
+
+div.dirty-exit-message {
+    text-align:center;
+    margin: 20px 0px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-variant: small-caps;
+}
+
+div.dirty-exit button {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+    vertical-align: middle;
+    padding: .4rem .75rem;
+    text-align: center;
+    margin-right: 1rem;
+    border-radius: 0;
+    border-style: none;
+}
+
+button.dirty-exit-button {
+    background-color: #e74a3b;
+    border-color: #e74a3b;
+}
+
+button.load-dirty-form-button {
+    background-color: #1cc88a;
+    border-color: #1cc88a;
+}

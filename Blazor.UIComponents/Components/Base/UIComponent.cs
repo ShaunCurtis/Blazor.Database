@@ -4,14 +4,15 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
+using Blazor.SPA.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
 using System.Collections.Generic;
 
-namespace Blazor.SPA.Components
+namespace Blazor.UIComponents
 {
-    public class UIComponent : AppComponentBase
+    public class UIComponent : UIComponentBase
     {
 
         [Parameter] public bool Show { get; set; } = true;
@@ -39,12 +40,17 @@ namespace Blazor.SPA.Components
             if (this.Show)
             {
                 builder.OpenElement(0, this.HtmlTag);
-                if (!string.IsNullOrWhiteSpace(this.CssClass)) builder.AddAttribute(1, "class", this.CssClass);
-                if (Disabled) builder.AddAttribute(2, "disabled");
+                builder.AddMultipleAttributes(1, this.SplatterAttributes);
+                if (!string.IsNullOrWhiteSpace(this.CssClass))
+                    builder.AddAttribute(2, "class", this.CssClass);
+
+                if (Disabled)
+                    builder.AddAttribute(3, "disabled");
+
                 if (ClickEvent.HasDelegate)
-                    builder.AddAttribute(3, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, ClickEvent));
-                builder.AddMultipleAttributes(3, this.SplatterAttributes);
-                builder.AddContent(4, ChildContent);
+                    builder.AddAttribute(4, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, ClickEvent));
+
+                builder.AddContent(5, ChildContent);
                 builder.CloseElement();
             }
         }

@@ -4,7 +4,7 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-namespace Blazor.SPA.Components
+namespace Blazor.UIComponents
 {
     class UIRow : UIComponent
     {

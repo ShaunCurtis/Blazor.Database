@@ -21,11 +21,11 @@ namespace Blazor.SPA.Forms
     /// <typeparam name="TRecord"></typeparam>
     public abstract class EditRecordFormBase<TRecord, TEditRecord> :
         RecordFormBase<TRecord>,
-        IAsyncDisposable
+        IDisposable
         where TRecord : class, IDbRecord<TRecord>, new()
         where TEditRecord : class, IEditRecord<TRecord>, new()
     {
-        [Inject] protected IEditStateService EditStateService { get; set; }
+        [Inject] protected RouteViewService RouteViewService { get; set; }
 
         public virtual Guid FormId { get; } = Guid.Empty;
 
@@ -66,21 +66,17 @@ namespace Blazor.SPA.Forms
         protected override async Task LoadRecordAsync()
         {
             _isLoaded = false;
+            this.RouteViewService.EditFormId = this.FormId;
+            this.RouteViewService.EditForm = this.GetType();
             this.TryGetModalID();
             var id = this._Id;
-            // check if we have a saved EditeState for this form and if so load it into Model
-            var retrievedEditState = await this.GetEditState();
-            // if so set the id to retrieve the base record
-            if (retrievedEditState)
-                id = Model.ID;
+            // check if we have a saved EditeState for this form and if so set the id
+            if (this.GetEditStateId(out Guid editstateid))
+                id = editstateid;
 
             await this.Service.GetRecordAsync(id);
-            // if we don't have a saved EditState build the model from the base record
-            if (!retrievedEditState)
-            {
                 this.Model = new TEditRecord();
                 this.Model.Populate(this.Service.Record);
-            }
             // assign the Model to the EditContext
             this.EditContext = new EditContext(this.Model);
             _isLoaded = true;
@@ -91,13 +87,11 @@ namespace Blazor.SPA.Forms
 
         protected void FieldChanged(object sender, FieldChangedEventArgs e)
         {
-            //this._dirtyExit = false;
             this._confirmDelete = false;
         }
 
         protected void EditStateChanged(bool dirty)
             => this.IsDirty = dirty;
-
 
         protected void ValidStateChanged(bool valid)
             => this._isValid = valid;
@@ -107,7 +101,7 @@ namespace Blazor.SPA.Forms
             var rec = this.Model.GetRecord();
             await this.Service.SaveRecordAsync(rec);
             this.EditFormState.UpdateState();
-            await this.EditStateService.ClearEditState(this.FormId);
+            this.EditFormState.ClearEditState();
             await this.InvokeAsync(this.StateHasChanged);
         }
 
@@ -136,7 +130,7 @@ namespace Blazor.SPA.Forms
         protected async Task ConfirmExit()
         {
             this.IsDirty = false;
-            await this.EditStateService.ClearEditState(this.FormId);
+            this.EditFormState.ClearEditState();
             await this.DoExit();
         }
 
@@ -151,33 +145,28 @@ namespace Blazor.SPA.Forms
                 this.NavManager.NavigateTo("/");
         }
 
-        protected async ValueTask SaveEditState()
+        protected bool GetEditStateId(out Guid id)
         {
-            var json = JsonSerializer.Serialize(this.Model);
-            var data = new EditStateData { Data = json, FormId = this.FormId, RecordId = this.Service.Record.ID };
-            await EditStateService.AddEditState(data);
-        }
-
-        protected async ValueTask<bool> GetEditState()
-        {
-            var rec = await EditStateService.GetEditState(this.FormId);
+            var rec = RouteViewService.GetEditState(this.FormId);
             var hasRecord = rec != null;
             if (hasRecord)
             {
                 var data = JsonSerializer.Deserialize<TEditRecord>(rec.Data);
-                this.Model = (TEditRecord)data;
-                // TODO - do we need to load the EditContext State and EditFormState
-                this.IsDirty = true;
+                var model = (TEditRecord)data;
+                id = model.ID;
+                return true;
             }
-            return hasRecord;
+            else
+            {
+                id =  Guid.Empty;
+                return false;
+            }
         }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
             if (this.EditContext != null)
                 this.EditContext.OnFieldChanged -= FieldChanged;
-            if (this.IsDirty && this.Service.Record != null)
-                await SaveEditState();
         }
     }
 }

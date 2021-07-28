@@ -31,12 +31,18 @@ namespace Blazor.SPA.Data
             return default;
         }
 
-
         public T GetEditValue<T>(string FieldName)
         {
             var x = _items.FirstOrDefault(item => item.FieldName.Equals(FieldName, StringComparison.CurrentCultureIgnoreCase));
             if (x != null && x.EditedValue is T t) return t;
             return default;
+        }
+        public object GetEditValue(string FieldName)
+        {
+            var val = _items.FirstOrDefault(item => item.FieldName.Equals(FieldName, StringComparison.CurrentCultureIgnoreCase));
+            if (val is not null)
+                return val.EditedValue;
+            return null;
         }
 
         public bool TryGet<T>(string FieldName, out T value)

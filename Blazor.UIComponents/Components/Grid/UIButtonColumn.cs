@@ -4,13 +4,13 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-namespace Blazor.SPA.Components
+namespace Blazor.UIComponents
 {
-    public class UIFormRow : UIComponent
+    public class UIButtonColumn : UIColumn
     {
-        public UIFormRow()
+        public UIButtonColumn()
         {
-            CssClasses.Add("row form-group");
+            CssClasses.Add("text-right");
         }
     }
 }

@@ -4,11 +4,13 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-namespace Blazor.SPA.Components
+using Microsoft.AspNetCore.Components;
+
+namespace Blazor.UIComponents
 {
-    public class UIContainer : UIComponent
+    public partial class FormViewButtons
     {
-        public UIContainer()
-            => CssClasses.Add("container - fluid");
+        [Parameter] public EventCallback OnExit { get; set; }
+
     }
 }

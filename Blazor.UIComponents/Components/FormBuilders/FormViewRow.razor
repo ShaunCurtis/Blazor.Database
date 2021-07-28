@@ -1,0 +1,21 @@
+﻿@*/// ============================================================
+    /// Author: Shaun Curtis, Cold Elm Coders
+    /// License: Use And Donate
+    /// If you use it, donate something to a charity somewhere
+    /// ============================================================*@
+
+@namespace Blazor.UIComponents
+
+<UIFormRow>
+    <UILabelColumn LargeColumns=this.LabelLargeColumns MediumColumns=this.LabelMediumColumns Columns=12>
+        @Title
+    </UILabelColumn>
+    <UIInputColumn LargeColumns=this.ControlLargeColumns MediumColumns=this.ControlMediumColumns Columns=12>
+        @if (this.ChildContent != null)
+        {
+            @ChildContent }
+        else
+        {
+            <InputReadOnlyText Value="@this.Value" />}
+    </UIInputColumn>
+</UIFormRow>

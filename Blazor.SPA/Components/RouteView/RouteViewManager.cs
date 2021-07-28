@@ -15,6 +15,8 @@
 
 using Blazor.SPA.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +59,8 @@ namespace Blazor.SPA.Components
         /// Used to get the override Layout if one is specified
         /// </summary>
         [Inject] private RouteViewService RouteViewService { get; set; }
+
+        [Inject] private IJSRuntime _js { get; set; }
 
         /// <summary>
         /// Gets and sets the view data.
@@ -116,6 +120,11 @@ namespace Blazor.SPA.Components
         /// RendleHandle we get from the Attach Process to queue render requests on
         /// </summary>
         private RenderHandle _renderHandle;
+
+        /// <summary>
+        /// Override to force loading of the EditForm when we have a dirty form defined
+        /// </summary>
+        private bool _loadEditForm = false;
 
         /// <inheritdoc />
         public void Attach(RenderHandle renderHandle)
@@ -197,8 +206,46 @@ namespace Blazor.SPA.Components
 
             builder.OpenComponent<LayoutView>(0);
             builder.AddAttribute(1, nameof(LayoutView.Layout), _pageLayoutType);
-            builder.AddAttribute(2, nameof(LayoutView.ChildContent), _renderComponentWithParameters);
+            if (RouteViewService.ConfirmDirtyExit && !_loadEditForm)
+                builder.AddAttribute(2, nameof(LayoutView.ChildContent), _dirtyExitFragment);
+            else
+            {
+                _loadEditForm = false;
+                builder.AddAttribute(2, nameof(LayoutView.ChildContent), _renderComponentWithParameters);
+            }
             builder.CloseComponent();
+        };
+
+        private RenderFragment _dirtyExitFragment => builder =>
+        {
+            builder.OpenElement(0, "div");
+            builder.AddAttribute(1, "class", "dirty-exit");
+            {
+                builder.OpenElement(2, "div");
+                builder.AddAttribute(3, "class", "dirty-exit-message");
+                builder.AddContent(4, "You are existing a form with unsaved data");
+                builder.CloseElement();
+            }
+            {
+                builder.OpenElement(2, "div");
+                builder.AddAttribute(3, "class", "dirty-exit-message");
+                {
+                    builder.OpenElement(2, "button");
+                    builder.AddAttribute(3, "class", "dirty-exit-button");
+                    builder.AddAttribute(5, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, this.DirtyExit));
+                    builder.AddContent(6, "Exit and Clear Unsaved Data");
+                    builder.CloseElement();
+                }
+                {
+                    builder.OpenElement(2, "button");
+                    builder.AddAttribute(3, "class", "load-dirty-form-button");
+                    builder.AddAttribute(5, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, this.LoadDirtyForm));
+                    builder.AddContent(6, "Reload Form");
+                    builder.CloseElement();
+                }
+                builder.CloseElement();
+            }
+            builder.CloseElement();
         };
 
         /// <summary>
@@ -278,5 +325,31 @@ namespace Blazor.SPA.Components
             }
             this.ViewHistory.Add(DateTime.Now, value);
         }
+
+        private Task DirtyExit(MouseEventArgs d)
+        {
+            this.RouteViewService.EditorView = null;
+            this.RouteViewService.ClearEditState(RouteViewService.EditFormId);
+            this.RouteViewService.EditFormId = Guid.Empty;
+            this.SetPageExitCheck(false);
+            return RenderAsync();
+        }
+
+        private Task LoadDirtyForm(MouseEventArgs d)
+        {
+            this.ViewData = this.RouteViewService.EditorView;
+            _loadEditForm = true;
+            return RenderAsync();
+        }
+
+        /// <summary>
+        /// Method to interact with the page js to enable/disable the "beforeunload" browser event
+        /// </summary>
+        /// <param name="action"></param>
+        private void SetPageExitCheck(bool action)
+            => _js.InvokeAsync<bool>("cecblazor_setEditorExitCheck", action);
+
+
+
     }
 }

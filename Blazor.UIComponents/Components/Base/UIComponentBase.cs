@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blazor.SPA.Components
+namespace Blazor.UIComponents
 {
-    public class AppComponentBase : ComponentBase
+    public class UIComponentBase : ComponentBase
     {
         [Parameter] public RenderFragment ChildContent { get; set; }
 
