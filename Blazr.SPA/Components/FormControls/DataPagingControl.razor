@@ -1,0 +1,54 @@
+﻿@namespace Blazr.SPA.Components
+
+@if (this.hasPagination)
+{
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" @onclick="() => this.RecordPager.ToStart()">&vert;&lt;</a>
+            </li>
+            @if (this.RecordPager.HasBlocks)
+            {
+                <li class="page-item">
+                    <a class="page-link" @onclick="() => this.RecordPager.PreviousBlock()">&lt;&lt;</a>
+                </li>
+            }
+            @for (var i = this.RecordPager.StartBlockPage; i < this.RecordPager.EndBlockPage; i++)
+            {
+                var pageNo = i;
+                @if (pageNo > this.RecordPager.LastPage) break;
+                @if (pageNo == this.RecordPager.Page)
+                {
+                    <li class="page-item active">
+                        <span class="page-link">
+                            @pageNo
+                            <span class="sr-only">(current)</span>
+                        </span>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" @onclick="() => this.RecordPager.ToPage(pageNo)">@pageNo</a>
+                    </li>
+                }
+
+            }
+            @if (this.RecordPager.HasBlocks)
+            {
+                <li class="page-item">
+                    <a class="page-link" @onclick="() => this.RecordPager.NextBlock()">&gt;&gt;</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link" @onclick="() => this.RecordPager.ToEnd()">&gt;&vert;</a>
+            </li>
+        </ul>
+    </nav>
+}
+
+@code {
+    [Parameter] public RecordPager RecordPager { get; set; }
+
+    private bool hasPagination => this.RecordPager != null && this.RecordPager.HasPagination;
+}

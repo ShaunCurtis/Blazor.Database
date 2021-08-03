@@ -1,0 +1,18 @@
+﻿@page "/fetchdataInline"
+
+@namespace Blazr.Database.RouteViews
+@inherits InlineFormBase
+
+<UIComponent Show="this.ShowEditor">
+    <WeatherForecastEditorForm ID="this.editorId" ExitAction="this.CloseDialog"></WeatherForecastEditorForm>
+</UIComponent>
+<UIComponent Show="this.ShowViewer">
+    <WeatherForecastViewerForm ID="this.viewerId" ExitAction="this.CloseDialog"></WeatherForecastViewerForm>
+</UIComponent>
+
+<WeatherForecastListForm EditRecord="this.GoToEditor" ViewRecord="this.GoToViewer" NewRecord="this.GoToNew" ExitAction="Exit"></WeatherForecastListForm>
+
+@code {
+
+}
+

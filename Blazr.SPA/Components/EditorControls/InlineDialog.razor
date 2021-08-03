@@ -1,0 +1,24 @@
+﻿@*
+    /// =================================
+    /// Author: Shaun Curtis, Cold Elm
+    /// License: MIT
+    /// ==================================
+*@
+
+@namespace Blazr.SPA.Components
+
+<div class="@this.backcss"></div>
+
+<div class="@this.CssClass">
+    @if (this.Cascade)
+    {
+        <CascadingValue Value="this">
+            @this.ChildContent
+        </CascadingValue>
+    }
+    else
+    {
+        @this.ChildContent
+    }
+</div>
+
