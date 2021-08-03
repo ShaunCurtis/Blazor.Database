@@ -1,0 +1,19 @@
+﻿@*
+    /// =================================
+    /// Author: Shaun Curtis, Cold Elm
+    /// License: MIT
+    /// ==================================
+*@
+
+@namespace Blazr.SPA.Components
+
+@inherits InputBase<string>
+
+<input class="@CssClass" type="text" @bind-value="this.CurrentStringValue" @attributes="this.AdditionalAttributes" list="@dataListId" @oninput="UpdateEnteredText" @onkeydown="OnKeyDown" />
+
+<datalist id="@dataListId">
+    @foreach (var option in this.DataList)
+    {
+        <option value="@option" />
+    }
+</datalist>

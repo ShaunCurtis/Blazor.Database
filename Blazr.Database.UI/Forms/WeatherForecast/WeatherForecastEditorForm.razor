@@ -1,0 +1,44 @@
+﻿@*/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================*@
+
+@namespace Blazr.Database.Forms
+@inherits EditRecordFormBase<WeatherForecast, EditWeatherForecast>
+
+<InlineDialog Lock="this._isInlineDirty" Transparent="false">
+    <FormViewTitle>
+        <h2>Weather Forecast Editor</h2>
+    </FormViewTitle>
+    <UILoader State="this.LoadState">
+        <EditForm EditContext="this.EditContext" OnValidSubmit="HandleValidSubmit" class=" px-2 py-3">
+            <EditFormState/>
+            <ValidationFormState ValidStateChanged="this.ValidStateChanged"></ValidationFormState>
+            <UIContainer>
+                <FormViewRow Title="Unique ID" Value="@this.Model.ID.ToString()" />
+                <UIFormRow>
+                    <UIColumn MediumColumns="6" Columns=12>
+                        <FormEditControl Label="Date" ShowLabel="true" @bind-Value="this.Model.Date" ControlType="typeof(InputDate<DateTimeOffset>)" IsRequired="true" ShowValidation="true" HelperText="Enter the Forecast Date"></FormEditControl>
+                    </UIColumn>
+                    <UIColumn MediumColumns="6" Columns=12>
+                        <FormEditControl Label="Temperature &deg;C" ShowLabel="true" @bind-Value="this.Model.TemperatureC" ControlType="typeof(InputNumber<int>)" IsRequired="true" ShowValidation="true" HelperText="Enter the Temperature"></FormEditControl>
+                    </UIColumn>
+                </UIFormRow>
+                <UIFormRow>
+                    <UIColumn MediumColumns="12" Columns=12>
+                        <FormEditControl Label="Summary" ShowLabel="true" @bind-Value="this.Model.Summary" IsRequired="true" ShowValidation="true" HelperText="Summarise the Weather"></FormEditControl>
+                    </UIColumn>
+                </UIFormRow>
+            </UIContainer>
+            <FormEditButtons ContainerSize="BootstrapSize.XLarge">
+                <UIButton type="button" Show="true" Disabled="this._deleteDisabled" class="btn-outline-danger" ClickEvent="() => Delete()">Delete</UIButton>
+                <UIButton type="button" Show="this._confirmDelete" class="btn-danger" ClickEvent="() => this.ConfirmDelete()">Confirm Delete</UIButton>
+                <UIButton type="button" Show="this.IsDirty" class="btn-outline-warning" ClickEvent="() => this.ResetToRecord()">Reset</UIButton>
+                <UIButton type="submit" Show="true" Disabled="this._saveDisabled" class="btn-success">@this._saveButtonText</UIButton>
+                <UIButton type="button" Show="this.IsDirty" class="btn-danger" ClickEvent="() => this.ConfirmExit()">Exit Without Saving</UIButton>
+                <UIButton type="button" Show="!this.IsDirty" class="btn-dark" ClickEvent="() => this.Exit()">Exit</UIButton>
+            </FormEditButtons>
+        </EditForm>
+    </UILoader>
+</InlineDialog>

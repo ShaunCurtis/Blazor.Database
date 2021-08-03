@@ -1,0 +1,26 @@
+﻿@*/// ============================================================
+    /// Author: Shaun Curtis, Cold Elm Coders
+    /// License: Use And Donate
+    /// If you use it, donate something to a charity somewhere
+    /// ============================================================*@
+
+@namespace Blazr.UIComponents
+
+<UIFormRow>
+    @if (this.LabelColumns > 0)
+    {
+<UILabelColumn Cols="@this.LabelColumns">
+    @Title
+</UILabelColumn>}
+    <UIInputColumn Cols="@this.ControlColumns">
+        @ChildContent
+    </UIInputColumn>
+    @if (this.ValidationContent != null)
+    {
+<UIValidationColumn Cols="@this.ValidationColumns">
+    @ValidationContent
+</UIValidationColumn>}
+    @if (this.paddingColumns > 0)
+    {
+<UIColumn Cols="@this.paddingColumns"></UIColumn>}
+</UIFormRow>
