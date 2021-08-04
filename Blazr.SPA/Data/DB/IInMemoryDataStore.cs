@@ -1,25 +1,17 @@
-﻿using Blazor.EditForms.Web.Data;
-using Blazr.Database.Core;
+﻿/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
+
 using Blazr.SPA.Data;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Blazr.Database.Data.Data
+namespace Blazr.Database.Data
 {
-    class InMemoryDataStore
+    public interface IInMemoryDataStore
     {
-
-        public WeatherDataSet WeatherForecast { get; set; }
-
-
-        public InMemoryDataStore()
-        {
-            WeatherForecast = new WeatherDataSet();
-        }
 
         public InMemoryDataSet<TRecord> GetDataSet<TRecord>() where TRecord : class, IDbRecord<TRecord>, new()
         {

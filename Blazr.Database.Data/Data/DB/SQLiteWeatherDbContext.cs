@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Blazr.Database.Data
 {
-    public class InMemoryWeatherDbContext : DbContext
+    public class SQLiteWeatherDbContext : DbContext
     {
         /// <summary>
         /// Tracking lifetime of contexts.
@@ -23,7 +23,7 @@ namespace Blazr.Database.Data
         /// New Method - creates a guid in case we need to track it
         /// </summary>
         /// <param name="options"></param>
-        public InMemoryWeatherDbContext(DbContextOptions<InMemoryWeatherDbContext> options)
+        public SQLiteWeatherDbContext(DbContextOptions<SQLiteWeatherDbContext> options)
             : base(options)
         {
             this._id = Guid.NewGuid();

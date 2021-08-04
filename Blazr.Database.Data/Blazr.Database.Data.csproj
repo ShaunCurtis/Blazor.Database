@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -22,7 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Blazr.Database.Core\Blazr.Database.Core.csproj" />
     <ProjectReference Include="..\Blazr.SPA\Blazr.SPA.csproj" />
-    <ProjectReference Include="..\Blazr.UIComponents\Blazr.UIComponents.csproj" />
   </ItemGroup>
 
 </Project>

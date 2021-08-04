@@ -26,10 +26,9 @@ namespace Blazr.Database.Extensions
 
             return services;
         }
-        public static IServiceCollection AddServerApplicationServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSQLServerApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
-
-            // Local DB Setup
+            // Local MS SQL DB Setup
             var dbContext = configuration.GetValue<string>("Configuration:DBContext");
             services.AddDbContextFactory<MSSQLWeatherDbContext>(options => options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
             services.AddSingleton<IDataBroker, WeatherSQLDataBroker>();
@@ -38,12 +37,21 @@ namespace Blazr.Database.Extensions
             return services;
         }
 
-        public static IServiceCollection AddInMemoryApplicationServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSQLiteServerApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
-
-            // In Memory DB Setup
+            // In Memory SQLite DB Setup
             var memdbContext = "Data Source=:memory:";
-            services.AddDbContextFactory<InMemoryWeatherDbContext>(options => options.UseSqlite(memdbContext), ServiceLifetime.Singleton);
+            services.AddDbContextFactory<SQLiteWeatherDbContext>(options => options.UseSqlite(memdbContext), ServiceLifetime.Singleton);
+            services.AddSingleton<IDataBroker, WeatherSQLiteDataBroker>();
+            AddCommonServices(services);
+
+            return services;
+        }
+
+        public static IServiceCollection AddInMemoryServerApplicationServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            // In Memory Datastore Setup
+            services.AddSingleton<IInMemoryDataStore, InMemoryWeatherDataStore>();
             services.AddSingleton<IDataBroker, WeatherInMemoryDataBroker>();
             AddCommonServices(services);
 

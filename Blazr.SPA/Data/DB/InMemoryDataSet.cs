@@ -4,15 +4,14 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blazor.EditForms.Web.Data
+namespace Blazr.SPA.Data
 {
-    public abstract class InMemoryDataSet<TRecord> : IEnumerable<TRecord>
+    public class InMemoryDataSet<TRecord> : IEnumerable<TRecord>
         where TRecord : class, IDbRecord<TRecord>, new()
     {
         protected List<TRecord> records = new List<TRecord>();
@@ -61,12 +60,8 @@ namespace Blazor.EditForms.Web.Data
             return record != null;
         }
 
-        public InMemoryDataSet()
-        {
-            LoadData();
-        }
-
-        public abstract void LoadData();
+        public void LoadData(List<TRecord> records)
+            => this.records = records;
 
         public IEnumerator GetEnumerator()
         {
