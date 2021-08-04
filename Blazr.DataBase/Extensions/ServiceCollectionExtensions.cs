@@ -6,6 +6,7 @@
 
 using Blazr.Database.Brokers;
 using Blazr.Database.Core;
+using Blazr.Database.Core.Connectors;
 using Blazr.Database.Data;
 using Blazr.SPA.Brokers;
 using Blazr.SPA.Connectors;
@@ -64,7 +65,7 @@ namespace Blazr.Database.Extensions
             services.AddScoped<ILogger, Logger<LoggingBroker>>();
             services.AddScoped<ILoggingBroker, LoggingBroker>();
             services.AddScoped<IDateTimeBroker, DateTimeBroker>();
-            services.AddScoped<IDataServiceConnector, ModelDataServiceConnector>();
+            services.AddScoped<IDataServiceConnector, WeatherDataServiceConnector>();
             services.AddScoped<WeatherForecastViewService>();
         }
     }

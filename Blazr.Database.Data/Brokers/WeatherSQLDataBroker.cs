@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 namespace Blazr.Database.Brokers
 {
     public class WeatherSQLDataBroker :
-        ServerDataBroker<MSSQLWeatherDbContext>
+        SQLServerDataBroker<MSSQLWeatherDbContext>
     {
         public WeatherSQLDataBroker(IConfiguration configuration, IDbContextFactory<MSSQLWeatherDbContext> dbContext) : base(configuration, dbContext) { }
     }

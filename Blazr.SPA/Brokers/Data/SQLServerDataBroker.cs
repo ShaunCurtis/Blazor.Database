@@ -20,7 +20,7 @@ namespace Blazr.SPA.Brokers
     /// Blazor Server Data Broker
     /// Interfaces through EF with SQL Database
     /// </summary>
-    public class ServerDataBroker<TDbContext> :
+    public class SQLServerDataBroker<TDbContext> :
         BaseDataBroker,
         IDataBroker
         where TDbContext : DbContext
@@ -28,7 +28,7 @@ namespace Blazr.SPA.Brokers
 
         protected virtual IDbContextFactory<TDbContext> DBContext { get; set; } = null;
 
-        public ServerDataBroker(IConfiguration configuration, IDbContextFactory<TDbContext> dbContext)
+        public SQLServerDataBroker(IConfiguration configuration, IDbContextFactory<TDbContext> dbContext)
             => this.DBContext = dbContext;
 
         public override async ValueTask<List<TRecord>> SelectAllRecordsAsync<TRecord>()

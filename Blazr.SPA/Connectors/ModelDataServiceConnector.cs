@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Blazr.SPA.Connectors
 {
-    public class ModelDataServiceConnector :
+    public abstract class ModelDataServiceConnector :
         IDataServiceConnector
 
     {
