@@ -2,6 +2,7 @@ using Blazr.Database.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,11 +26,11 @@ namespace Blazor.Database.Web
         public void ConfigureServices(IServiceCollection services){
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddControllersWithViews();
+            services.AddControllers().PartManager.ApplicationParts.Add(new AssemblyPart(typeof(Blazr.Database.Controllers.WeatherForecastController).Assembly));
 
-            // services.AddApplicationServices(this.Configuration);
-            // services.AddInMemoryApplicationServices(this.Configuration);
-            services.AddServerApplicationServices(this.Configuration);
+            // services.AddSQLServerApplicationServices(this.Configuration);
+            // services.AddSQLiteServerApplicationServices(this.Configuration);
+            services.AddInMemoryServerApplicationServices(this.Configuration);
 
             // Server Side Blazor doesn't register HttpClient by default
             // Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode
@@ -72,7 +73,7 @@ namespace Blazor.Database.Web
                 app1.UseRouting();
                 app1.UseEndpoints(endpoints =>
                 {
-                    endpoints.MapFallbackToPage("/wasm/{*path:nonfile}", "/WASM");
+                    endpoints.MapFallbackToPage("/wasm/{*path:nonfile}", "/_WASM");
                 });
             });
 

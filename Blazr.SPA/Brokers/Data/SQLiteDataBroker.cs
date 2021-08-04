@@ -19,7 +19,7 @@ namespace Blazr.SPA.Brokers
     /// Blazor In-Memory SQLite Server Data Broker
     /// Interfaces through EF with SQL Database
     /// </summary>
-    public class InMemoryDataBroker<TDbContext> :
+    public class SQLiteDataBroker<TDbContext> :
         BaseDataBroker,
         IDataBroker
         where TDbContext : DbContext
@@ -29,7 +29,7 @@ namespace Blazr.SPA.Brokers
 
         private DbContext _dbContext;
 
-        public InMemoryDataBroker(IConfiguration configuration, IDbContextFactory<TDbContext> dbContext)
+        public SQLiteDataBroker(IConfiguration configuration, IDbContextFactory<TDbContext> dbContext)
         {
             this.DBContext = dbContext;
             _dbContext = this.DBContext.CreateDbContext();

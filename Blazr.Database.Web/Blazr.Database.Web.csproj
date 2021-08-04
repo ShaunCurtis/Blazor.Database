@@ -18,15 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Blazr.Database.Controllers\Blazr.Database.Controllers.csproj" />
     <ProjectReference Include="..\Blazr.Database.Core\Blazr.Database.Core.csproj" />
     <ProjectReference Include="..\Blazr.Database.Data\Blazr.Database.Data.csproj" />
     <ProjectReference Include="..\Blazr.Database.UI\Blazr.Database.UI.csproj" />
     <ProjectReference Include="..\Blazr.SPA\Blazr.SPA.csproj" />
     <ProjectReference Include="..\Blazr.DataBase\Blazr.Database.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewServices\" />
   </ItemGroup>
 
 </Project>

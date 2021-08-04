@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MVC = Microsoft.AspNetCore.Mvc;
 
-namespace Blazor.Database.Controllers
+namespace Blazr.Database.Controllers
 {
     [ApiController]
     public class WeatherForecastController : ControllerBase

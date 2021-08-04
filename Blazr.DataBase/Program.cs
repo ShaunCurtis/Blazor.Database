@@ -1,5 +1,5 @@
-using Blazr.Database.Extensions;
 using Blazr.Database.Components;
+using Blazr.Database.Extensions;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;

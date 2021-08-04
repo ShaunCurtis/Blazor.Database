@@ -11,9 +11,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Blazr.Database.Brokers
 {
-    public class WeatherInMemoryDataBroker :
-        InMemoryDataStoreBroker<InMemoryWeatherDataStore>
+    public class WeatherSQLiteDataBroker :
+        SQLiteDataBroker<SQLiteWeatherDbContext>
     {
-        public WeatherInMemoryDataBroker(IInMemoryDataStore dataContext) : base(dataContext) { }
+        public WeatherSQLiteDataBroker(IConfiguration configuration, IDbContextFactory<SQLiteWeatherDbContext> dbContext) : base(configuration, dbContext) { }
     }
 }

@@ -25,7 +25,6 @@
     <ProjectReference Include="..\Blazr.Database.Data\Blazr.Database.Data.csproj" />
     <ProjectReference Include="..\Blazr.Database.UI\Blazr.Database.UI.csproj" />
     <ProjectReference Include="..\Blazr.SPA\Blazr.SPA.csproj" />
-    <ProjectReference Include="..\Blazr.UIComponents\Blazr.UIComponents.csproj" />
   </ItemGroup>
 
 </Project>

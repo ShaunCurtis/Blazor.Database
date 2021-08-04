@@ -21,11 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Database.Tests.Unit",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.UIComponents", "Blazr.UIComponents\Blazr.UIComponents.csproj", "{C537B8B2-95F8-486F-93E4-174E820AC800}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Database.Data", "Blazr.Database.Data\Blazr.Database.Data.csproj", "{CACC01DE-C829-4AA7-8CA7-BD102CDAB9C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Database.Data", "Blazr.Database.Data\Blazr.Database.Data.csproj", "{CACC01DE-C829-4AA7-8CA7-BD102CDAB9C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Database.UI", "Blazr.Database.UI\Blazr.Database.UI.csproj", "{8217E32F-9538-4B0E-BD69-F3BBD4F33038}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Database.UI", "Blazr.Database.UI\Blazr.Database.UI.csproj", "{8217E32F-9538-4B0E-BD69-F3BBD4F33038}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Database.Core", "Blazr.Database.Core\Blazr.Database.Core.csproj", "{492B8419-442D-4BD7-A9AC-547B6ABF1AED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Database.Core", "Blazr.Database.Core\Blazr.Database.Core.csproj", "{492B8419-442D-4BD7-A9AC-547B6ABF1AED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Database.Controllers", "Blazr.Database.Controllers\Blazr.Database.Controllers.csproj", "{1A7F2D06-962E-450F-A5DB-CA7B2DFCF35F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{492B8419-442D-4BD7-A9AC-547B6ABF1AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{492B8419-442D-4BD7-A9AC-547B6ABF1AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{492B8419-442D-4BD7-A9AC-547B6ABF1AED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A7F2D06-962E-450F-A5DB-CA7B2DFCF35F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A7F2D06-962E-450F-A5DB-CA7B2DFCF35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A7F2D06-962E-450F-A5DB-CA7B2DFCF35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A7F2D06-962E-450F-A5DB-CA7B2DFCF35F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
