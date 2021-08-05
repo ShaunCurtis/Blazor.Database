@@ -4,12 +4,11 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Blazr.SPA.Services
+namespace Blazr.SPA.Core
 {
     public interface IModelViewService<TRecord>
         where TRecord : class, new()

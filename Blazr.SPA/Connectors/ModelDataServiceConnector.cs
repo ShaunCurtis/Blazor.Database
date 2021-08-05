@@ -4,13 +4,12 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Brokers;
 using Blazr.SPA.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Blazr.SPA.Connectors
+namespace Blazr.SPA.Core
 {
     public abstract class ModelDataServiceConnector :
         IDataServiceConnector

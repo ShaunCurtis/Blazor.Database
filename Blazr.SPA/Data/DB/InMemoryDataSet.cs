@@ -4,6 +4,7 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
+using Blazr.SPA.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;

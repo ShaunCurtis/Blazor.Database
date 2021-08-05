@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Blazr.SPA.Data
+namespace Blazr.SPA.Core
 {
     /// <summary>
     /// Common Interface definition for any DbRecord

@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Blazr.SPA.Brokers
+namespace Blazr.SPA.Data
 {
     public interface ILoggingBroker
     {

@@ -5,6 +5,7 @@
 /// ============================================================
 
 using Blazr.Database.Core;
+using Blazr.SPA.Core;
 using Blazr.SPA.Data;
 using System;
 using System.Collections.Generic;

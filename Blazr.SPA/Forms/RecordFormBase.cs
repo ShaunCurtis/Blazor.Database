@@ -4,14 +4,12 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Components;
-using Blazr.SPA.Data;
-using Blazr.SPA.Services;
+using Blazr.SPA.Core;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 
-namespace Blazr.SPA.Forms
+namespace Blazr.SPA.Components
 {
     /// <summary>
     /// Abstract class to implement the boilerplate code used to Display a record

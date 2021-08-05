@@ -6,7 +6,7 @@
 
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Blazr.SPA.Data
+namespace Blazr.SPA.Core
 {
     public interface IValidation
     {

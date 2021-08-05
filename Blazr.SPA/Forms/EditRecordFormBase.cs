@@ -4,18 +4,14 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Components;
-using Blazr.SPA.Data;
-using Blazr.SPA.Data.Events;
-using Blazr.SPA.Services;
+using Blazr.SPA.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Blazr.SPA.Forms
+namespace Blazr.SPA.Components
 {
     /// <summary>
     /// Abstract Class defining all the boilerplate code used in an edit form

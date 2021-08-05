@@ -6,7 +6,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace Blazr.SPA.Brokers
+namespace Blazr.SPA.Data
 {
     public class LoggingBroker : ILoggingBroker
     {

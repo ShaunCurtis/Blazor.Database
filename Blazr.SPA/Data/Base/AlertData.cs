@@ -4,6 +4,8 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
+using Blazr.SPA.Core;
+
 namespace Blazr.SPA.Data
 {
     public class AlertData

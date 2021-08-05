@@ -4,10 +4,10 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Services;
+using Blazr.SPA.Components;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Blazr.SPA.Extensions
+namespace Blazr.SPA
 {
     public static class ServiceCollectionExtensions
     {

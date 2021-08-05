@@ -4,13 +4,12 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Components;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blazr.SPA.Services
+namespace Blazr.SPA.Components
 {
     /// <summary>
     /// Service Class for managing Cusotm Routes and Runtime Layout Changes

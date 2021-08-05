@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Blazr.SPA.Data.Events
+namespace Blazr.SPA.Components
 {
     public class EditStateEventArgs : EventArgs
     {

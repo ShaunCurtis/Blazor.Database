@@ -1,19 +1,19 @@
-/// =================================
+/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
-using Blazr.SPA.Data;
+using Blazr.SPA.Core;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System;
-using Blazr.SPA.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Threading.Tasks;
 
-namespace Blazr.SPA.Brokers
+namespace Blazr.SPA.Data
 {
     /// <summary>
     /// Blazor In-Memory SQLite Server Data Broker

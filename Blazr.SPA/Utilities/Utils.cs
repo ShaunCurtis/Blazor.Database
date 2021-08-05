@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Blazr.SPA.Utilities
+namespace Blazr.SPA.Data
 {
     public static class Utils
     {

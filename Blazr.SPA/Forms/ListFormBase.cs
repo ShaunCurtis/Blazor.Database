@@ -4,14 +4,12 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Components;
-using Blazr.SPA.Data;
-using Blazr.SPA.Services;
+using Blazr.SPA.Core;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 
-namespace Blazr.SPA.Forms
+namespace Blazr.SPA.Components
 {
     /// <summary>
     /// Abstract class to implement the boilerplate code used in list forms
@@ -46,9 +44,13 @@ namespace Blazr.SPA.Forms
             {
                 await this.Service.GetRecordsAsync();
                 this.Service.ListHasChanged += OnListChanged;
-                if (this.EditStateService.IsDirty)
-                    this.Edit((Guid)this.EditStateService.RecordID);
             }
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (this.EditStateService.IsDirty)
+                this.Edit((Guid)this.EditStateService.RecordID);
         }
 
         protected void OnListChanged(object sender, EventArgs e)

@@ -4,12 +4,11 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Blazr.SPA.Brokers
+namespace Blazr.SPA.Core
 {
     /// <summary>
     /// Main database broker interface 

@@ -1,5 +1,11 @@
-﻿using Blazr.SPA.Brokers;
-using Blazr.SPA.Connectors;
+﻿/// ============================================================
+/// Author: Shaun Curtis, Cold Elm Coders
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
+
+using Blazr.SPA.Data;
+using Blazr.SPA.Core;
 
 namespace Blazr.Database.Core.Connectors
 {

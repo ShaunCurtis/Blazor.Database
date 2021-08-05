@@ -4,7 +4,7 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-namespace Blazr.SPA.Data
+namespace Blazr.SPA.Core
 {
     public class RecordPagingData
     {

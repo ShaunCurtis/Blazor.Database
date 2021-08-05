@@ -4,12 +4,11 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Blazr.SPA.Connectors
+namespace Blazr.SPA.Core
 
 {
     public interface IDataServiceConnector

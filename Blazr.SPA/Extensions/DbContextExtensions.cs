@@ -4,12 +4,12 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
+using Blazr.SPA.Core;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
-using Blazr.SPA.Data;
 
-namespace Blazr.SPA.Extensions
+namespace Blazr.SPA.Data
 {
     /// <summary>
     /// Class defining extension methods for <see cref="DbContext"/>

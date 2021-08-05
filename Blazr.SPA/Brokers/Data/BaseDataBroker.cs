@@ -4,17 +4,17 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Data;
+using Blazr.SPA.Core;
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Blazr.SPA.Brokers
+namespace Blazr.SPA.Data
 {
     /// <summary>
     /// Abstract base class for a DataBroker implmeneting IDataBroker 
     /// </summary>
-    public abstract class BaseDataBroker: IDataBroker
+    public abstract class BaseDataBroker : IDataBroker
     {
         public virtual ValueTask<List<TRecord>> SelectAllRecordsAsync<TRecord>() where TRecord : class, IDbRecord<TRecord>, new()
             => ValueTask.FromResult(new List<TRecord>());

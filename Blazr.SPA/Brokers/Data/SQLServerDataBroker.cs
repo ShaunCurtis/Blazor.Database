@@ -4,8 +4,7 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Data;
-using Blazr.SPA.Extensions;
+using Blazr.SPA.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -14,7 +13,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
-namespace Blazr.SPA.Brokers
+namespace Blazr.SPA.Data
 {
     /// <summary>
     /// Blazor Server Data Broker
@@ -47,10 +46,10 @@ namespace Blazr.SPA.Brokers
             var startpage = paginatorData.Page <= 1
                 ? 0
                 : (paginatorData.Page - 1) * paginatorData.PageSize;
-            
+
             var dbset = dbContext
                 .GetDbSet<TRecord>();
-            
+
             var isSortable = typeof(TRecord).GetProperty(paginatorData.SortColumn) != null;
             List<TRecord> list;
             if (isSortable)
@@ -76,7 +75,7 @@ namespace Blazr.SPA.Brokers
             var list = await dbContext
                 .GetDbSet<TRecord>()
                 .FirstOrDefaultAsync(item => ((IDbRecord<TRecord>)item).ID == id) ?? default;
-            
+
             dbContext?.Dispose();
             return list;
         }
@@ -96,7 +95,7 @@ namespace Blazr.SPA.Brokers
         {
             var context = this.DBContext.CreateDbContext();
             context.Entry(record).State = EntityState.Modified;
-            var result =  await this.UpdateContext(context);
+            var result = await this.UpdateContext(context);
             context?.Dispose();
             return result;
         }
@@ -114,7 +113,7 @@ namespace Blazr.SPA.Brokers
         {
             var context = this.DBContext.CreateDbContext();
             context.Entry(record).State = EntityState.Deleted;
-            var result =  await this.UpdateContext(context);
+            var result = await this.UpdateContext(context);
             context?.Dispose();
             return result;
         }

@@ -4,10 +4,9 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.SPA.Data.Events;
 using System;
 
-namespace Blazr.SPA.Services
+namespace Blazr.SPA.Components
 {
     /// <summary>
     /// Service Class for managing Form Edit State
@@ -55,7 +54,7 @@ namespace Blazr.SPA.Services
         public void NotifyRecordSaved()
             => RecordSaved?.Invoke(this, EventArgs.Empty);
 
-        public void NotifyEditStateChanged( bool dirtyState)
+        public void NotifyEditStateChanged(bool dirtyState)
             => EditStateChanged?.Invoke(this, EditStateEventArgs.NewArgs(dirtyState));
     }
 }

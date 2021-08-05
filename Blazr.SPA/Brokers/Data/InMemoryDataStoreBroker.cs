@@ -4,15 +4,14 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-using Blazr.Database.Data;
-using Blazr.SPA.Data;
+using Blazr.SPA.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
-namespace Blazr.SPA.Brokers
+namespace Blazr.SPA.Data
 {
     /// <summary>
     /// Blazor Server Data Broker

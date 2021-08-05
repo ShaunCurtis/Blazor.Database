@@ -5,7 +5,7 @@
 /// ============================================================
 
 using Blazr.Database.Core;
-using Blazr.SPA.Forms;
+using Blazr.SPA.Components;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 

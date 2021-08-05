@@ -1,17 +1,18 @@
-/// =================================
+/// ============================================================
 /// Author: Shaun Curtis, Cold Elm Coders
-/// License: MIT
-/// ==================================
+/// License: Use And Donate
+/// If you use it, donate something to a charity somewhere
+/// ============================================================
 
-using Blazr.SPA.Data;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Blazr.SPA.Core;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 
-namespace Blazr.SPA.Brokers
+namespace Blazr.SPA.Data
 {
     /// <summary>
     /// API Data Broker
@@ -31,6 +32,7 @@ namespace Blazr.SPA.Brokers
 
         public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(RecordPagingData paginatorData)
         {
+            var response = await HttpClient.PostAsync("", );
             var response = await this.HttpClient.PostAsJsonAsync($"/api/{GetRecordName<TRecord>()}/listpaged", paginatorData);
             return await response.Content.ReadFromJsonAsync<List<TRecord>>();
         }

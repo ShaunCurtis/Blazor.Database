@@ -3,11 +3,10 @@
 /// License: MIT
 /// ==================================
 
-using Blazr.SPA.Data;
+using Blazr.SPA.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
