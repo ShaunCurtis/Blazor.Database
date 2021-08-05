@@ -32,7 +32,6 @@ namespace Blazr.SPA.Data
 
         public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(RecordPagingData paginatorData)
         {
-            var response = await HttpClient.PostAsync("", );
             var response = await this.HttpClient.PostAsJsonAsync($"/api/{GetRecordName<TRecord>()}/listpaged", paginatorData);
             return await response.Content.ReadFromJsonAsync<List<TRecord>>();
         }
