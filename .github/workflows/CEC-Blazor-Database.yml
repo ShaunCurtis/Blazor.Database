@@ -5,11 +5,11 @@ on:
     - master
 env:
   AZURE_WEBAPP_NAME: CEC-Blazor-Database
-  AZURE_WEBAPP_PACKAGE_PATH: Blazor.Database.Web/publish
+  AZURE_WEBAPP_PACKAGE_PATH: Blazr.Database.Web/publish
   AZURE_WEBAPP_PUBLISH_PROFILE: ${{secrets.cecblazordatabase_bdb9}}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 5.0.x
-  WORKING_DIRECTORY: Blazor.Database.Web
+  WORKING_DIRECTORY: Blazr.Database.Web
 jobs:
   build-and-deploy:
     runs-on: windows-latest
