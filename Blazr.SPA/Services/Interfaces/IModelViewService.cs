@@ -25,7 +25,7 @@ namespace Blazr.SPA.Core
 
         public RecordPager RecordPager { get; }
 
-        public bool IsRecord { get; }
+        public bool HasRecord { get; }
 
         public bool HasRecords { get; }
 

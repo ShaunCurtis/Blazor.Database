@@ -35,7 +35,8 @@ namespace Blazr.SPA.Data
             var dbContext = this.DBContext.CreateDbContext();
             var list = await dbContext
             .GetDbSet<TRecord>()
-            .ToListAsync() ?? new List<TRecord>();
+            .ToListAsync() 
+            ?? new List<TRecord>();
             dbContext?.Dispose();
             return list;
         }
@@ -57,13 +58,17 @@ namespace Blazr.SPA.Data
                 list = await dbset
                     .OrderBy(paginatorData.SortDescending ? $"{paginatorData.SortColumn} descending" : paginatorData.SortColumn)
                     .Skip(startpage)
-                    .Take(paginatorData.PageSize).ToListAsync() ?? new List<TRecord>();
+                    .Take(paginatorData.PageSize)
+                    .ToListAsync() 
+                    ?? new List<TRecord>();
             }
             else
             {
                 list = await dbset
                     .Skip(startpage)
-                    .Take(paginatorData.PageSize).ToListAsync() ?? new List<TRecord>();
+                    .Take(paginatorData.PageSize)
+                    .ToListAsync() 
+                    ?? new List<TRecord>();
             }
             dbContext?.Dispose();
             return list;

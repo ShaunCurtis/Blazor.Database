@@ -43,7 +43,7 @@ namespace Blazr.SPA.Core
 
         public RecordPager RecordPager { get; private set; }
 
-        public bool IsRecord => this.Record != null;
+        public bool HasRecord => this.Record != null;
 
         public bool HasRecords => this.Records != null && this.Records.Count > 0;
 
@@ -107,7 +107,7 @@ namespace Blazr.SPA.Core
                 this.Record = new TRecord();
                 this.IsNewRecord = true;
             }
-            return this.IsRecord;
+            return this.HasRecord;
         }
 
         public async ValueTask<int> GetRecordListCountAsync()

@@ -15,20 +15,12 @@ namespace Blazr.Database.Data
     public class SQLiteWeatherDbContext : DbContext
     {
         /// <summary>
-        /// Tracking lifetime of contexts.
-        /// </summary>
-        private readonly Guid _id;
-
-        /// <summary>
         /// New Method - creates a guid in case we need to track it
         /// </summary>
         /// <param name="options"></param>
         public SQLiteWeatherDbContext(DbContextOptions<SQLiteWeatherDbContext> options)
             : base(options)
-        {
-            this._id = Guid.NewGuid();
-            this.BuildInMemoryDatabase();
-        }
+            => this.BuildInMemoryDatabase();
 
         /// <summary>
         /// DbSet for the <see cref="DbWeatherForecast"/> record
@@ -58,19 +50,16 @@ namespace Blazr.Database.Data
         {
             get
             {
-                {
-                    var rng = new Random();
+                var rng = new Random();
 
-                    return Enumerable.Range(1, 80).Select(index => new WeatherForecast
-                    {
-                        //ID = index,
-                        Date = DateTime.Now.AddDays(index),
-                        TemperatureC = rng.Next(-20, 55),
-                        Summary = Summaries[rng.Next(Summaries.Length)]
-                    }).ToList();
-                }
+                return Enumerable.Range(1, 80).Select(index => new WeatherForecast
+                {
+                    //ID = index,
+                    Date = DateTime.Now.AddDays(index),
+                    TemperatureC = rng.Next(-20, 55),
+                    Summary = Summaries[rng.Next(Summaries.Length)]
+                }).ToList();
             }
         }
-
     }
 }
