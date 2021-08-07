@@ -32,38 +32,21 @@ namespace Blazr.SPA.Components
     /// </summary>
     public class RouteViewManager : IComponent
     {
+        private ViewData _ViewData { get; set; }
+        private bool _RenderEventQueued;
+        private RenderHandle _renderHandle;
 
         [Inject] private EditStateService EditStateService { get; set; }
         [Inject] private IJSRuntime _js { get; set; }
         [Inject] private NavigationManager NavManager { get; set; }
         [Inject] private RouteViewService RouteViewService { get; set; }
-        private ViewData _ViewData { get; set; }
-        private bool _RenderEventQueued;
-        private RenderHandle _renderHandle;
 
-        /// <summary>
-        /// Gets or sets the route data. This determines the page that will be
-        /// displayed and the parameter values that will be supplied to the page.
-        /// </summary>
-        [Parameter]
-        public RouteData RouteData { get; set; }
+        [Parameter] public RouteData RouteData { get; set; }
 
-        /// <summary>
-        /// Gets or sets the type of a layout to be used if the page does not
-        /// declare any layout. If specified, the type must implement <see cref="IComponent"/>
-        /// and accept a parameter named <see cref="LayoutComponentBase.Body"/>.
-        /// </summary>
-        [Parameter]
-        public Type DefaultLayout { get; set; }
+        [Parameter] public Type DefaultLayout { get; set; }
 
-        /// <summary>
-        /// The size of the History list used for Views.
-        /// </summary>
         [Parameter] public int ViewHistorySize { get; set; } = 10;
 
-        /// <summary>
-        /// Gets and sets the view data.
-        /// </summary>
         public ViewData ViewData
         {
             get => this._ViewData;
@@ -74,14 +57,8 @@ namespace Blazr.SPA.Components
             }
         }
 
-        /// <summary>
-        /// Property that stores the View History.  It's size is controlled by ViewHistorySize
-        /// </summary>
         public SortedList<DateTime, ViewData> ViewHistory { get; private set; } = new SortedList<DateTime, ViewData>();
 
-        /// <summary>
-        /// Gets the last view data.
-        /// </summary>
         public ViewData LastViewData
         {
             get
@@ -92,25 +69,13 @@ namespace Blazr.SPA.Components
             }
         }
 
-        /// <summary>
-        /// Method to check if <param name="view"> is the current View
-        /// </summary>
-        /// <param name="view"></param>
-        /// <returns></returns>
         public bool IsCurrentView(Type view) => this.ViewData?.ViewType == view;
 
-        /// <summary>
-        /// Boolean to check if we have a View set
-        /// </summary>
         public bool HasView => this._ViewData?.ViewType != null;
 
-        /// <inheritdoc />
         public void Attach(RenderHandle renderHandle)
-        {
-            _renderHandle = renderHandle;
-        }
+            => _renderHandle = renderHandle;
 
-        /// <inheritdoc />
         public async Task SetParametersAsync(ParameterView parameters)
         {
             // Sets the component parameters
@@ -127,11 +92,6 @@ namespace Blazr.SPA.Components
             await this.RenderAsync();
         }
 
-        /// <summary>
-        /// Method to load a new view
-        /// </summary>
-        /// <param name="viewData"></param>
-        /// <returns></returns>
         public async Task LoadViewAsync(ViewData viewData = null)
         {
             if (viewData != null) this.ViewData = viewData;
@@ -142,26 +102,12 @@ namespace Blazr.SPA.Components
             await this.RenderAsync();
         }
 
-        /// <summary>
-        /// Method to load a new view
-        /// </summary>
-        /// <param name="viewtype"></param>
-        /// <returns></returns>
         public async Task LoadViewAsync(Type viewtype)
             => await this.LoadViewAsync(new ViewData(viewtype, new Dictionary<string, object>()));
 
-        /// <summary>
-        /// Method to load a new view
-        /// </summary>
-        /// <typeparam name="TView"></typeparam>
-        /// <param name="data"></param>
-        /// <returns></returns>
         public async Task LoadViewAsync<TView>(Dictionary<string, object> data = null)
             => await this.LoadViewAsync(new ViewData(typeof(TView), data));
 
-        /// <summary>
-        ///  RenderFragment Delegate run when rendering the component
-        /// </summary>
         private RenderFragment _renderDelegate => builder =>
         {
             _RenderEventQueued = false;
@@ -173,9 +119,6 @@ namespace Blazr.SPA.Components
             builder.CloseComponent();
         };
 
-        /// <summary>
-        /// Render Fragment to build the layout with either the Routed component or the View Component
-        /// </summary>
         private RenderFragment _layoutViewFragment => builder =>
         {
             Type _pageLayoutType = RouteData?.PageType.GetCustomAttribute<LayoutAttribute>()?.LayoutType
@@ -226,9 +169,6 @@ namespace Blazr.SPA.Components
             builder.CloseElement();
         };
 
-        /// <summary>
-        /// Render Fragment to build the view or route component
-        /// </summary>
         private RenderFragment _renderComponentWithParameters => builder =>
         {
             Type componentType = null;
@@ -262,10 +202,6 @@ namespace Blazr.SPA.Components
             }
         };
 
-        /// <summary>
-        /// Method to force a UI update
-        /// Queues a render of the component
-        /// </summary>
         public async Task RenderAsync() => await InvokeAsync(() =>
         {
             if (!this._RenderEventQueued)
@@ -276,24 +212,12 @@ namespace Blazr.SPA.Components
         }
         );
 
-        /// <summary>
-        /// Executes the supplied work item on the associated renderer's
-        /// synchronization context.
-        /// </summary>
-        /// <param name="workItem">The work item to execute.</param>
-        protected Task InvokeAsync(Action workItem) => _renderHandle.Dispatcher.InvokeAsync(workItem);
+        protected Task InvokeAsync(Action workItem) 
+            => _renderHandle.Dispatcher.InvokeAsync(workItem);
 
-        /// <summary>
-        /// Executes the supplied work item on the associated renderer's
-        /// synchronization context.
-        /// </summary>
-        /// <param name="workItem">The work item to execute.</param>
-        protected Task InvokeAsync(Func<Task> workItem) => _renderHandle.Dispatcher.InvokeAsync(workItem);
+        protected Task InvokeAsync(Func<Task> workItem) 
+            => _renderHandle.Dispatcher.InvokeAsync(workItem);
 
-        /// <summary>
-        /// Method to add a View to the View History and manage it's size
-        /// </summary>
-        /// <param name="value"></param>
         private void AddViewToHistory(ViewData value)
         {
             while (this.ViewHistory.Count >= this.ViewHistorySize)
@@ -317,14 +241,7 @@ namespace Blazr.SPA.Components
             NavManager.NavigateTo(this.EditStateService.EditFormUrl);
         }
 
-        /// <summary>
-        /// Method to interact with the page js to enable/disable the "beforeunload" browser event
-        /// </summary>
-        /// <param name="action"></param>
         private void SetPageExitCheck(bool action)
             => _js.InvokeAsync<bool>("cecblazor_setEditorExitCheck", action);
-
-
-
     }
 }

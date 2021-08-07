@@ -150,7 +150,6 @@ namespace Blazr.SPA.Components
         {
             var isDirty = EditFields?.IsDirty ?? false;
             this.EditStateService.NotifyEditStateChanged(isDirty);
-
         }
 
         // IDisposable Implementation

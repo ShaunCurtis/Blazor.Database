@@ -7,10 +7,10 @@
 
 @code {
 
-    [Inject] public NavigationManager NavManager { get; set; }
-
     [Parameter] public Guid ID { get; set; }
 
+    [Inject] public NavigationManager NavManager { get; set; }
+
     private void ExitToList()
-        => this.NavManager.NavigateTo("/fetchdata");
+    => this.NavManager.NavigateTo("/fetchdata");
 }

@@ -21,8 +21,7 @@ namespace Blazr.SPA.Components
     {
         [CascadingParameter] public IModalDialog Modal { get; set; }
 
-        [Parameter]
-        public Guid ID { get; set; } = Guid.Empty;
+        [Parameter] public Guid ID { get; set; } = Guid.Empty;
 
         [Parameter] public EventCallback ExitAction { get; set; }
 

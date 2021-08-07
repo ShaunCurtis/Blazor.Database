@@ -18,41 +18,10 @@
 </UIContainer>
 <UILoader State="this.LoadState">
     <UIContainer>
-        <UIFormRow>
-            <UILabelColumn>
-                Date
-            </UILabelColumn>
-            <UIInputColumn Cols="3">
-                <InputReadOnlyText Value="@this.ViewService.Record.Date.LocalDateTime.ToShortDateString()"></InputReadOnlyText>
-            </UIInputColumn>
-            <UIColumn Cols="7"></UIColumn>
-        </UIFormRow>
-        <UIFormRow>
-            <UILabelColumn>
-                Temperature &deg;C
-            </UILabelColumn>
-            <UIInputColumn Cols="2">
-                <InputReadOnlyText Value="@this.ViewService.Record.TemperatureC.ToString()"></InputReadOnlyText>
-            </UIInputColumn>
-            <UIColumn Cols="8"></UIColumn>
-        </UIFormRow>
-        <UIFormRow>
-            <UILabelColumn>
-                Temperature &deg;f
-            </UILabelColumn>
-            <UIInputColumn Cols="2">
-                <InputReadOnlyText Value="@this.ViewService.Record.TemperatureF.ToString()"></InputReadOnlyText>
-            </UIInputColumn>
-            <UIColumn Cols="8"></UIColumn>
-        </UIFormRow>
-        <UIFormRow>
-            <UILabelColumn>
-                Summary
-            </UILabelColumn>
-            <UIInputColumn Cols="9">
-                <InputReadOnlyText Value="@this.ViewService.Record.Summary"></InputReadOnlyText>
-            </UIInputColumn>
-        </UIFormRow>
+        <FormViewControl Label="Date" Value="@this.ViewService.Record.Date.LocalDateTime.ToShortDateString()" IsRow="true" ControlCols="7" />
+        <FormViewControl Label="Temperature &deg;C" Value="@this.ViewService.Record.TemperatureC.ToString()" IsRow="true" ControlCols="7" />
+        <FormViewControl Label="Temperature &deg;F" Value="@this.ViewService.Record.TemperatureF.ToString()" IsRow="true" ControlCols="7" />
+        <FormViewControl Label="Summary" Value="@this.ViewService.Record.Summary" IsRow="true" ControlCols="7" />
     </UIContainer>
 </UILoader>
 <UIContainer>

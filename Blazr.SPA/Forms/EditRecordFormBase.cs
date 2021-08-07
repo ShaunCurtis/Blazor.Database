@@ -27,8 +27,6 @@ namespace Blazr.SPA.Components
 
         [Inject] protected EditStateService EditStateService { get; set; }
 
-        public virtual Guid FormId { get; } = Guid.Empty;
-
         protected EditContext EditContext { get; set; }
         protected bool IsDirty => this.EditStateService.IsDirty;
 
@@ -53,30 +51,31 @@ namespace Blazr.SPA.Components
         protected override async Task LoadRecordAsync()
         {
             _isLoaded = false;
-            this.TryGetModalID();
+            // Get the ID either from a ModalDialog Options or the Id Parameter and set the local id
             var id = this._Id;
+            // Check if we have a dirty form reload and if so get the Id from the EditStateService
             if (this.EditStateService.IsDirty)
                 id = (Guid)this.EditStateService.RecordID;
-
-            id = id != Guid.Empty ? id : this.ID;
+            // Get the record
             await this.Service.GetRecordAsync(id);
-            // assign the Model to the EditContext
+            // Get a new Edit class instance, populate it from the record and assign it to the EditContext
             this.Model = new TEditRecord();
             this.Model.Populate(this.Service.Record);
             this.EditContext = new EditContext(this.Model);
+            // Set up the EditStateService FirmUrl and Record Id
             this.EditStateService.EditFormUrl = FormUrl ?? NavManager.Uri;
             this.EditStateService.RecordID = id;
             _isLoaded = true;
+            // wire up the events
             this.EditContext.OnFieldChanged += FieldChanged;
             this.EditStateService.EditStateChanged += OnEditStateChanged;
+            // if we have a dirty record or are editing an existing record, run validation
             if (!this._isNew)
                 this.EditContext.Validate();
         }
 
         protected void FieldChanged(object sender, FieldChangedEventArgs e)
-        {
-            this._confirmDelete = false;
-        }
+            =>  this._confirmDelete = false;
 
         private void OnEditStateChanged(object sender, EditStateEventArgs e)
         {
@@ -89,16 +88,18 @@ namespace Blazr.SPA.Components
 
         protected async Task HandleValidSubmit()
         {
+            // Get the readonly record to submit
             var rec = this.Model.GetRecord();
+            // Save the record
             await this.Service.SaveRecordAsync(rec);
+            // Update the EditStateService to clean
             this.EditStateService.NotifyRecordSaved();
+            // Render the component
             await this.InvokeAsync(this.StateHasChanged);
         }
 
         protected void ResetToRecord()
-        {
-            this.Model.Populate(this.Service.Record);
-        }
+            => this.Model.Populate(this.Service.Record);
 
         protected void Delete()
         {

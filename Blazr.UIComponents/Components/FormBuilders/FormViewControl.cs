@@ -17,12 +17,9 @@ using System.Linq.Expressions;
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 namespace Blazr.UIComponents
 {
-    public class FormEditControl<TValue> : ComponentBase
+    public class FormViewControl<TValue> : ComponentBase
     {
-        [Parameter]
-        public TValue? Value { get; set; }
-
-        [Parameter] public EventCallback<TValue> ValueChanged { get; set; }
+        [Parameter] public TValue? Value { get; set; }
 
         [Parameter] public Expression<Func<TValue>>? ValueExpression { get; set; }
 
@@ -36,27 +33,19 @@ namespace Blazr.UIComponents
 
         [Parameter] public string ControlCssClass { get; set; } = "form-control";
 
-        [Parameter] public Type ControlType { get; set; } = typeof(InputText);
+        [Parameter] public Type ControlType { get; set; } = typeof(InputReadOnlyText);
 
-        [Parameter] public bool ShowValidation { get; set; }
+        [Parameter] public int ControlCols { get; set; } = 9;
+
+        [Parameter] public int LabelCols { get; set; } = 3;
 
         [Parameter] public bool ShowLabel { get; set; } = true;
 
-        [Parameter] public bool IsRequired { get; set; }
-
         [Parameter] public bool IsRow { get; set; }
-
-        [CascadingParameter] EditContext CurrentEditContext { get; set; } = default!;
-
-        private readonly string formId = Guid.NewGuid().ToString();
 
         private bool IsLabel => this.ShowLabel && (!string.IsNullOrWhiteSpace(this.Label) || !string.IsNullOrWhiteSpace(this.FieldName));
 
-        private bool IsValid;
-
-        private FieldIdentifier _fieldIdentifier;
-
-        private ValidationMessageStore? _messageStore;
+        private readonly string formId = Guid.NewGuid().ToString();
 
         private string? DisplayLabel => this.Label ?? this.FieldName;
         private string? FieldName
@@ -70,67 +59,10 @@ namespace Blazr.UIComponents
             }
         }
 
-        private string MessageCss => CSSBuilder.Class()
-            .AddClass("invalid-feedback", !this.IsValid)
-            .AddClass("valid-feedback", this.IsValid)
-            .Build();
-
-        private string ControlCss => CSSBuilder.Class(this.ControlCssClass)
-            .AddClass("is-valid", this.IsValid)
-            .AddClass("is-invalid", !this.IsValid)
-            .Build();
-
+        private int spacerCols => 12 - (LabelCols + ControlCols);
+        
         protected override void OnInitialized()
         {
-            if (CurrentEditContext is null)
-                throw new InvalidOperationException($"No Cascading Edit Context Found!");
-
-            if (ValueExpression is null)
-                throw new InvalidOperationException($"No ValueExpression defined for the Control!  Define a Bind-Value.");
-
-            if (!ValueChanged.HasDelegate)
-                throw new InvalidOperationException($"No ValueChanged defined for the Control! Define a Bind-Value.");
-
-            CurrentEditContext.OnFieldChanged += FieldChanged;
-            CurrentEditContext.OnValidationStateChanged += ValidationStateChanged;
-            _messageStore = new ValidationMessageStore(this.CurrentEditContext);
-            _fieldIdentifier = FieldIdentifier.Create(ValueExpression);
-            if (_messageStore is null)
-                throw new InvalidOperationException($"Cannot set the Validation Message Store!");
-            
-            var messages = CurrentEditContext.GetValidationMessages(_fieldIdentifier).ToList();
-            var showHelpText = (messages.Count == 0) && this.IsRequired && this.Value is null;
-            if (showHelpText && !string.IsNullOrWhiteSpace(this.HelperText))
-                _messageStore.Add(_fieldIdentifier, this.HelperText);
-        }
-
-        protected void ValidationStateChanged(object sender, ValidationStateChangedEventArgs e)
-        {
-            var messages = CurrentEditContext.GetValidationMessages(_fieldIdentifier).ToList();
-            if (messages != null || messages.Count > 1)
-            {
-                _messageStore.Clear();
-            }
-        }
-
-        protected void FieldChanged(object sender, FieldChangedEventArgs e)
-        {
-            if (e.FieldIdentifier.Equals(_fieldIdentifier))
-                _messageStore.Clear();
-        }
-
-        protected override void OnParametersSet()
-        {
-            this.IsValid = true;
-            {
-                if (this.IsRequired)
-                {
-                    this.IsValid = false;
-                    var messages = CurrentEditContext.GetValidationMessages(_fieldIdentifier).ToList();
-                    if (messages is null || messages.Count == 0)
-                        this.IsValid = true;
-                }
-            }
         }
 
         protected override void BuildRenderTree(RenderTreeBuilder builder)
@@ -147,7 +79,6 @@ namespace Blazr.UIComponents
             builder.AddAttribute(10, "class", this.DivCssClass);
             builder.AddContent(40, this.LabelFragment);
             builder.AddContent(60, this.ControlFragment);
-            builder.AddContent(70, this.ValidationFragment);
             builder.CloseElement();
         };
 
@@ -156,14 +87,19 @@ namespace Blazr.UIComponents
             builder.OpenElement(0, "div");
             builder.AddAttribute(10, "class", "row form-group");
             builder.OpenElement(20, "div");
-            builder.AddAttribute(30, "class", "col-12 col-md-3");
+            builder.AddAttribute(30, "class", $"col-12 col-md-{this.LabelCols}");
             builder.AddContent(40, this.LabelFragment);
             builder.CloseElement();
             builder.OpenElement(40, "div");
-            builder.AddAttribute(50, "class", "col-12 col-md-9");
+            builder.AddAttribute(50, "class", $"col-12 col-md-{this.ControlCols}");
             builder.AddContent(60, this.ControlFragment);
-            builder.AddContent(70, this.ValidationFragment);
             builder.CloseElement();
+            if (this.spacerCols > 0)
+            {
+                builder.OpenElement(40, "div");
+                builder.AddAttribute(50, "class", $"d-none d-md-block col-md-{this.spacerCols}");
+                builder.CloseElement();
+            }
             builder.CloseElement();
         };
 
@@ -185,33 +121,11 @@ namespace Blazr.UIComponents
             if (this.IsLabel)
             {
                 builder.OpenComponent(210, this.ControlType);
-                builder.AddAttribute(220, "class", this.ControlCss);
                 builder.AddAttribute(230, "Value", this.Value);
-                builder.AddAttribute(240, "ValueChanged", EventCallback.Factory.Create(this, this.ValueChanged));
-                builder.AddAttribute(250, "ValueExpression", this.ValueExpression);
                 builder.CloseComponent();
             }
         };
 
-        private RenderFragment ValidationFragment => (builder) =>
-        {
-            if (this.ShowValidation && !this.IsValid)
-            {
-                builder.OpenElement(310, "div");
-                builder.AddAttribute(320, "class", MessageCss);
-                builder.OpenComponent<ValidationMessage<TValue>>(330);
-                builder.AddAttribute(340, "For", this.ValueExpression);
-                builder.CloseComponent();
-                builder.CloseElement();
-            }
-            else if (!string.IsNullOrWhiteSpace(this.HelperText))
-            {
-                builder.OpenElement(350, "div");
-                builder.AddAttribute(360, "class", MessageCss);
-                builder.AddContent(370, this.HelperText);
-                builder.CloseElement();
-            }
-        };
 
         // Code lifted from FieldIdentifier.cs
         private static void ParseAccessor<T>(Expression<Func<T>> accessor, out object model, out string fieldName)
