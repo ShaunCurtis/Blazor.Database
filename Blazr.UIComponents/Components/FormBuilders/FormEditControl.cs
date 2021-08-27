@@ -97,7 +97,7 @@ namespace Blazr.UIComponents
             _fieldIdentifier = FieldIdentifier.Create(ValueExpression);
             if (_messageStore is null)
                 throw new InvalidOperationException($"Cannot set the Validation Message Store!");
-            
+
             var messages = CurrentEditContext.GetValidationMessages(_fieldIdentifier).ToList();
             var showHelpText = (messages.Count == 0) && this.IsRequired && this.Value is null;
             if (showHelpText && !string.IsNullOrWhiteSpace(this.HelperText))
@@ -182,15 +182,12 @@ namespace Blazr.UIComponents
 
         private RenderFragment ControlFragment => (builder) =>
         {
-            if (this.IsLabel)
-            {
-                builder.OpenComponent(210, this.ControlType);
-                builder.AddAttribute(220, "class", this.ControlCss);
-                builder.AddAttribute(230, "Value", this.Value);
-                builder.AddAttribute(240, "ValueChanged", EventCallback.Factory.Create(this, this.ValueChanged));
-                builder.AddAttribute(250, "ValueExpression", this.ValueExpression);
-                builder.CloseComponent();
-            }
+            builder.OpenComponent(210, this.ControlType);
+            builder.AddAttribute(220, "class", this.ControlCss);
+            builder.AddAttribute(230, "Value", this.Value);
+            builder.AddAttribute(240, "ValueChanged", EventCallback.Factory.Create(this, this.ValueChanged));
+            builder.AddAttribute(250, "ValueExpression", this.ValueExpression);
+            builder.CloseComponent();
         };
 
         private RenderFragment ValidationFragment => (builder) =>
