@@ -43,10 +43,10 @@ namespace Blazr.SPA.Components
         }
 
         public CSSBuilder AddClass(string cssFragment, bool WhenTrue)
-        {
-            if (WhenTrue) return this.AddClass(cssFragment);
-            return this;
-        }
+            => WhenTrue ? this.AddClass(cssFragment) : this;
+
+        public CSSBuilder AddClass(string trueCssFragment, string falseCssFragment, bool WhenTrue)
+            => WhenTrue ? this.AddClass(trueCssFragment) : this.AddClass(falseCssFragment);
 
         public CSSBuilder AddClassFromAttributes(IReadOnlyDictionary<string, object> additionalAttributes)
         {

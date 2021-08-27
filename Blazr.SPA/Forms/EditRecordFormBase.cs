@@ -7,6 +7,7 @@
 using Blazr.SPA.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
@@ -75,7 +76,7 @@ namespace Blazr.SPA.Components
         }
 
         protected void FieldChanged(object sender, FieldChangedEventArgs e)
-            =>  this._confirmDelete = false;
+            => this._confirmDelete = false;
 
         private void OnEditStateChanged(object sender, EditStateEventArgs e)
         {
@@ -136,6 +137,76 @@ namespace Blazr.SPA.Components
 
         private void SetPageExitCheck(bool action)
             => _js.InvokeAsync<bool>("cecblazor_setEditorExitCheck", action);
+
+        protected RenderFragment ButtonContent => (builder) =>
+        {
+            {
+                builder.OpenElement(0, "button");
+                builder.AddAttribute(1, "type", "button");
+                builder.AddAttribute(2, "Show", true);
+                if (this._deleteDisabled)
+                    builder.AddAttribute(3, "Disabled");
+                builder.AddAttribute(4, "class", "btn mr-1 btn-outline-danger");
+                builder.AddAttribute(5, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, this.Delete));
+                builder.AddContent(6, "Delete");
+                builder.CloseComponent();
+            }
+            {
+                if (this._confirmDelete)
+                {
+                    builder.OpenElement(10, "button");
+                    builder.AddAttribute(11, "type", "button");
+                    builder.AddAttribute(14, "class", "btn mr-1 btn-danger");
+                    builder.AddAttribute(15, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, this.ConfirmDelete));
+                    builder.AddContent(16, "Confirm Delete");
+                    builder.CloseComponent();
+                }
+            }
+            {
+                if (this.IsDirty)
+                {
+                    builder.OpenElement(20, "button");
+                    builder.AddAttribute(21, "type", "button");
+                    builder.AddAttribute(24, "class", "btn mr-1 btn-outline-warning");
+                    builder.AddAttribute(25, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, this.ResetToRecord));
+                    builder.AddContent(26, "Reset");
+                    builder.CloseComponent();
+                }
+            }
+            {
+                builder.OpenElement(30, "button");
+                builder.AddAttribute(31, "type", "submit");
+                if (this._saveDisabled)
+                    builder.AddAttribute(33, "Disabled");
+                builder.AddAttribute(34, "class", "btn mr-1 btn-success");
+                builder.AddContent(36, this._saveButtonText);
+                builder.CloseComponent();
+            }
+            {
+                if (this.IsDirty)
+                {
+                    builder.OpenElement(40, "button");
+                    builder.AddAttribute(41, "type", "button");
+                    if (this._saveDisabled)
+                        builder.AddAttribute(43, "Disabled");
+                    builder.AddAttribute(44, "class", "btn mr-1 btn-danger");
+                    builder.AddAttribute(45, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, this.ConfirmExit));
+                    builder.AddContent(46, "Exit Without Saving");
+                    builder.CloseComponent();
+                }
+            }
+            {
+                if (!this.IsDirty)
+                    {
+                    builder.OpenElement(50, "button");
+                    builder.AddAttribute(51, "type", "button");
+                    builder.AddAttribute(54, "class", "btn mr-1 btn-dark");
+                    builder.AddAttribute(55, "onclick", EventCallback.Factory.Create<MouseEventArgs>(this, this.Exit));
+                    builder.AddContent(56, "Exit");
+                    builder.CloseComponent();
+                }
+            }
+        };
 
         public void Dispose()
         {

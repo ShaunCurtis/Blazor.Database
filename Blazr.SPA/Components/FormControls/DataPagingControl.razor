@@ -5,23 +5,24 @@
     <nav aria-label="...">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" @onclick="() => this.RecordPager.ToStart()">&vert;&lt;</a>
+                <a class="page-link cursor-hand" @onclick="() => this.RecordPager.ToPage(0)">&vert;&lt;</a>
             </li>
             @if (this.RecordPager.HasBlocks)
             {
                 <li class="page-item">
-                    <a class="page-link" @onclick="() => this.RecordPager.PreviousBlock()">&lt;&lt;</a>
+                    <a class="page-link cursor-hand" @onclick="() => this.RecordPager.BlockMove(-1)">&lt;&lt;</a>
                 </li>
             }
-            @for (var i = this.RecordPager.StartBlockPage; i < this.RecordPager.EndBlockPage; i++)
+            @for (var i = this.RecordPager.DisplayStartBlockPage; i <= this.RecordPager.DisplayEndBlockPage; i++)
             {
-                var pageNo = i;
-                @if (pageNo > this.RecordPager.LastPage) break;
-                @if (pageNo == this.RecordPager.Page)
+                var displayPageNo = i;
+                var pageNo = i - 1;
+                @if (displayPageNo > this.RecordPager.DisplayLastPage) break;
+                @if (displayPageNo == this.RecordPager.DisplayPage)
                 {
                     <li class="page-item active">
-                        <span class="page-link">
-                            @pageNo
+                        <span class="page-link cursor-hand">
+                            @displayPageNo
                             <span class="sr-only">(current)</span>
                         </span>
                     </li>
@@ -29,7 +30,7 @@
                 else
                 {
                     <li class="page-item">
-                        <a class="page-link" @onclick="() => this.RecordPager.ToPage(pageNo)">@pageNo</a>
+                        <a class="page-link cursor-hand" @onclick="() => this.RecordPager.ToPage(pageNo)">@displayPageNo</a>
                     </li>
                 }
 
@@ -37,11 +38,11 @@
             @if (this.RecordPager.HasBlocks)
             {
                 <li class="page-item">
-                    <a class="page-link" @onclick="() => this.RecordPager.NextBlock()">&gt;&gt;</a>
+                    <a class="page-link cursor-hand" @onclick="() => this.RecordPager.BlockMove(1)">&gt;&gt;</a>
                 </li>
             }
             <li class="page-item">
-                <a class="page-link" @onclick="() => this.RecordPager.ToEnd()">&gt;&vert;</a>
+                <a class="page-link cursor-hand" @onclick="() => this.RecordPager.ToPage(this.RecordPager.LastPage)">&gt;&vert;</a>
             </li>
         </ul>
     </nav>

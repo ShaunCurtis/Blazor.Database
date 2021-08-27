@@ -75,5 +75,6 @@ namespace Blazr.SPA.Components
 
         public void Dispose()
             => this.Service.ListHasChanged -= OnListChanged;
+
     }
 }

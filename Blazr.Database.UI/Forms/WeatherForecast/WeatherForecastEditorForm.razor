@@ -32,12 +32,7 @@
                 </UIFormRow>
             </UIContainer>
             <FormEditButtons ContainerSize="BootstrapSize.XLarge">
-                <UIButton type="button" Show="true" Disabled="this._deleteDisabled" class="btn-outline-danger" ClickEvent="() => Delete()">Delete</UIButton>
-                <UIButton type="button" Show="this._confirmDelete" class="btn-danger" ClickEvent="() => this.ConfirmDelete()">Confirm Delete</UIButton>
-                <UIButton type="button" Show="this.IsDirty" class="btn-outline-warning" ClickEvent="() => this.ResetToRecord()">Reset</UIButton>
-                <UIButton type="submit" Show="true" Disabled="this._saveDisabled" class="btn-success">@this._saveButtonText</UIButton>
-                <UIButton type="button" Show="this.IsDirty" class="btn-danger" ClickEvent="() => this.ConfirmExit()">Exit Without Saving</UIButton>
-                <UIButton type="button" Show="!this.IsDirty" class="btn-dark" ClickEvent="() => this.Exit()">Exit</UIButton>
+                @this.ButtonContent
             </FormEditButtons>
         </EditForm>
     </UILoader>

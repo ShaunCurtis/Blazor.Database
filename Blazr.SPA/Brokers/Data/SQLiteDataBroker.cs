@@ -42,26 +42,23 @@ namespace Blazr.SPA.Data
             return await dbset.ToListAsync() ?? new List<TRecord>();
         }
 
-        public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(RecordPagingData paginatorData)
+        public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(RecordPagingData pagingData)
         {
-            var startpage = paginatorData.Page <= 1
-                ? 0
-                : (paginatorData.Page - 1) * paginatorData.PageSize;
             var dbset = _dbContext.GetDbSet<TRecord>();
-            var isSortable = typeof(TRecord).GetProperty(paginatorData.SortColumn) != null;
-            if (isSortable)
+            var isSortable = typeof(TRecord).GetProperty(pagingData.SortColumn) != null;
+            if (pagingData.Sort && isSortable)
             {
                 var list = await dbset
-                    .OrderBy(paginatorData.SortDescending ? $"{paginatorData.SortColumn} descending" : paginatorData.SortColumn)
-                    .Skip(startpage)
-                    .Take(paginatorData.PageSize).ToListAsync() ?? new List<TRecord>();
+                    .OrderBy(pagingData.SortDescending ? $"{pagingData.SortColumn} descending" : pagingData.SortColumn)
+                    .Skip(pagingData.StartRecord)
+                    .Take(pagingData.PageSize).ToListAsync() ?? new List<TRecord>();
                 return list;
             }
             else
             {
                 var list = await dbset
-                    .Skip(startpage)
-                    .Take(paginatorData.PageSize).ToListAsync() ?? new List<TRecord>();
+                    .Skip(pagingData.StartRecord)
+                    .Take(pagingData.PageSize).ToListAsync() ?? new List<TRecord>();
                 return list;
             }
         }

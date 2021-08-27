@@ -20,6 +20,5 @@ namespace Blazr.UIComponents
         [Parameter] public int ButtonColumns { get; set; } = 7;
 
         [Parameter] public BootstrapSize ContainerSize { get; set; } = BootstrapSize.Fluid;
-
     }
 }

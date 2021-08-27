@@ -1,0 +1,25 @@
+﻿@namespace Blazr.UIComponents
+@inherits UIComponentBase
+
+@if (this.IsHeader)
+{
+    <th class="@this.HeaderCSS">
+        @((MarkupString)this.HeaderTitle)
+    </th>
+}
+else if (this.isMaxRowColumn)
+{
+    <td class="max-column" @attributes="this.SplatterAttributes">
+        <div class="grid-overflow">
+            <div class="grid-overflowinner">
+                @ChildContent
+            </div>
+        </div>
+    </td>
+}
+else
+{
+    <td class="data-column" @attributes="this.SplatterAttributes">
+        @this.ChildContent
+    </td>
+}

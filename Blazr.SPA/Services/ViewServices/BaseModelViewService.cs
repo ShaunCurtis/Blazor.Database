@@ -60,7 +60,7 @@ namespace Blazr.SPA.Core
         public BaseModelViewService(IDataServiceConnector dataServiceConnector)
         {
             this.DataServiceConnector = dataServiceConnector;
-            this.RecordPager = new RecordPager(10, 5);
+            this.RecordPager = new RecordPager();
             this.RecordPager.PageChanged += this.OnPageChanged;
         }
 
@@ -90,7 +90,7 @@ namespace Blazr.SPA.Core
 
         public async ValueTask GetRecordsAsync()
         {
-            this.Records = await DataServiceConnector.GetPagedRecordsAsync<TRecord>(this.RecordPager.GetData);
+            this.Records = await DataServiceConnector.GetPagedRecordsAsync<TRecord>(this.RecordPager.PagingData);
             this.RecordPager.RecordCount = await GetRecordListCountAsync();
             this.ListHasChanged?.Invoke(null, EventArgs.Empty);
         }

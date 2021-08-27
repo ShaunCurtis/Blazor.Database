@@ -1,0 +1,47 @@
+﻿@namespace Blazr.UIComponents
+@inherits UIComponentBase
+@typeparam TRecord
+
+@if (this.LoadState == ComponentState.Loaded && this.HasRecords)
+{
+    <table @attributes="this.SplatterAttributes">
+        <thead>
+            <CascadingValue Name="IsHeader" Value="true">
+                <tr>
+                    @RowTemplate(default(TRecord))
+                </tr>
+            </CascadingValue>
+        </thead>
+        <tbody>
+            @foreach (var item in this.Records)
+            {
+                <tr>
+                    @RowTemplate(item)
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (this.LoadState == ComponentState.Loaded)
+{
+    <div class="alert alert-warning">
+        No Records to Display
+    </div>
+}
+else if (this.LoadState == ComponentState.Loading)
+{
+    <div class="m-2 p-2">Loading...</div>
+}
+else
+{
+    <div class="alert alert-danger">
+        Error Loading the List
+    </div>
+}
+@code {
+    [Parameter] public ComponentState LoadState { get; set; }
+    [Parameter] public RenderFragment<TRecord> RowTemplate { get; set; }
+    [Parameter] public IEnumerable<TRecord> Records { get; set; }
+    private bool HasRecords => Records.Count() > 0;
+
+}

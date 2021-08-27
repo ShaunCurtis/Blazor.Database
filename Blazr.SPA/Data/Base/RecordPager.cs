@@ -8,15 +8,55 @@ using System;
 
 namespace Blazr.SPA.Core
 {
+    // IMPORTANT - record, page and block numbering is 0 based i.e. the first page is 0
     public class RecordPager
     {
-        public int Page { get; set; } = 1;
+        public int DisplayPage => this.Page + 1;
 
-        public int PageSize { get; set; } = 25;
+        public int DisplayLastPage => this.LastPage + 1;
 
-        public int BlockSize { get; set; } = 10;
+        public int DisplayLastBlock => this.LastBlock + 1;
+
+        public int DisplayStartBlockPage => this.StartBlockPage + 1;
+
+        public int DisplayEndBlockPage => this.EndBlockPage + 1;
+
+        public bool Enabled { get; set; }
+
+        public int Page { get; private set; } = 0;
 
         public int RecordCount { get; set; } = 0;
+
+        public int PageSize { get; set; } = 10;
+
+        public int BlockSize { get; set; } = 5;
+
+        public string DefaultSortColumn { get; set; } = "ID";
+
+        public bool Sort { get; set; }
+
+        public bool SortDescending { get; set; }
+
+        public int Block
+        {
+            get
+            {
+                var block = (int)Math.Floor((Decimal)(this.Page / this.BlockSize));
+                return block < this.LastBlock ? block : LastBlock;
+            }
+        }
+
+        public int LastPage => ((int)Math.Floor((Decimal)((RecordCount - 1) / PageSize))) - 1;
+
+        public int LastBlock => (int)Math.Floor((Decimal)(this.LastPage / this.BlockSize));
+
+        public int StartBlockPage => (Block * BlockSize);
+
+        public int EndBlockPage => (StartBlockPage + (BlockSize - 1)) > LastPage ? LastPage : StartBlockPage + (BlockSize - 1);
+
+        public bool HasBlocks => this.LastPage > BlockSize;
+
+        public bool HasPagination => this.RecordCount > PageSize;
 
         public string SortColumn
         {
@@ -26,78 +66,45 @@ namespace Blazr.SPA.Core
 
         private string _sortColumn = string.Empty;
 
-        public string DefaultSortColumn { get; set; } = "ID";
-
-        public bool SortDescending { get; set; }
-
-        public RecordPager(int pageSize, int blockSize)
+        public RecordPagingData PagingData => new RecordPagingData()
         {
-            this.BlockSize = blockSize;
-            this.PageSize = pageSize;
-        }
+            Page = this.Page,
+            PageSize = this.PageSize,
+            Sort = this.Sort,
+            SortColumn = this.SortColumn,
+            SortDescending = this.SortDescending
+        };
 
         public event EventHandler PageChanged;
 
-        // Set of read only properties for calculations and control in the Paging Control
-        public int LastPage => (int)Math.Ceiling((RecordCount / PageSize) + 0.5);
-        public int LastBlock => (int)((LastPage / BlockSize) + 1.5);
-        public int CurrentBlock => (int)((Page / BlockSize) + 1.5);
-        public int StartBlockPage => ((CurrentBlock - 1) * BlockSize) + 1;
-        public int EndBlockPage => StartBlockPage + BlockSize;
-        public bool HasBlocks => ((RecordCount / (PageSize * BlockSize)) + 0.5) > 1;
-        public bool HasPagination => (RecordCount / PageSize) > 1;
-
-        public void ToPage(int page, bool forceUpdate = false)
+        public bool ToPage(int page, bool forceUpdate = false)
         {
-            if ((forceUpdate | !this.Page.Equals(page)) && page > 0)
+            var move = (forceUpdate | !this.Page.Equals(page)) && page >= 0;
+            if (move)
             {
                 this.Page = page;
                 this.PageChanged?.Invoke(this, EventArgs.Empty);
             }
+            return move;
         }
 
-        public void NextPage()
-            => this.ToPage(this.Page + 1);
-
-        public void PreviousPage()
-                    => this.ToPage(this.Page - 1);
-
-        public void ToStart()
-            => this.ToPage(1);
-
-        public void ToEnd()
-            => this.ToPage((int)Math.Ceiling((RecordCount / PageSize) + 0.5));
-
-        public void NextBlock()
+        public bool PageMove(int pages)
         {
-            if (CurrentBlock != LastBlock)
-            {
-                var calcpage = (CurrentBlock * BlockSize) + 1;
-                this.Page = calcpage > LastPage ? LastPage : LastPage;
-                this.PageChanged?.Invoke(this, EventArgs.Empty);
-            }
+            var move = this.Page + pages <= this.LastPage && this.Page + pages >= 0;
+            if (move)
+                this.ToPage(this.Page + pages);
+            return move;
         }
 
-        public void PreviousBlock()
+        public bool BlockMove(int blocks)
         {
-            if (CurrentBlock != 1)
-            {
-                this.Page = ((CurrentBlock - 2) * PageSize) + 1;
-                this.PageChanged?.Invoke(this, EventArgs.Empty);
-            }
+            var move = this.Block + blocks <= this.LastBlock && this.Block + blocks >= 0;
+            if (move)
+                this.ToPage((this.Block + blocks) * BlockSize);
+            return move;
         }
 
         public void NotifySortingChanged()
-            => this.ToPage(1, true);
-
-        public RecordPagingData GetData => new RecordPagingData()
-        {
-            Page = this.Page,
-            PageSize = this.PageSize,
-            BlockSize = this.BlockSize,
-            RecordCount = this.RecordCount,
-            SortColumn = this.SortColumn,
-            SortDescending = this.SortDescending
-        };
+           => this.ToPage(1, true);
     }
 }

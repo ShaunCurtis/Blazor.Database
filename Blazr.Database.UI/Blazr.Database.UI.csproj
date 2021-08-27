@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Folder Include="Components\Base\" />
+    <Folder Include="Forms\Base\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

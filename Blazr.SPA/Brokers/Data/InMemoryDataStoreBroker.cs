@@ -32,20 +32,23 @@ namespace Blazr.SPA.Data
             .GetDataSet<TRecord>()
             .ToList());
 
-        public override ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(RecordPagingData paginatorData)
+        public override ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(RecordPagingData pagingData)
         {
-            var startpage = paginatorData.Page <= 1
-                ? 0
-                : (paginatorData.Page - 1) * paginatorData.PageSize;
-
-            var list = DataContext
+            var dbSet = DataContext
                 .GetDataSet<TRecord>()
-                .AsQueryable()
-                .OrderBy(paginatorData.SortDescending ? $"{paginatorData.SortColumn} descending" : paginatorData.SortColumn)
-                .Skip(startpage)
-                .Take(paginatorData.PageSize)
                 .ToList();
-            return ValueTask.FromResult<List<TRecord>>(list);
+            if (pagingData.Sort)
+            {
+                dbSet = dbSet
+                    .AsQueryable()
+                    .OrderBy(pagingData.SortDescending ? $"{pagingData.SortColumn} descending" : pagingData.SortColumn)
+                    .ToList();
+            }
+            return ValueTask.FromResult ( dbSet
+                .Skip(pagingData.StartRecord)
+                .Take(pagingData.PageSize)
+                .ToList()
+                );
         }
 
 
