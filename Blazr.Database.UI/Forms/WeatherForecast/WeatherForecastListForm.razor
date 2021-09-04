@@ -18,7 +18,7 @@
         <UIListColumn HeaderTitle="Temp &deg; F">@context.TemperatureF</UIListColumn>
         <UIListColumn HeaderTitle="Summary">@context.Summary</UIListColumn>
         <UIListColumn HeaderTitle="Detail" IsMaxColumn="true">@context.Description</UIListColumn>
-        <UIListColumn HeaderTitle="Edit/View">
+        <UIListColumn HeaderTitle="Edit/View" NoWrap="true" >
             <UIButton type="button" class="btn-sm btn-secondary" ClickEvent="() => this.View(context.ID)">View</UIButton>
             <UIButton type="button" class="btn-sm btn-primary" ClickEvent="() => this.Edit(context.ID)">Edit</UIButton>
         </UIListColumn>

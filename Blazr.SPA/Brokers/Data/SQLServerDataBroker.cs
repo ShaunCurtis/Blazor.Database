@@ -32,18 +32,17 @@ namespace Blazr.SPA.Data
 
         public override async ValueTask<List<TRecord>> SelectAllRecordsAsync<TRecord>()
         {
-            var dbContext = this.DBContext.CreateDbContext();
+            using var dbContext = this.DBContext.CreateDbContext();
             var list = await dbContext
             .GetDbSet<TRecord>()
             .ToListAsync() 
             ?? new List<TRecord>();
-            dbContext?.Dispose();
             return list;
         }
 
         public override async ValueTask<List<TRecord>> SelectPagedRecordsAsync<TRecord>(RecordPagingData pagingData)
         {
-            var dbContext = this.DBContext.CreateDbContext();
+            using var dbContext = this.DBContext.CreateDbContext();
             var dbset = dbContext
                 .GetDbSet<TRecord>();
 
@@ -66,56 +65,50 @@ namespace Blazr.SPA.Data
                     .ToListAsync() 
                     ?? new List<TRecord>();
             }
-            dbContext?.Dispose();
             return list;
         }
 
         public override async ValueTask<TRecord> SelectRecordAsync<TRecord>(Guid id)
         {
-            var dbContext = this.DBContext.CreateDbContext();
+            using var dbContext = this.DBContext.CreateDbContext();
             var list = await dbContext
                 .GetDbSet<TRecord>()
                 .FirstOrDefaultAsync(item => ((IDbRecord<TRecord>)item).ID == id) ?? default;
 
-            dbContext?.Dispose();
             return list;
         }
 
         public override async ValueTask<int> SelectRecordListCountAsync<TRecord>()
         {
-            var dbContext = this.DBContext.CreateDbContext();
+            using var dbContext = this.DBContext.CreateDbContext();
             var count = await dbContext
                 .GetDbSet<TRecord>()
                 .CountAsync();
 
-            dbContext?.Dispose();
             return count;
         }
 
         public override async ValueTask<DbTaskResult> UpdateRecordAsync<TRecord>(TRecord record)
         {
-            var context = this.DBContext.CreateDbContext();
+            using var context = this.DBContext.CreateDbContext();
             context.Entry(record).State = EntityState.Modified;
             var result = await this.UpdateContext(context);
-            context?.Dispose();
             return result;
         }
 
         public override async ValueTask<DbTaskResult> InsertRecordAsync<TRecord>(TRecord record)
         {
-            var context = this.DBContext.CreateDbContext();
+            using var context = this.DBContext.CreateDbContext();
             context.GetDbSet<TRecord>().Add(record);
             var result = await this.UpdateContext(context);
-            context?.Dispose();
             return result;
         }
 
         public override async ValueTask<DbTaskResult> DeleteRecordAsync<TRecord>(TRecord record)
         {
-            var context = this.DBContext.CreateDbContext();
+            using var context = this.DBContext.CreateDbContext();
             context.Entry(record).State = EntityState.Deleted;
             var result = await this.UpdateContext(context);
-            context?.Dispose();
             return result;
         }
 

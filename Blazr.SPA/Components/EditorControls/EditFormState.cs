@@ -30,6 +30,8 @@ namespace Blazr.SPA.Components
 
         [Inject] private IJSRuntime _js { get; set; }
 
+        [Inject] private NavigationManager NavManager { get; set; }
+
         protected override Task OnInitializedAsync()
         {
             Debug.Assert(this.EditContext != null);
@@ -102,7 +104,7 @@ namespace Blazr.SPA.Components
 
         private void FieldChanged(object sender, FieldChangedEventArgs e)
         {
-            var isDirty = EditFields?.IsDirty ?? false;
+            var wasDirty = EditFields?.IsDirty ?? false;
             // Get the PropertyInfo object for the model property
             // Uses reflection to get property and value
             var prop = e.FieldIdentifier.Model.GetType().GetProperty(e.FieldIdentifier.FieldName);
@@ -113,22 +115,23 @@ namespace Blazr.SPA.Components
                 // Sets the edit value in the EditField
                 EditFields.SetField(e.FieldIdentifier.FieldName, value);
                 // Invokes EditStateChanged if changed
-                var stateChange = (EditFields?.IsDirty ?? false) != isDirty;
-                isDirty = EditFields?.IsDirty ?? false;
-                if (stateChange)
+                var isStateChange = (EditFields?.IsDirty ?? false) != wasDirty;
+                var isDirty = EditFields?.IsDirty ?? false;
+                if (isStateChange)
                     this.NotifyEditStateChanged();
                 if (isDirty)
-                    this.SaveEditState();
+                    this.SaveEditState(isStateChange);
                 else
                     this.ClearEditState();
             }
         }
 
-        private void SaveEditState()
+        private void SaveEditState(bool isStateChange)
         {
-            this.SetPageExitCheck(true);
+            if (isStateChange)
+                this.SetPageExitCheck(true);
             var jsonData = JsonSerializer.Serialize(this.EditContext.Model);
-            EditStateService.SetEditState(jsonData);
+            EditStateService.SetEditState(jsonData, NavManager.Uri);
         }
 
         private void ClearEditState()

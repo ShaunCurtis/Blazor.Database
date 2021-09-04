@@ -21,7 +21,8 @@ namespace Blazr.UIComponents
             BootstrapSize.Large => "container-lg",
             BootstrapSize.XLarge => "container-xl",
             BootstrapSize.XXLarge => "container-xxl",
-            _ => "container-fluid"
+            BootstrapSize.Fluid => "container-fluid",
+            _ => "container"
         };
 
         protected override void OnInitialized()

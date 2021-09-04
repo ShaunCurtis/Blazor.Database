@@ -131,7 +131,43 @@ app {
     top: 0.5rem;
 }
 
-@media (max-width: 767.98px) {
+div.dirty-exit {
+    width: 400px;
+    margin: 10px auto 10px auto;
+}
+
+div.dirty-exit-message {
+    text-align: center;
+    margin: 20px 0px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-variant: small-caps;
+}
+
+div.dirty-exit button {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+    vertical-align: middle;
+    padding: .4rem .75rem;
+    text-align: center;
+    margin-right: 1rem;
+    border-radius: 0;
+    border-style: none;
+}
+
+button.dirty-exit-button {
+    background-color: #e74a3b;
+    border-color: #e74a3b;
+}
+
+button.load-dirty-form-button {
+    background-color: #1cc88a;
+    border-color: #1cc88a;
+}
+
+/*@media (max-width: 767.98px) {
     .main .top-row:not(.auth) {
         display: none;
     }
@@ -171,11 +207,23 @@ app {
         display: none;
     }
 
-    .sidebar .collapse {
+    .sidebar .collapse {*/
         /* Never collapse the sidebar for wide screens */
-        display: block;
+        /*display: block;
     }
+}*/
+
+.form-composite .form-control {
+    border-top: hidden;
+    border-left: hidden;
+    border-right: hidden;
+    border-radius: 0;
 }
+
+.form-composite .form-label {
+    font-size: 0.75rem;
+}
+
 
 .display-5 {
     font-size: 2rem;
@@ -220,3 +268,4 @@ app {
 .opacity-5 {
     opacity: 1.0;
 }
+

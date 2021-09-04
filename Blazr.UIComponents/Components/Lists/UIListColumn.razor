@@ -3,23 +3,23 @@
 
 @if (this.IsHeader)
 {
-    <th class="@this.HeaderCSS">
+    <th class="@this.HeaderCss">
         @((MarkupString)this.HeaderTitle)
     </th>
 }
 else if (this.isMaxRowColumn)
 {
-    <td class="max-column" @attributes="this.SplatterAttributes">
-        <div class="grid-overflow">
-            <div class="grid-overflowinner">
-                @ChildContent
-            </div>
+<td class="@this.TDCss" @attributes="this.SplatterAttributes">
+    <div class="grid-overflow">
+        <div class="grid-overflowinner">
+            @ChildContent
         </div>
-    </td>
+    </div>
+</td>
 }
 else
 {
-    <td class="data-column" @attributes="this.SplatterAttributes">
+    <td class="@this.TDCss" @attributes="this.SplatterAttributes">
         @this.ChildContent
     </td>
 }

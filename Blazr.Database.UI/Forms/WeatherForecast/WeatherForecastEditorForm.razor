@@ -15,7 +15,7 @@
         <EditForm EditContext="this.EditContext" OnValidSubmit="HandleValidSubmit" class=" px-2 py-3">
             <EditFormState/>
             <ValidationFormState ValidStateChanged="this.ValidStateChanged"></ValidationFormState>
-            <UIContainer>
+            <UIContainer class="form-composite">
                 <FormViewRow Title="Unique ID" Value="@this.Model.ID.ToString()" />
                 <UIFormRow>
                     <UIColumn MediumColumns="6" Columns=12>

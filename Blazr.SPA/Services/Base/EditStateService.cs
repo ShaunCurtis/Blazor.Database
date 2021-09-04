@@ -31,9 +31,10 @@ namespace Blazr.SPA.Components
 
         public event EventHandler<EditStateEventArgs> EditStateChanged;
 
-        public void SetEditState(string data)
+        public void SetEditState(string data, string formUrl)
         {
             this.Data = data;
+            this.EditFormUrl = formUrl;
             this._isDirty = true;
         }
 
@@ -41,6 +42,7 @@ namespace Blazr.SPA.Components
         {
             this.Data = null;
             this._isDirty = false;
+            this.EditFormUrl = string.Empty;
         }
 
         public void ResetEditState()
@@ -52,7 +54,13 @@ namespace Blazr.SPA.Components
         }
 
         public void NotifyRecordSaved()
-            => RecordSaved?.Invoke(this, EventArgs.Empty);
+        {
+            RecordSaved?.Invoke(this, EventArgs.Empty);
+            EditStateChanged?.Invoke(this, EditStateEventArgs.NewArgs(false));
+        }
+
+        public void NotifyRecordExit()
+            => this.NotifyRecordSaved();
 
         public void NotifyEditStateChanged(bool dirtyState)
             => EditStateChanged?.Invoke(this, EditStateEventArgs.NewArgs(dirtyState));

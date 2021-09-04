@@ -46,7 +46,7 @@ namespace Blazr.SPA.Core
             }
         }
 
-        public int LastPage => ((int)Math.Floor((Decimal)((RecordCount - 1) / PageSize))) - 1;
+        public int LastPage => ((int)Math.Floor((Decimal)((RecordCount - 1) / PageSize)));
 
         public int LastBlock => (int)Math.Floor((Decimal)(this.LastPage / this.BlockSize));
 
