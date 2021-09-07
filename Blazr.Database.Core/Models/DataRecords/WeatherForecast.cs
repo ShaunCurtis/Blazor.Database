@@ -15,6 +15,8 @@ namespace Blazr.Database.Core
     {
         [Key] public Guid ID { get; init; } = Guid.Empty;
 
+        public string Location { get; init; } = string.Empty;
+
         public DateTimeOffset Date { get; init; } = DateTimeOffset.Now;
 
         public int TemperatureC { get; init; } = 0;

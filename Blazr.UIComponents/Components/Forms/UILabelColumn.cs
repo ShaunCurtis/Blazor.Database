@@ -12,7 +12,7 @@ namespace Blazr.UIComponents
     {
         [Parameter] public override int Columns { get; set; } = 2;
 
-        [Parameter] public string FormCss { get; set; } = "form-label";
+        [Parameter] public string FormCss { get; set; } = "form-label col-form-label";
 
         public UILabelColumn()
             => this.CssClasses.Add(this.FormCss);

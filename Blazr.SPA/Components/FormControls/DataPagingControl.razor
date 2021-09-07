@@ -5,12 +5,12 @@
     <nav aria-label="...">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link cursor-hand" @onclick="() => this.RecordPager.ToPage(0)">&vert;&lt;</a>
+                <a class="page-link cursor-hand text-nowrap" @onclick="() => this.RecordPager.ToPage(0)">&vert;&lt;</a>
             </li>
             @if (this.RecordPager.HasBlocks)
             {
                 <li class="page-item">
-                    <a class="page-link cursor-hand" @onclick="() => this.RecordPager.BlockMove(-1)">&lt;&lt;</a>
+                    <a class="page-link cursor-hand text-nowrap" @onclick="() => this.RecordPager.BlockMove(-1)">&lt;&lt;</a>
                 </li>
             }
             @for (var i = this.RecordPager.DisplayStartBlockPage; i <= this.RecordPager.DisplayEndBlockPage; i++)
@@ -21,7 +21,7 @@
                 @if (displayPageNo == this.RecordPager.DisplayPage)
                 {
                     <li class="page-item active">
-                        <span class="page-link cursor-hand">
+                        <span class="page-link cursor-hand text-nowrap">
                             @displayPageNo
                             <span class="sr-only">(current)</span>
                         </span>
@@ -30,7 +30,7 @@
                 else
                 {
                     <li class="page-item">
-                        <a class="page-link cursor-hand" @onclick="() => this.RecordPager.ToPage(pageNo)">@displayPageNo</a>
+                        <a class="page-link cursor-hand text-nowrap" @onclick="() => this.RecordPager.ToPage(pageNo)">@displayPageNo</a>
                     </li>
                 }
 
@@ -38,11 +38,11 @@
             @if (this.RecordPager.HasBlocks)
             {
                 <li class="page-item">
-                    <a class="page-link cursor-hand" @onclick="() => this.RecordPager.BlockMove(1)">&gt;&gt;</a>
+                    <a class="page-link cursor-hand text-nowrap" @onclick="() => this.RecordPager.BlockMove(1)">&gt;&gt;</a>
                 </li>
             }
             <li class="page-item">
-                <a class="page-link cursor-hand" @onclick="() => this.RecordPager.ToPage(this.RecordPager.LastPage)">&gt;&vert;</a>
+                <a class="page-link cursor-hand text-nowrap" @onclick="() => this.RecordPager.ToPage(this.RecordPager.LastPage)">&gt;&vert;</a>
             </li>
         </ul>
     </nav>

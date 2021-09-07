@@ -19,6 +19,7 @@
 <UILoader State="this.LoadState">
     <UIContainer>
         <FormViewControl Label="Date" Value="@this.ViewService.Record.Date.LocalDateTime.ToShortDateString()" IsRow="true" ControlCols="7" />
+        <FormViewControl Label="Location" Value="@this.ViewService.Record.Location" IsRow="true" ControlCols="7" />
         <FormViewControl Label="Temperature &deg;C" Value="@this.ViewService.Record.TemperatureC.ToString()" IsRow="true" ControlCols="7" />
         <FormViewControl Label="Temperature &deg;F" Value="@this.ViewService.Record.TemperatureF.ToString()" IsRow="true" ControlCols="7" />
         <FormViewControl Label="Summary" Value="@this.ViewService.Record.Summary" IsRow="true" ControlCols="7" />

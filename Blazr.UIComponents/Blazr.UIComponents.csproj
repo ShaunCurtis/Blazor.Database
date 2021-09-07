@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Folder Include="Components\Data\" />
+    <Folder Include="Components\InputControls\" />
   </ItemGroup>
 
   <ItemGroup>

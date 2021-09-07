@@ -14,11 +14,12 @@
 <UIListControl TRecord="WeatherForecast" Records="this.ViewService.Records" LoadState="this.LoadState" class="table">
     <RowTemplate>
         <UIListColumn HeaderTitle="Date">@context.Date.LocalDateTime.ToShortDateString()</UIListColumn>
+        <UIListColumn HeaderTitle="Location">@context.Location</UIListColumn>
         <UIListColumn HeaderTitle="Temp &deg; C">@context.TemperatureC</UIListColumn>
         <UIListColumn HeaderTitle="Temp &deg; F">@context.TemperatureF</UIListColumn>
         <UIListColumn HeaderTitle="Summary">@context.Summary</UIListColumn>
         <UIListColumn HeaderTitle="Detail" IsMaxColumn="true">@context.Description</UIListColumn>
-        <UIListColumn HeaderTitle="Edit/View" NoWrap="true" >
+        <UIListColumn HeaderTitle="Edit/View" NoWrap="true">
             <UIButton type="button" class="btn-sm btn-secondary" ClickEvent="() => this.View(context.ID)">View</UIButton>
             <UIButton type="button" class="btn-sm btn-primary" ClickEvent="() => this.Edit(context.ID)">Edit</UIButton>
         </UIListColumn>

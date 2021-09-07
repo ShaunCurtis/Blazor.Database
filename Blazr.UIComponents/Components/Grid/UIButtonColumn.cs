@@ -10,7 +10,7 @@ namespace Blazr.UIComponents
     {
         public UIButtonColumn()
         {
-            CssClasses.Add("text-right");
+            CssClasses.Add("text-right text-nowrap");
         }
     }
 }

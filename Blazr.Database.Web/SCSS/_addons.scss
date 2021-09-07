@@ -167,53 +167,8 @@ button.load-dirty-form-button {
     border-color: #1cc88a;
 }
 
-/*@media (max-width: 767.98px) {
-    .main .top-row:not(.auth) {
-        display: none;
-    }
 
-    .main .top-row.auth {
-        justify-content: space-between;
-    }
-
-    .main .top-row a, .main .top-row .btn-link {
-        margin-left: 0;
-    }
-}
-
-@media (min-width: 992px) {
-    app {
-        flex-direction: row;
-    }
-
-    .sidebar {
-        width: 250px;
-        height: 100vh;
-        position: sticky;
-        top: 0;
-    }
-
-    .main .top-row {
-        position: sticky;
-        top: 0;
-    }
-
-    .main > div {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
-    }
-
-    .navbar-toggler {
-        display: none;
-    }
-
-    .sidebar .collapse {*/
-        /* Never collapse the sidebar for wide screens */
-        /*display: block;
-    }
-}*/
-
-.form-composite .form-control {
+.form-composite .form-control, .form-composite .input-group-append, .form-composite .input-group-text {
     border-top: hidden;
     border-left: hidden;
     border-right: hidden;
@@ -224,6 +179,19 @@ button.load-dirty-form-button {
     font-size: 0.75rem;
 }
 
+.form-composite .input-group-text.is-valid {
+    border-color: $success;
+}
+
+.form-composite .input-group-text.is-invalid {
+    border-color: $danger;
+}
+
+.form-composite .input-group-text {
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
 
 .display-5 {
     font-size: 2rem;

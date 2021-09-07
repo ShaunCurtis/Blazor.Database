@@ -32,11 +32,11 @@ namespace Blazr.Database.Data
             var conn = this.Database.GetDbConnection();
             conn.Open();
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "CREATE TABLE [WeatherForecast]([ID] UNIQUEIDENTIFIER PRIMARY KEY, [Date] [smalldatetime] NOT NULL, [TemperatureC] [int] NOT NULL, [Summary] [varchar](255) NULL)";
+            cmd.CommandText = "CREATE TABLE [WeatherForecast]([ID] UNIQUEIDENTIFIER PRIMARY KEY, [Date] [smalldatetime] NOT NULL, [Location] [varchar](255) NOT NULL, [TemperatureC] [int] NOT NULL, [Summary] [varchar](255) NULL)";
             cmd.ExecuteNonQuery();
             foreach (var forecast in this.NewForecasts)
             {
-                cmd.CommandText = $"INSERT INTO WeatherForecast([ID], [Date], [TemperatureC], [Summary]) VALUES({Guid.NewGuid()} ,'{forecast.Date.LocalDateTime.ToLongDateString()}', {forecast.TemperatureC}, '{forecast.Summary}')";
+                cmd.CommandText = $"INSERT INTO WeatherForecast([ID], [Date], [TemperatureC], [Summary]) VALUES({Guid.NewGuid()}, 'New Zealand' ,'{forecast.Date.LocalDateTime.ToLongDateString()}', {forecast.TemperatureC}, '{forecast.Summary}')";
                 cmd.ExecuteNonQuery();
             }
         }

@@ -10,7 +10,7 @@ namespace Blazr.Database.Core
 {
     public static class Countries
     {
-        public static List<KeyValuePair<int, string>> CountryList
+        public static List<KeyValuePair<int, string>> CountryKVList
         {
             get
             {
@@ -20,6 +20,19 @@ namespace Blazr.Database.Core
                 {
                     list.Add(new KeyValuePair<int, string>(x, v));
                     x++;
+                }
+                return list;
+            }
+        }
+
+        public static List<string> CountryList
+        {
+            get
+            {
+                List<string> list = new List<string>();
+                foreach (var v in CountryArray)
+                {
+                    list.Add(v);
                 }
                 return list;
             }

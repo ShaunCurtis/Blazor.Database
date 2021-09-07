@@ -33,6 +33,7 @@ namespace Blazr.Database.Data
 
             return Enumerable.Range(1, 80).Select(index => new WeatherForecast
             {
+                Location = "Australia",
                 ID = Guid.NewGuid(),
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),

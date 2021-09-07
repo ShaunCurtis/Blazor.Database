@@ -16,6 +16,9 @@ namespace Blazr.Database.Core
     {
         public Guid ID { get; set; } = Guid.Empty;
 
+        [Required]
+        public string Location { get; set; } = string.Empty;
+
         public DateTimeOffset Date { get; set; } = DateTimeOffset.Now;
 
         [Required]
@@ -31,6 +34,7 @@ namespace Blazr.Database.Core
         public WeatherForecast GetRecord() => new WeatherForecast
         {
             ID = this.ID,
+            Location = this.Location,
             Date = this.Date,
             TemperatureC = this.TemperatureC,
             Summary = this.Summary
@@ -39,6 +43,7 @@ namespace Blazr.Database.Core
         public void Populate(IDbRecord<WeatherForecast> dbRecord)
         {
             var rec = (WeatherForecast)dbRecord;
+            this.Location = rec.Location;
             this.ID = rec.ID;
             this.Date = rec.Date;
             this.TemperatureC = rec.TemperatureC;
