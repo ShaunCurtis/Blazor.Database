@@ -1,4 +1,5 @@
 ﻿@page "/fetchdataInline"
+@attribute [Authorize(Roles = "Admin, User")]
 
 @namespace Blazr.Database.RouteViews
 @inherits InlineFormBase
@@ -13,6 +14,6 @@
 <WeatherForecastListForm EditRecord="this.GoToEditor" ViewRecord="this.GoToViewer" NewRecord="this.GoToNew" ExitAction="Exit"></WeatherForecastListForm>
 
 @code {
-//TODO - Inline New doesn't work
+    //TODO - Inline New doesn't work
 }
 

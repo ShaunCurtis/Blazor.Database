@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blazor.DataBase\Blazr.Database.csproj" />
-    <ProjectReference Include="..\Blazor.SPA\Blazr.SPA.csproj" />
+    <ProjectReference Include="..\Blazr.DataBase\Blazr.Database.csproj" />
+    <ProjectReference Include="..\Blazr.SPA\Blazr.SPA.csproj" />
   </ItemGroup>
 
 </Project>

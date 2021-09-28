@@ -1,6 +1,8 @@
 using Blazr.Database.Extensions;
+using Blazr.Database.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +33,7 @@ namespace Blazor.Database.Web
             // services.AddSQLServerApplicationServices(this.Configuration);
             // services.AddSQLiteServerApplicationServices(this.Configuration);
             services.AddInMemoryServerApplicationServices(this.Configuration);
+            services.AddScoped<AuthenticationStateProvider, TestAuthenticationStateProvider>();
 
             // Server Side Blazor doesn't register HttpClient by default
             // Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode

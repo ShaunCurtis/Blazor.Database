@@ -1,0 +1,45 @@
+﻿@namespace Blazr.Database.Components
+<AuthorizeView>
+    <Authorized>
+        <div class="m-1 p-1 text-white">
+            @user.Identity.Name
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="m-1 p-1 text-white">
+            Not Logged In
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+<div class="m-1 p-3">
+    <select class="form-control" @onchange="ChangeUser">
+        @foreach (var value in Enum.GetNames(typeof(TestUserType)))
+        {
+            <option value="@value">@value</option>
+        }
+    </select>
+</div>
+
+@code {
+
+    [CascadingParameter] public Task<AuthenticationState> AuthTask { get; set; }
+
+    [Inject] private AuthenticationStateProvider AuthState { get; set; }
+
+    private System.Security.Claims.ClaimsPrincipal user;
+
+    private TestUserType _userType = TestUserType.Visitor;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var authState = await AuthTask;
+        this.user = authState.User;
+    }
+
+    private async Task ChangeUser(ChangeEventArgs e)
+    {
+        var en = Enum.Parse<TestUserType>(e.Value.ToString());
+        var authState = await ((TestAuthenticationStateProvider)AuthState).ChangeUser(en);
+        this.user = authState.User;
+    }
+}

@@ -1,5 +1,6 @@
 ﻿@page "/weather/edit"
 @page "/weather/edit/{ID:guid}"
+@attribute [Authorize(Roles = "Admin, User")]
 
 @namespace Blazr.Database.RouteViews
 

@@ -33,7 +33,7 @@ namespace Blazr.SPA.Components
     public class RouteViewManager : IComponent
     {
         private ViewData _ViewData { get; set; }
-        private bool _RenderEventQueued;
+        protected bool RenderEventQueued;
         private RenderHandle _renderHandle;
 
         [Inject] private EditStateService EditStateService { get; set; }
@@ -108,18 +108,21 @@ namespace Blazr.SPA.Components
         public async Task LoadViewAsync<TView>(Dictionary<string, object> data = null)
             => await this.LoadViewAsync(new ViewData(typeof(TView), data));
 
-        private RenderFragment _renderDelegate => builder =>
+        protected virtual RenderFragment RenderRouteView => builder
+            => RenderDelegate(builder);
+ 
+        protected RenderFragment RenderDelegate => builder =>
         {
-            _RenderEventQueued = false;
+            RenderEventQueued = false;
             // Adds cascadingvalue for the ViewManager
             builder.OpenComponent<CascadingValue<RouteViewManager>>(0);
             builder.AddAttribute(1, "Value", this);
             // Get the layout render fragment
-            builder.AddAttribute(2, "ChildContent", this._layoutViewFragment);
+            builder.AddAttribute(2, "ChildContent", this.LayoutViewFragment);
             builder.CloseComponent();
         };
 
-        private RenderFragment _layoutViewFragment => builder =>
+        protected RenderFragment LayoutViewFragment => builder =>
         {
             Type _pageLayoutType = RouteData?.PageType.GetCustomAttribute<LayoutAttribute>()?.LayoutType
                 ?? RouteViewService.Layout
@@ -128,16 +131,16 @@ namespace Blazr.SPA.Components
             builder.OpenComponent<LayoutView>(0);
             builder.AddAttribute(1, nameof(LayoutView.Layout), _pageLayoutType);
             if (this.EditStateService.IsDirty && this.EditStateService.DoFormReload is not true)
-                builder.AddAttribute(2, nameof(LayoutView.ChildContent), _dirtyExitFragment);
+                builder.AddAttribute(2, nameof(LayoutView.ChildContent), this.DirtyExitFragment);
             else
             {
                 this.EditStateService.DoFormReload = false;
-                builder.AddAttribute(3, nameof(LayoutView.ChildContent), _renderComponentWithParameters);
+                builder.AddAttribute(3, nameof(LayoutView.ChildContent), this.RenderComponentWithParameters);
             }
             builder.CloseComponent();
         };
 
-        private RenderFragment _dirtyExitFragment => builder =>
+        protected RenderFragment DirtyExitFragment => builder =>
         {
             builder.OpenElement(0, "div");
             builder.AddAttribute(1, "class", "dirty-exit");
@@ -169,7 +172,7 @@ namespace Blazr.SPA.Components
             builder.CloseElement();
         };
 
-        private RenderFragment _renderComponentWithParameters => builder =>
+        protected RenderFragment RenderComponentWithParameters => builder =>
         {
             Type componentType = null;
             IReadOnlyDictionary<string, object> parameters = new Dictionary<string, object>();
@@ -204,10 +207,10 @@ namespace Blazr.SPA.Components
 
         public async Task RenderAsync() => await InvokeAsync(() =>
         {
-            if (!this._RenderEventQueued)
+            if (!this.RenderEventQueued)
             {
-                this._RenderEventQueued = true;
-                _renderHandle.Render(_renderDelegate);
+                this.RenderEventQueued = true;
+                _renderHandle.Render(RenderRouteView);
             }
         }
         );

@@ -1,4 +1,5 @@
 ﻿@page "/fetchdata"
+@attribute [Authorize(Roles = "Admin, User")]
 @namespace Blazr.Database.RouteViews
 
 <WeatherForecastListForm EditRecord="this.GoToEditor" ViewRecord="this.GoToViewer" NewRecord="this.GoToNew" ExitAction="Exit"></WeatherForecastListForm>
