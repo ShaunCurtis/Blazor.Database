@@ -19,8 +19,7 @@ namespace Blazr.UIComponents
 {
     public class BaseFormEditControl<TValue> : ComponentBase
     {
-        [Parameter]
-        public TValue? Value { get; set; }
+        [Parameter] public TValue? Value { get; set; }
 
         [Parameter] public EventCallback<TValue> ValueChanged { get; set; }
 
@@ -42,7 +41,7 @@ namespace Blazr.UIComponents
 
         [Parameter] public bool ShowLabel { get; set; } = true;
 
-        [Parameter] public bool IsRequired { get; set; }
+        [Parameter] public bool IsRequired { get; set; } = true;
 
         [Parameter] public bool IsRow { get; set; }
 
@@ -108,9 +107,7 @@ namespace Blazr.UIComponents
         {
             var messages = CurrentEditContext.GetValidationMessages(_fieldIdentifier).ToList();
             if (messages != null || messages.Count > 1)
-            {
                 _messageStore.Clear();
-            }
         }
 
         protected void FieldChanged(object sender, FieldChangedEventArgs e)
@@ -153,16 +150,16 @@ namespace Blazr.UIComponents
 
         private RenderFragment RowFragment => (builder) =>
         {
-            builder.OpenElement(0, "div");
-            builder.AddAttribute(10, "class", "row form-group");
-            builder.OpenElement(20, "div");
-            builder.AddAttribute(30, "class", "col-12 col-md-3");
-            builder.AddContent(40, this.LabelFragment);
+            builder.OpenElement(1000, "div");
+            builder.AddAttribute(1010, "class", "row form-group");
+            builder.OpenElement(1020, "div");
+            builder.AddAttribute(1030, "class", "col-12 col-md-3");
+            builder.AddContent(1040, this.LabelFragment);
             builder.CloseElement();
-            builder.OpenElement(40, "div");
-            builder.AddAttribute(50, "class", "col-12 col-md-9");
-            builder.AddContent(60, this.ControlFragment);
-            builder.AddContent(70, this.ValidationFragment);
+            builder.OpenElement(1050, "div");
+            builder.AddAttribute(1060, "class", "col-12 col-md-9");
+            builder.AddContent(1070, this.ControlFragment);
+            builder.AddContent(1080, this.ValidationFragment);
             builder.CloseElement();
             builder.CloseElement();
         };
@@ -203,9 +200,9 @@ namespace Blazr.UIComponents
             }
             else if (!string.IsNullOrWhiteSpace(this.HelperText))
             {
-                builder.OpenElement(350, "div");
-                builder.AddAttribute(360, "class", MessageCss);
-                builder.AddContent(370, this.HelperText);
+                builder.OpenElement(410, "div");
+                builder.AddAttribute(420, "class", MessageCss);
+                builder.AddContent(430, this.HelperText);
                 builder.CloseElement();
             }
         };
