@@ -11,6 +11,7 @@ using Blazr.Database.Data;
 using Blazr.SPA;
 using Blazr.SPA.Core;
 using Blazr.SPA.Data;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -67,6 +68,8 @@ namespace Blazr.Database.Extensions
             services.AddScoped<IDateTimeBroker, DateTimeBroker>();
             services.AddScoped<IDataServiceConnector, WeatherDataServiceConnector>();
             services.AddScoped<WeatherForecastViewService>();
+            services.AddScoped<AuthenticationStateProvider, TestAuthenticationStateProvider>();
+            services.AddAuthorizationCore();
         }
     }
 }

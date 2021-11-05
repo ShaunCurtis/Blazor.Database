@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Blazr.Database.UI
+namespace Blazr.Database.Core
 {
     public class TestAuthenticationStateProvider : AuthenticationStateProvider
     {

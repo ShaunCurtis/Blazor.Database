@@ -4,7 +4,7 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
-namespace Blazr.Database.UI
+namespace Blazr.Database.Core
 {
     public enum TestUserType
     {
