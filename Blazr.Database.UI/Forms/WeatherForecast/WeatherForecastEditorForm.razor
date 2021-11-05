@@ -18,18 +18,18 @@
             <UIContainer class="form-composite">
                 <UIFormRow>
                     <UIColumn MediumColumns="6" Columns=12>
-                        <FormDataListControl Label="Location" ShowLabel="true" @bind-Value="this.Model.Location" IsRequired="true" ShowValidation="true" DataList="Countries.CountryList" RestrictToList="true" HelperText="Where?" />
+                        <FormDataListControl Label="Location" ShowLabel="true" @bind-Value="this.Model.Location" ShowValidation="true" DataList="Countries.CountryList" RestrictToList="true" HelperText="Where?" />
                     </UIColumn>
                     <UIColumn MediumColumns="3" Columns=12>
-                        <FormEditControl Label="Date" ShowLabel="true" @bind-Value="this.Model.Date" ControlType="typeof(InputDate<DateTimeOffset>)" IsRequired="true" ShowValidation="true" HelperText="Enter the Forecast Date"></FormEditControl>
+                        <FormEditControl Label="Date" ShowLabel="true" @bind-Value="this.Model.Date" ControlType="typeof(InputDate<DateTimeOffset>)" ShowValidation="true" HelperText="Enter the Forecast Date"></FormEditControl>
                     </UIColumn>
                     <UIColumn MediumColumns="3" Columns=12>
-                        <FormEditControl Label="Temperature &deg;C" ShowLabel="true" @bind-Value="this.Model.TemperatureC" ControlType="typeof(InputNumber<int>)" IsRequired="true" ShowValidation="true" HelperText="Enter the Temperature &deg;C"></FormEditControl>
+                        <FormEditControl Label="Temperature &deg;C" ShowLabel="true" @bind-Value="this.Model.TemperatureC" ControlType="typeof(InputNumber<int>)" ShowValidation="true" HelperText="Enter the Temperature &deg;C"></FormEditControl>
                     </UIColumn>
                 </UIFormRow>
                 <UIFormRow>
                     <UIColumn MediumColumns="12" Columns=12>
-                        <FormDataListControl Label="Summary" ShowLabel="true" @bind-Value="this.Model.Summary" IsRequired="true" ShowValidation="true" DataList="WeatherSummaries.SummariesList" HelperText="Summarise the Weather" />
+                        <FormDataListControl Label="Summary" ShowLabel="true" @bind-Value="this.Model.Summary" ShowValidation="true" DataList="WeatherSummaries.SummariesList" HelperText="Summarise the Weather" />
                     </UIColumn>
                 </UIFormRow>
             </UIContainer>

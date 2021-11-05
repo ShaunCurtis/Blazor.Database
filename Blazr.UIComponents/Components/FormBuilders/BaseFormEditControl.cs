@@ -17,7 +17,7 @@ using System.Linq.Expressions;
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 namespace Blazr.UIComponents
 {
-    public class BaseFormEditControl<TValue> : ComponentBase
+    public abstract class BaseFormEditControl<TValue> : ComponentBase
     {
         [Parameter] public TValue? Value { get; set; }
 
@@ -40,8 +40,6 @@ namespace Blazr.UIComponents
         [Parameter] public bool ShowValidation { get; set; }
 
         [Parameter] public bool ShowLabel { get; set; } = true;
-
-        [Parameter] public bool IsRequired { get; set; } = true;
 
         [Parameter] public bool IsRow { get; set; }
 
@@ -72,7 +70,7 @@ namespace Blazr.UIComponents
         }
 
         private string MessageCss => CSSBuilder.Class()
-            .AddClass("valid-feedback","invalid-feedback", this.IsValid)
+            .AddClass("valid-feedback", "invalid-feedback", this.IsValid)
             .Build();
 
         protected string ControlCss => CSSBuilder.Class(this.ControlCssClass)
@@ -98,7 +96,7 @@ namespace Blazr.UIComponents
                 throw new InvalidOperationException($"Cannot set the Validation Message Store!");
 
             var messages = CurrentEditContext.GetValidationMessages(_fieldIdentifier).ToList();
-            var showHelpText = (messages.Count == 0) && this.IsRequired && this.Value is null;
+            var showHelpText = messages.Count == 0 && this.Value is null;
             if (showHelpText && !string.IsNullOrWhiteSpace(this.HelperText))
                 _messageStore.Add(_fieldIdentifier, this.HelperText);
         }
@@ -120,13 +118,10 @@ namespace Blazr.UIComponents
         {
             this.IsValid = true;
             {
-                if (this.IsRequired)
-                {
-                    this.IsValid = false;
-                    var messages = CurrentEditContext.GetValidationMessages(_fieldIdentifier).ToList();
-                    if (messages is null || messages.Count == 0)
-                        this.IsValid = true;
-                }
+                this.IsValid = false;
+                var messages = CurrentEditContext.GetValidationMessages(_fieldIdentifier).ToList();
+                if (messages is null || messages.Count == 0)
+                    this.IsValid = true;
             }
         }
 
