@@ -14,12 +14,12 @@ namespace Blazr.Database.Forms
     public partial class WeatherForecastEditorForm : EditRecordFormBase<WeatherForecast, EditWeatherForecast>
     {
 
-        [Inject] private WeatherForecastViewService ViewService { get; set; }
+        [Inject] private WeatherForecastViewService? ViewService { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
             //this.FormUrl = "/Weather/Edit";
-            this.Service = ViewService;
+            this.Service = ViewService!;
             await LoadRecordAsync();
         }
     }

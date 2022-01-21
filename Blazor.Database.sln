@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31005.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Database.Web", "Blazr.Database.Web\Blazr.Database.Web.csproj", "{7E11628B-1A8A-4D10-9AD5-FE9F3F9B3BC0}"
 EndProject
@@ -27,7 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Database.UI", "Blazr.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Database.Core", "Blazr.Database.Core\Blazr.Database.Core.csproj", "{492B8419-442D-4BD7-A9AC-547B6ABF1AED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Database.Controllers", "Blazr.Database.Controllers\Blazr.Database.Controllers.csproj", "{1A7F2D06-962E-450F-A5DB-CA7B2DFCF35F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazr.Database.Controllers", "Blazr.Database.Controllers\Blazr.Database.Controllers.csproj", "{1A7F2D06-962E-450F-A5DB-CA7B2DFCF35F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.Database.Server.Web", "Blazr.Database.Server.Web\Blazr.Database.Server.Web.csproj", "{CE45F77F-FD66-4353-AF2D-7A4BF4F1ACA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazr.NavigationLocker", "Blazr.NavigationLocker\Blazr.NavigationLocker.csproj", "{B39BA50E-E280-4906-8C4A-F174CF88EF82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +79,14 @@ Global
 		{1A7F2D06-962E-450F-A5DB-CA7B2DFCF35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A7F2D06-962E-450F-A5DB-CA7B2DFCF35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A7F2D06-962E-450F-A5DB-CA7B2DFCF35F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE45F77F-FD66-4353-AF2D-7A4BF4F1ACA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE45F77F-FD66-4353-AF2D-7A4BF4F1ACA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE45F77F-FD66-4353-AF2D-7A4BF4F1ACA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE45F77F-FD66-4353-AF2D-7A4BF4F1ACA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B39BA50E-E280-4906-8C4A-F174CF88EF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B39BA50E-E280-4906-8C4A-F174CF88EF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B39BA50E-E280-4906-8C4A-F174CF88EF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B39BA50E-E280-4906-8C4A-F174CF88EF82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

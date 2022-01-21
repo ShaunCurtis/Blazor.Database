@@ -7,7 +7,10 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<button class="btn btn-dark" @onclick="Lock">Lock me</button>
+
 @code {
+    [CascadingParameter] private NavigationLock? navigationLock { get; set; }
 
     [Parameter] public int ID { get; set; } = 0;
 
@@ -17,6 +20,15 @@
     {
         currentCount++;
     }
+
+    private bool locked;
+
+    private void Lock()
+    {
+        this.locked = !this.locked;
+        this.navigationLock?.SetLock(locked);
+    }
+
 
     protected override Task OnInitializedAsync()
     {

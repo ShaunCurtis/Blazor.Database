@@ -4,13 +4,12 @@
 /// If you use it, donate something to a charity somewhere
 /// ============================================================
 
+using Blazr.NavigationLocker.Components;
 using Blazr.SPA.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using System;
-using System.Threading.Tasks;
 
 namespace Blazr.SPA.Components
 {
@@ -24,16 +23,15 @@ namespace Blazr.SPA.Components
         where TRecord : class, IDbRecord<TRecord>, new()
         where TEditRecord : class, IEditRecord<TRecord>, new()
     {
-        [Inject] private IJSRuntime _js { get; set; }
+        [CascadingParameter] private NavigationLock? navigationLock { get; set; }
 
-        [Inject] protected EditStateService EditStateService { get; set; }
+        protected EditContext? EditContext { get; set; }
 
-        protected EditContext EditContext { get; set; }
-        protected bool IsDirty => this.EditStateService.IsDirty;
+        protected bool IsDirty => this.EditStateService!.IsDirty;
 
-        protected virtual string FormUrl { get; set; }
+        protected virtual string? FormUrl { get; set; }
 
-        protected TEditRecord Model { get; set; }
+        protected TEditRecord? Model { get; set; }
 
         // Set of boolean properties/fields used in the razor code and methods to track 
         // state in the form or disable/show/hide buttons.
@@ -54,31 +52,24 @@ namespace Blazr.SPA.Components
             _isLoaded = false;
             // Get the ID either from a ModalDialog Options or the Id Parameter and set the local id
             var id = this._Id;
-            // Check if we have a dirty form reload and if so get the Id from the EditStateService
-            if (this.EditStateService.IsDirty)
-                id = (Guid)this.EditStateService.RecordID;
             // Get the record
             await this.Service.GetRecordAsync(id);
             // Get a new Edit class instance, populate it from the record and assign it to the EditContext
             this.Model = new TEditRecord();
             this.Model.Populate(this.Service.Record);
             this.EditContext = new EditContext(this.Model);
-            // Set up the EditStateService FirmUrl and Record Id
-            this.EditStateService.EditFormUrl = FormUrl ?? NavManager.Uri;
-            this.EditStateService.RecordID = id;
             _isLoaded = true;
             // wire up the events
             this.EditContext.OnFieldChanged += FieldChanged;
-            this.EditStateService.EditStateChanged += OnEditStateChanged;
             // if we have a dirty record or are editing an existing record, run validation
             if (!this._isNew)
                 this.EditContext.Validate();
         }
 
-        protected void FieldChanged(object sender, FieldChangedEventArgs e)
+        protected void FieldChanged(object? sender, FieldChangedEventArgs e)
             => this._confirmDelete = false;
 
-        private void OnEditStateChanged(object sender, EditStateEventArgs e)
+        private void OnEditStateChanged(object? sender, EditStateEventArgs e)
         {
             if (this.IsModal) this.Modal.Lock(e.IsDirty);
             this.InvokeAsync(StateHasChanged);
@@ -120,7 +111,6 @@ namespace Blazr.SPA.Components
         protected async Task ConfirmExit()
         {
             this.EditStateService.ResetEditState();
-            this.SetPageExitCheck(false);
             await this.DoExit();
         }
 
@@ -134,9 +124,6 @@ namespace Blazr.SPA.Components
             else
                 this.NavManager.NavigateTo("/");
         }
-
-        private void SetPageExitCheck(bool action)
-            => _js.InvokeAsync<bool>("cecblazor_setEditorExitCheck", action);
 
         protected RenderFragment ButtonContent => (builder) =>
         {
@@ -197,7 +184,7 @@ namespace Blazr.SPA.Components
             }
             {
                 if (!this.IsDirty)
-                    {
+                {
                     builder.OpenElement(50, "button");
                     builder.AddAttribute(51, "type", "button");
                     builder.AddAttribute(54, "class", "btn mr-1 btn-dark");
