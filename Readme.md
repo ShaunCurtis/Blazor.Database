@@ -1,6 +1,13 @@
 # Blazor.Database
 
-This is my current working Repository for developing a CRUD Database Template for Blazor.
+This code base for building Blazor Projects has been superceeded.  I've left it here because I know it still gets visitors and serveral people have starred or forked it.
+
+The new solution is at [Blazor.Demo](https://github.com/ShaunCurtis/Blazr.Demo).
+
+
+==============================================================
+
+This is no longer my current working Repository for developing a CRUD Database Template for Blazor.
 
 There are a set of articles associated with this Repository on my personal GitHub site - [Building a Database Application in Blazor](https://shauncurtis.github.io/Building-a-Database-Application-in-Blazor/).
 
